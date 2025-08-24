@@ -1,0 +1,178 @@
+/* Page background with gradient */
+.uf-page {
+  min-height: 85vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #e0f2fe, #e0e7ff);
+  padding: 20px;
+}
+.uf-small-icon {
+  position: absolute;
+  top: 16px;
+  right: 18px;
+  color: #475569;
+  cursor: pointer;
+  transition: color 0.25s ease, transform 0.25s ease;
+}
+
+.uf-small-icon:hover {
+  color: #0284c7;
+  transform: scale(1.1);
+}
+/* Card with glass effect */
+.uf-card {
+  width: 1000px;
+  max-width: 95%;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  border-radius: 16px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+  padding: 28px 30px;
+  animation: fadeIn 0.4s ease-in-out;
+}
+
+.uf-title {
+  margin-bottom: 18px;
+  font-size: 24px;
+  font-weight: 600;
+  text-align: center;
+  color: #0f172a;
+}
+@media (max-width: 768px) {
+  .uf-card {
+    grid-template-columns: 1fr; /* Single column layout */
+    padding: 20px;
+    width: 95%;
+    max-height: none; /* full scroll allow */
+  }
+}
+
+/* Tablet (769px - 1024px) ke liye */
+@media (max-width: 1024px) {
+  .uf-card {
+    width: 90%;
+    grid-template-columns: 1fr 1fr; /* still 2 columns but narrower */
+  }
+}
+
+.uf-row {
+  display: flex;
+  gap: 16px;
+}
+
+.uf-field {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 14px;
+  flex: 1;
+}
+
+.uf-field span {
+  font-size: 14px;
+  color: #334155;
+  margin-bottom: 6px;
+  font-weight: 500;
+}
+
+.uf-field input {
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1px solid #d1d5db;
+  font-size: 14px;
+  background: white;
+  transition: all 0.25s ease;
+}
+
+.uf-field input:focus {
+  border-color: #0284c7;
+  box-shadow: 0 0 0 4px rgba(2, 132, 199, 0.1);
+}
+
+/* Password wrapper */
+.uf-passwrap {
+  display: flex;
+  align-items: center;
+}
+
+.uf-passbtn {
+  margin-left: 8px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: none;
+  background: #f1f5f9;
+  cursor: pointer;
+  font-size: 12px;
+  transition: background 0.25s ease;
+}
+
+.uf-passbtn:hover {
+  background: #e2e8f0;
+}
+
+/* Actions */
+.uf-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  margin-top: 12px;
+}
+
+.uf-submit {
+  background: linear-gradient(135deg, #0284c7, #0369a1);
+  color: white;
+  padding: 10px 18px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  font-weight: 500;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.uf-submit:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(3, 105, 161, 0.3);
+}
+
+.uf-reset {
+  background: white;
+  color: #475569;
+  padding: 10px 16px;
+  border-radius: 10px;
+  border: 1px solid #cbd5e1;
+  cursor: pointer;
+  transition: background 0.25s ease;
+}
+
+.uf-reset:hover {
+  background: #f8fafc;
+}
+
+/* Error message */
+.uf-error {
+  color: #b91c1c;
+  margin-top: 5px;
+  font-size: 12px;
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  .uf-row {
+    flex-direction: column;
+  }
+  .uf-card {
+    padding: 20px;
+  }
+}
+
+/* Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

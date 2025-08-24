@@ -1,0 +1,143 @@
+/* Container */
+.signup-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 88vh;
+  padding: 20px;
+  background: #fff;
+  font-family: Arial, sans-serif;
+}
+
+/* Logo */
+.app-logo {
+  font-size: 28px;
+  font-weight: bold;
+    background-color: #1E40AF;
+  color: white;
+  margin-top: 40px;
+   padding: 8px 16px; /* extra background area */
+  border-radius: 8px; /* rounded corners */
+}
+.app-logo span {
+  font-family: "Noto Sans Devanagari", sans-serif;
+}
+
+/* Tabs */
+.tab-buttons {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 20px 0;
+}
+.tab-buttons button {
+  padding: 8px 18px;
+  border-radius: 8px;
+  border: 1px solid #1E40AF;
+  background: transparent;
+  color: #1E40AF;
+  font-weight: bold;
+  cursor: pointer;
+}
+.tab-buttons button.active {
+  background: #1E40AF;
+  color: #fff;
+}
+.profile-icon {
+  font-size: 35px;
+  color: #1E40AF;
+}
+
+/* Form */
+.signup-form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 320px;
+  gap: 12px;
+}
+.signup-form input {
+  padding: 12px;
+  border: 2px solid #d1eaff;
+  border-radius: 50px;
+  outline: none;
+  font-size: 14px;
+}
+.signup-form input:focus {
+  border-color: #1E40AF;
+}
+.submit-btn {
+  background: #60a5fa;
+  color: #fff;
+  border: none;
+  padding: 12px;
+  border-radius: 50px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+/* Google Button */
+.google-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid #ccc;
+  padding: 8px 18px;
+  border-radius: 50px;
+  margin: 20px 0;
+  cursor: pointer;
+  background: #fff;
+}
+.google-btn img {
+  width: 20px;
+  height: 20px;
+}
+
+/* Scrolling offers */
+.scrolling-offers {
+  font-weight: bold;
+  margin: 10px 0;
+}
+
+/* Footer */
+.footer {
+  color: #1E40AF;
+  font-size: 16px;
+  margin-top: auto;
+}
+/* Form Wrapper with border */
+.form-wrapper {
+  border: 2px solid #d1eaff;
+  border-radius: 15px;
+  padding: 20px;
+  background: #fff;
+  width: 100%;
+  max-width: 340px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+/* Tabs */
+.tab-buttons {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+  justify-content: center;
+}
+.tab-buttons button {
+  padding: 8px 18px;
+  border-radius: 8px;
+  border: 1px solid #1E40AF;
+  background: transparent;
+  color: #1E40AF;
+  font-weight: bold;
+  cursor: pointer;
+}
+.tab-buttons button.active {
+  background: #1E40AF;
+  color: #fff;
+}
+.profile-icon {
+  font-size: 35px;
+  color: #1E40AF;
+}

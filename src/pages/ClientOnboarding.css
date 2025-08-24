@@ -1,0 +1,307 @@
+html, body{
+  height:auto;
+  overflow:auto !important;
+}
+
+
+.onboard-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin:10px 40px;
+  
+}
+.actions{
+  display:flex;
+  gap:20px;
+  font-size:22px;
+  cursor:pointer;
+}
+
+.client-onboarding{
+  width:100%;
+/*  max-width:1024px;*/
+  margin:15px auto;
+  
+}
+form{
+  width:100%;
+  background:#fff;
+  padding:15px;
+  border-radius:6px;
+  display:flex;
+  flex-direction:column;
+  gap:15px;
+   
+}
+
+.form-row{
+  display:flex;
+  gap:10px;
+   flex-wrap:wrap;
+}
+input,select,textarea{
+  flex:1;
+  padding:8px;
+  font-size:14px;
+  border:1px solid #ccc;
+  border-radius:4px;
+}
+.phone-input{
+  display:flex;
+  gap:5px;
+}
+
+.upload-input-wrapper{
+  position:relative;
+  flex:0.49;
+}
+.upload-input-wrapper input[type='text']{
+  width:100%;
+  padding:8px 10px 8px 8px;
+  border:1px solid #ccc;
+  border-radius:4px;
+  cursor:pointer;
+}
+.upload-input-wrapper button{
+  position:absolute;
+  top:50%;
+  right:4px;
+  transform:translateY(-50%);
+  background: #244EE8;
+  color:white;
+  padding:6px 14px;
+  border:none;
+  border-radius:4px;
+  cursor:pointer;
+}
+
+.form-row input[name='billingTerms'],
+.form-row input[name='invoiceProcessing']{
+  flex:0.49;
+}
+
+.branch-buttons{
+  display:flex;
+  justify-content:flex-end;
+  gap:10px;
+}
+.branch-buttons button{
+  background:#fff;
+  border:1px solid #2196f3;
+  padding:6px 12px;
+  border-radius:4px;
+  cursor:pointer;
+  color: #1E38A8;
+  font-family: Lexend;
+  font-size: 16px;
+}
+
+.sla-section textarea{
+  width:100%;
+  height:60px;
+  margin-top: -20px;
+}
+
+
+ .submit-btn {
+  max-width: 200px;   /* prevents button from being too wide */
+  width: 100%;        /* button will adjust inside max-width */
+  display: flex;       /* button behaves like normal inline element */
+  margin: 25px auto;           /* centers it horizontally */
+  background: transparent !important;
+  padding-left: 10px;
+}
+.btn-wrapper {
+  display: grid !important;
+  place-items: center !important;
+  width: 100%;                 /* make sure wrapper spans full width */
+}
+.submit-btn button{
+  padding:8px 20px;
+  background:#2F4EE8;
+  color:#fff;
+  border:none;
+  border-radius:6px;
+  cursor:pointer;
+   outline: none;         /* button focus outline hatane ke liye */
+  box-shadow: none;  
+}
+.submit-btn button:hover,
+.submit-btn button:focus {
+  outline: none;
+  box-shadow: none;
+}
+/* Phone input height like other fields */
+.phone-field {
+  width: 100% !important;
+  height: 38px !important;
+  font-size:14px !important;
+}
+
+/* Remove padding issue around flag box */
+.react-tel-input .form-control {
+  width: 100% !important;
+  height: 38px !important;
+}
+/* Modal Overlay */
+.modal-overlay {
+  position: fixed;
+  top: 0; 
+  left: 0;
+  width: 100%; /* abhi full screen */
+  height: 100%;
+  background: rgba(0, 0, 0, 0.3); /* light transparency */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* Modal Content - small popup */
+.modal-content {
+/*  max-height: 85vh; */  /* screen height ka 85% */
+  min-height: auto;   /* unnecessary extra height hatao */
+   /*overflow-y: auto;*/
+  background: #fff;
+    padding: 20px;
+  border-radius: 12px;
+  /*width: 900px; *//* small width */
+  max-width: 90%;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  position: relative;
+  margin: 0;
+}
+
+.modal-header-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #1c9ba5;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 8px 8px 0 0;
+}
+.modal-header-bar h3 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.close-btn {
+  background: transparent;
+  border: none;
+  font-size: 22px;
+  color: white;
+  cursor: pointer;
+}
+.map-wrapper {
+  margin-top: 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+}
+.map-box {
+  height: 300px;   /* jitna chaahe badha */
+  width: 100%;      /* ya 100% */
+  max-width: 900px;  /* optional limit */
+  margin: auto;    /* center align */
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.selected-address-box {
+  margin-top: 12px;
+  padding: 10px;
+  background: #e6f5f5;
+  border: 1px solid #cdecec;
+  border-radius: 6px;
+  font-size: 14px;
+}
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 15px;
+}
+.btn-cancel {
+  background: #ddd;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.btn-select {
+  background: #1c9ba5;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+/* Floating Current Location Button */
+.current-location-btn {
+  position: absolute;
+  bottom: 15px;
+  right: 15px;
+  z-index: 1000;
+  background: white;
+  border: 2px solid #1c9ba5;
+  color: #1c9ba5;
+  font-size: 18px;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  box-shadow: 0px 2px 6px rgba(0,0,0,0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.current-location-btn:hover {
+  background: #1c9ba5;
+  color: white;
+}
+
+@media (max-width:768px){
+ 
+
+  .form-row > *{
+    flex:1 1 100%;
+    min-width:100%;
+  }
+
+  .upload-input-wrapper{
+    flex:1 1 100%;
+  }
+}
+@media(max-width:768px){
+  .form-row{
+    flex-wrap: wrap;
+  }
+  .form-row > *{
+    min-width:100%;
+    flex:1 1 100%;
+  }
+  
+}
+
+
+@media (max-width:768px){
+  .client-onboarding{
+    margin-left:0 !important;
+    width:100%;
+    padding:10px;
+    max-height:none;       /* <– don't restrict to 100vh */
+    overflow-y:visible;    /* <– allow normal scrolling */
+  }
+}
+@media (max-width: 768px) {
+  .btn-wrapper {
+    display: grid !important;
+    place-items: center !important;
+  }
+  .submit-btn {
+    margin: 25px auto 0 !important;
+  }
+}

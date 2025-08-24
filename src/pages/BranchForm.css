@@ -1,0 +1,178 @@
+body.modal-open {
+  overflow: hidden;
+}
+.form-container {
+  width: 100%;
+  max-width: 850px;       /* form ka width limit */
+  background: #fff;
+  border-radius: 12px;
+  padding: 20px 25px;
+  margin: 0;              /* 👈 yaha margin bilkul mat do */
+  max-height: 90vh;        /* ✅ height limit */
+  overflow-y: auto;        /* ✅ agar zyada fields ho to scroll */
+  box-sizing: border-box;
+  /*box-shadow: 0 6px 20px rgba(0,0,0,0.15);*/
+}
+.modal-overlay {
+  position: fixed;         /* screen pe chipka rahega */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.4); /* halka black background */
+  display: flex;
+  justify-content: center;
+  align-items: center;     /* 👈 vertical + horizontal dono center */
+  z-index: 9999;
+   padding: 10px;   
+   overflow: hidden;
+}
+.form-title {
+  margin-bottom: 15px;
+  font-size: 18px;
+  color: #2962ff;
+}
+
+.form-row-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+  margin-bottom: 15px;
+}
+
+.form-row-2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+  margin-bottom: 15px;
+}
+
+.form-row-1 {
+  display: grid;
+ grid-template-columns: 1fr;
+  margin-bottom: 15px;
+}
+
+.form-row-3 input,
+.form-row-2 input,
+.form-row-1 input {
+   flex: 1;
+  padding: 10px 12px;   /* left-right gap */
+  border: 1px solid #dce1ff;
+  border-radius: 6px;
+  outline: none;
+  font-size: 14px;
+}
+.row input{
+  width:100%;
+  height:40px;
+  padding:10px 12px;         /* placeholder spacing */
+  border:1px solid #dce1ff;
+  border-radius:6px;
+  font-size:14px;
+  outline:none;
+  box-sizing: border-box;
+}
+.phone-field {
+   width: 100% !important;
+  height: 40px !important;
+  border: 1px solid #dce1ff !important;
+  border-radius: 6px !important;
+  padding-left: 50px !important;  /* 👈 flag aur code ke baad gap */
+  font-size: 14px !important;
+  box-sizing: border-box !important;
+}
+.phone-wrapper {
+  flex: 1;   /* equal space le */
+}
+
+.react-tel-input .flag-dropdown {
+ border: none !important;
+  background: transparent !important;
+}
+.phone-field::placeholder {
+  color: #999;
+}
+.add-btn {
+  background: transparent;
+  color: #2962ff;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+  margin: 10px 0;
+}
+
+.add-btn:hover {
+  text-decoration: underline;
+}
+.clear-row {
+  text-align: center;      /* button ko center karne ke liye */
+  margin-top: 15px;
+}
+
+.clear-btn {
+  background-color: #ffeb3b;   /* yellow shade */
+  color: #333;                 /* text color */
+  font-weight: bold;
+  padding: 8px 20px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.clear-btn:hover {
+  background-color: #fdd835;   /* hover pe thoda dark yellow */
+  transform: translateY(-2px); /* thoda lift effect */
+}
+
+.submit-row {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.submit-btn {
+  background-color: #2962ff;
+  color: white;
+  width: 120px;
+  height: 36px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.submit-btn:hover {
+  background-color: #1c46b0;
+}
+
+/* ✅ Responsive Design */
+@media (max-width: 992px) {
+  .form-container {
+    max-width: 95%;
+    padding: 15px;
+  }
+}
+@media (max-width: 768px) {
+  .form-row-3,
+  .form-row-2 {
+     grid-template-columns: 1fr !important;
+  }
+  .form-title {
+    text-align: center;
+  }
+}
+@media (max-width: 480px) {
+  .form-container {
+    padding: 12px;
+    border-radius: 8px;
+  }
+  input, .phone-field {
+    font-size: 13px;
+    height: 34px !important;
+  }
+  .submit-btn {
+    width: 100%;   /* ✅ Mobile full width button */
+  }
+}
