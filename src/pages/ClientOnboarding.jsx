@@ -45,15 +45,27 @@ export default function ClientOnboarding() {
   const [branches, setBranches] = useState([]);
   const [showBranchForm, setShowBranchForm] = useState(false);
   const [showBranchList, setShowBranchList] = useState(false);
+   const [branchFormData, setBranchFormData] = useState(null);
 
-  // Map modal
   const [showMap, setShowMap] = useState(false);
   const [markerPos, setMarkerPos] = useState([20.5937, 78.9629]);
-   const [selectedAddress, setSelectedAddress] = useState("");
-  
+  const [selectedAddress, setSelectedAddress] = useState("");
+
   const handleChange = (e) => {
     const { name, value } = e.target;
-    if ((name === "billingTerms" || name === "invoiceProcessing") && !/^\d*$/.test(value)) return;
+    if (
+      (name === "billingTerms" || name === "invoiceProcessing") &&
+      !/^\d*$/.test(value)
+    )
+      return;
+    if (
+      ["clientName", "clientType", "accountManager", "state", "city"].includes(
+        name
+      ) &&
+      !/^[a-zA-Z\s]*$/.test(value)
+    ) {
+      return;
+    }
     setFormData({ ...formData, [name]: value });
   };
 
@@ -62,12 +74,24 @@ export default function ClientOnboarding() {
     if (!file) return;
 
     if (type === "logo") {
-      if (!file.type.startsWith("image/")) { alert("❌ Only image files allowed"); return; }
-      if (file.size > 1 * 1024 * 1024) { alert("❌ Max 1MB"); return; }
+      if (!file.type.startsWith("image/")) {
+        alert("❌ Only image files allowed");
+        return;
+      }
+      if (file.size > 1 * 1024 * 1024) {
+        alert("❌ Max 1MB");
+        return;
+      }
       setClientLogo(file);
     } else if (type === "contract") {
-      if (file.type !== "application/pdf") { alert("❌ Only PDF allowed"); return; }
-      if (file.size > 5 * 1024 * 1024) { alert("❌ Max 5MB"); return; }
+      if (file.type !== "application/pdf") {
+        alert("❌ Only PDF allowed");
+        return;
+      }
+      if (file.size > 5 * 1024 * 1024) {
+        alert("❌ Max 5MB");
+        return;
+      }
       setContractFile(file);
     }
   };
@@ -81,14 +105,33 @@ export default function ClientOnboarding() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (formData.contractEnd && formData.contractStart && formData.contractEnd < formData.contractStart) {
+    if (
+      formData.contractEnd &&
+      formData.contractStart &&
+      formData.contractEnd < formData.contractStart
+    ) {
       alert("❌ Contract End Date must be after Start Date!");
       return;
     }
     console.log(formData, clientLogo, contractFile, branches);
   };
+// Delete function
+const handleDeleteBranch = (index) => {
+  const updatedBranches = [...branches];
+  updatedBranches.splice(index, 1);
+  setBranches(updatedBranches);
+};
 
- useEffect(() => {
+// Edit function
+const handleEditBranch = (index) => {
+  const branchToEdit = branches[index];
+  setBranchFormData(branchToEdit);  // form me data bhar do
+  setBranches(branches.filter((_, i) => i !== index)); // purana remove karo
+  setShowBranchList(false); // list band karo
+  setShowBranchForm(true); // form open karo
+};
+
+  useEffect(() => {
     const fetchAddress = async () => {
       const [lat, lon] = markerPos;
       try {
@@ -104,7 +147,6 @@ export default function ClientOnboarding() {
     fetchAddress();
   }, [markerPos]);
 
-  // Save location into form
   const saveLocation = () => {
     setFormData((prev) => ({
       ...prev,
@@ -129,7 +171,6 @@ export default function ClientOnboarding() {
         searchLabel: " Search location...",
       });
 
-
       map.addControl(searchControl);
       map.on("geosearch/showlocation", (e) => {
         const { x, y } = e.location;
@@ -138,57 +179,55 @@ export default function ClientOnboarding() {
       return () => map.removeControl(searchControl);
     }, [map, setMarkerPos]);
 
+    const goToCurrentLocation = () => {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          (pos) => {
+            const { latitude, longitude } = pos.coords;
+            setMarkerPos([latitude, longitude]);
+            map.flyTo([latitude, longitude], 14);
+          },
+          (err) => alert("❌ Unable to fetch location: " + err.message),
+          { enableHighAccuracy: true }
+        );
+      } else {
+        alert("❌ Geolocation not supported in this browser!");
+      }
+    };
 
-        const goToCurrentLocation = () => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (pos) => {
-          const { latitude, longitude } = pos.coords;
-          setMarkerPos([latitude, longitude]);
-          map.flyTo([latitude, longitude], 14);
-        },
-        (err) => alert("❌ Unable to fetch location: " + err.message),
-        { enableHighAccuracy: true }
-      );
-    } else {
-      alert("❌ Geolocation not supported in this browser!");
-    }
-  };
-   return (
-    <>
-      <Marker
-        position={markerPos}
-        draggable={true}
-        eventHandlers={{
-          dragend: (e) =>
-            setMarkerPos([
-              e.target.getLatLng().lat,
-              e.target.getLatLng().lng,
-            ]),
-        }}
-      />
-
-      {/* Floating button for current location */}
-      <button
-        onClick={goToCurrentLocation}
-        style={{
-          position: "absolute",
-          top: "10px",
-          right: "10px",
-          zIndex: 1000,
-          background: "#1c9ba5",
-          color: "white",
-          border: "none",
-          padding: "6px 12px",
-          borderRadius: "6px",
-          cursor: "pointer",
-        }}
-      >
-        📍 
-      </button>
-    </>
-  );
-}
+    return (
+      <>
+        <Marker
+          position={markerPos}
+          draggable={true}
+          eventHandlers={{
+            dragend: (e) =>
+              setMarkerPos([
+                e.target.getLatLng().lat,
+                e.target.getLatLng().lng,
+              ]),
+          }}
+        />
+        <button
+          onClick={goToCurrentLocation}
+          style={{
+            position: "absolute",
+            top: "10px",
+            right: "10px",
+            zIndex: 1000,
+            background: "#1c9ba5",
+            color: "white",
+            border: "none",
+            padding: "6px 12px",
+            borderRadius: "6px",
+            cursor: "pointer",
+          }}
+        >
+          📍
+        </button>
+      </>
+    );
+  }
 
   return (
     <>
@@ -203,61 +242,186 @@ export default function ClientOnboarding() {
       <div className="client-onboarding">
         <form onSubmit={handleSubmit}>
           <div className="form-row">
-            <input type="text" name="clientName" placeholder="Client Name" value={formData.clientName} onChange={handleChange} />
-            <input type="text" name="clientType" placeholder="Client Type" value={formData.clientType} onChange={handleChange} />
+            <input
+              type="text"
+              name="clientName"
+              placeholder="Client Name"
+              value={formData.clientName}
+              onChange={handleChange}
+            />
+            <input
+              type="text"
+              name="clientType"
+              placeholder="Client Type"
+              value={formData.clientType}
+              onChange={handleChange}
+            />
           </div>
 
           <div className="form-row">
-            <input type="text" name="accountManager" placeholder="Account Manager" value={formData.accountManager} onChange={handleChange} />
+            <input
+              type="text"
+              name="accountManager"
+              placeholder="Account Manager"
+              value={formData.accountManager}
+              onChange={handleChange}
+            />
             <div style={{ flex: 1.1 }}>
-              <PhoneInput country={"us"} placeholder="Phone" value={formData.phone} onChange={(phone) => setFormData({ ...formData, phone })} inputClass="phone-field" />
+              <PhoneInput
+                country={"us"}
+                placeholder="Phone"
+                value={formData.phone}
+                onChange={(phone) => setFormData({ ...formData, phone })}
+                inputClass="phone-field"
+              />
             </div>
-            <input type="text" name="address" placeholder="Address" value={formData.address} readOnly onClick={() => setShowMap(true)} />
-            <input type="text" name="geoLocation" placeholder="Geo Location" value={formData.geoLocation} readOnly />
+            <input
+              type="text"
+              name="address"
+              placeholder="Address"
+              value={formData.address}
+              readOnly
+              onClick={() => setShowMap(true)}
+            />
+            <input
+              type="text"
+              name="geoLocation"
+              placeholder="Geo Location"
+              value={formData.geoLocation}
+              readOnly
+            />
           </div>
 
           <div className="form-row">
-            <input type="text" name="state" placeholder="State" value={formData.state} onChange={handleChange} />
-            <input type="text" name="city" placeholder="City" value={formData.city} onChange={handleChange} />
+            <input
+              type="text"
+              name="state"
+              placeholder="State"
+              value={formData.state}
+              onChange={handleChange}
+            />
+            <input
+              type="text"
+              name="city"
+              placeholder="City"
+              value={formData.city}
+              onChange={handleChange}
+            />
           </div>
 
           <div className="form-row">
-            <input type="number" name="billingTerms" placeholder="Billing Terms" value={formData.billingTerms} onChange={handleChange} />
+            <input
+              type="number"
+              name="billingTerms"
+              placeholder="Billing Terms Days"
+              value={formData.billingTerms}
+              onChange={handleChange}
+            />
             <div className="upload-input-wrapper">
-              <input type="text" placeholder="Upload Client Logo" readOnly value={clientLogo ? clientLogo.name : ""} onClick={() => document.getElementById("logoFile").click()} />
-              <input type="file" id="logoFile" style={{ display: "none" }} onChange={(e) => handleFileChange(e, "logo")} />
-              <button type="button" onClick={() => document.getElementById("logoFile").click()}>Upload</button>
+              <input
+                type="text"
+                placeholder="Upload Client Logo"
+                readOnly
+                value={clientLogo ? clientLogo.name : ""}
+                onClick={() => document.getElementById("logoFile").click()}
+              />
+              <input
+                type="file"
+                id="logoFile"
+                style={{ display: "none" }}
+                onChange={(e) => handleFileChange(e, "logo")}
+              />
+              <button
+                type="button"
+                onClick={() => document.getElementById("logoFile").click()}
+              >
+                Upload
+              </button>
             </div>
           </div>
 
           <div className="form-row">
-            <input type={!startFocus ? "text" : "date"} placeholder="Contract Start Date" name="contractStart" value={formData.contractStart} onChange={handleChange} onFocus={() => setStartFocus(true)} onBlur={() => setStartFocus(false)} />
-            <input type={!endFocus ? "text" : "date"} placeholder="Contract End Date" name="contractEnd" value={formData.contractEnd} min={formData.contractStart} onChange={handleChange} onFocus={() => setEndFocus(true)} onBlur={() => setEndFocus(false)} />
+            <input
+              type={!startFocus ? "text" : "date"}
+              placeholder="Contract Start Date"
+              name="contractStart"
+              value={formData.contractStart}
+              onChange={handleChange}
+              onFocus={() => setStartFocus(true)}
+              onBlur={() => setStartFocus(false)}
+            />
+            <input
+              type={!endFocus ? "text" : "date"}
+              placeholder="Contract End Date"
+              name="contractEnd"
+              value={formData.contractEnd}
+              min={formData.contractStart}
+              onChange={handleChange}
+              onFocus={() => setEndFocus(true)}
+              onBlur={() => setEndFocus(false)}
+            />
           </div>
 
           <div className="form-row">
-            <input type="number" name="invoiceProcessing" placeholder="Invoice Processing" value={formData.invoiceProcessing} onChange={handleChange} />
+            <input
+              type="number"
+              name="invoiceProcessing"
+              placeholder="Invoice Processing Days"
+              value={formData.invoiceProcessing}
+              onChange={handleChange}
+            />
             <div className="upload-input-wrapper">
-              <input type="text" placeholder="Contract Upload (PDF)" readOnly value={contractFile ? contractFile.name : ""} onClick={() => document.getElementById("contractFile").click()} />
-              <input type="file" id="contractFile" style={{ display: "none" }} onChange={(e) => handleFileChange(e, "contract")} />
-              <button type="button" onClick={() => document.getElementById("contractFile").click()}>Upload</button>
+              <input
+                type="text"
+                placeholder="Contract Upload (PDF)"
+                readOnly
+                value={contractFile ? contractFile.name : ""}
+                onClick={() => document.getElementById("contractFile").click()}
+              />
+              <input
+                type="file"
+                id="contractFile"
+                style={{ display: "none" }}
+                onChange={(e) => handleFileChange(e, "contract")}
+              />
+              <button
+                type="button"
+                onClick={() => document.getElementById("contractFile").click()}
+              >
+                Upload
+              </button>
             </div>
           </div>
 
           <div className="branch-buttons">
-            <button type="button" onClick={() => setShowBranchList(true)}>View Branches</button>
-            <button type="button" onClick={() => setShowBranchForm(true)}>Add Branch +</button>
+            <button type="button" onClick={() => setShowBranchList(true)}>
+              View Branches
+            </button>
+            <button type="button" onClick={() => setShowBranchForm(true)}>
+              Add Branch +
+            </button>
           </div>
 
           <div className="sla-section">
-            <label><b>SLA</b></label>
-            <textarea name="sla" value={formData.sla} onChange={handleChange} placeholder="SLA"></textarea>
+            <label>
+              <b>SLA</b>
+            </label>
+            <textarea
+              name="sla"
+              value={formData.sla}
+              onChange={handleChange}
+              placeholder="SLA"
+            ></textarea>
           </div>
 
           <div className="btn-wrapper">
-            <div className="submit-btn">
-              <button type="submit">Submit</button>
-              <button type="button" onClick={handleClear} style={{ marginLeft: "10px", background: "yellow" }}>Clear</button>
+            <div className="button-row">
+              <button type="submit" className="submit-btn">
+                Submit
+              </button>
+              <button type="button" className="clear-btn" onClick={handleClear}>
+                Clear
+              </button>
             </div>
           </div>
         </form>
@@ -267,9 +431,31 @@ export default function ClientOnboarding() {
       {showBranchForm && (
         <div className="modal-overlay">
           <div className="modal-content">
-            <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "15px" }}>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                marginBottom: "15px",
+              }}
+            >
               <h3>Add Branch</h3>
-              <button style={{ backgroundColor: "#f44336", color: "white", padding: "6px 15px", border: "none", borderRadius: "6px", cursor: "pointer" }} onClick={() => setShowBranchForm(false)}>Close</button>
+              <button
+                style={{
+                  backgroundColor: "#f44336",
+                  color: "white",
+                  padding: "10px 25px",
+                  minWidth: "100px",
+                  height: "40px",
+                  border: "none",
+                  borderRadius: "8px",
+                  cursor: "pointer",
+                  fontSize: "15px",
+                  fontWeight: "600",
+                }}
+                onClick={() => setShowBranchForm(false)}
+              >
+                Close
+              </button>
             </div>
             <BranchForm onAddBranch={handleAddBranch} />
           </div>
@@ -280,43 +466,122 @@ export default function ClientOnboarding() {
       {showBranchList && (
         <div className="modal-overlay">
           <div className="modal-content">
-            <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "15px" }}>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                marginBottom: "15px",
+              }}
+            >
               <h3>All Branches</h3>
-              <button style={{ backgroundColor: "#f44336", color: "white", padding: "6px 15px", border: "none", borderRadius: "6px", cursor: "pointer" }} onClick={() => setShowBranchList(false)}>Close</button>
+              <button
+                style={{
+                  backgroundColor: "#f44336",
+                  color: "white",
+                  padding: "10px 25px",
+                  minWidth: "100px",
+                  height: "40px",
+                  border: "none",
+                  borderRadius: "8px",
+                  cursor: "pointer",
+                  fontSize: "15px",
+                  fontWeight: "600",
+                }}
+                onClick={() => setShowBranchList(false)}
+              >
+                Close
+              </button>
             </div>
-            {branches.length === 0 ? <p>No branches added yet.</p> : <ul>{branches.map((b, i) => <li key={i}><b>{b.branchName}</b> - {b.branchPOC} ({b.phone})</li>)}</ul>}
+            {branches.length === 0 ? (
+              <p>No branches added yet.</p>
+            ) : (
+              <div className="branch-list-scroll">
+                <div className="branch-cards">
+                  {branches.map((branch, index) => (
+                    <div key={index} className="branch-card">
+                      <h3>{branch.branchName}</h3>
+                      <p>
+                        <strong>POC:</strong> {branch.branchPOC}
+                      </p>
+                      <p>
+                        <strong>Phone:</strong> {branch.phone}
+                      </p>
+                      <p>
+                        <strong>Store Phone:</strong> {branch.storePhone}
+                      </p>
+                      <p>
+                        <strong>Address:</strong> {branch.address}
+                      </p>
+                      <p>
+                        <strong>Geo:</strong> {branch.geoLocation}
+                      </p>
+                      <p>
+                        <strong>City:</strong> {branch.city}
+                      </p>
+
+                      <div>
+                        <strong>APIs:</strong>
+                        <ul>
+                          {branch.apis.map((api, i) => (
+                            <li key={i}>
+                              {api.apiName} → {api.apiUrl}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+
+
+                       {/* ✅ Edit & Delete Buttons */}
+    <div className="branch-actions">
+      <button 
+        className="edit-btn" 
+        onClick={() => handleEditBranch(index)}
+      >
+        Edit
+      </button>
+      <button 
+        className="delete-btn" 
+        onClick={() => handleDeleteBranch(index)}
+      >
+        Delete
+      </button>
+    </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
         </div>
       )}
 
       {/* Map Modal */}
-       {showMap && (
+      {showMap && (
         <div className="modal-overlay">
           <div className="modal-content location-modal">
-           <div className="modal-header-bar">
-        <h3>📍 Select Location</h3>
-        <button className="close-btn" onClick={() => setShowMap(false)}>×</button>
-      </div>
+            <div className="modal-header-bar">
+              <h3>📍 Select Location</h3>
+              <button className="close-btn" onClick={() => setShowMap(false)}>
+                ×
+              </button>
+            </div>
 
-             {/* Map with Search */}
-      <div className="map-wrapper">
-        <MapContainer
-          center={markerPos}
-          zoom={5}
-          style={{ height: "500px", borderRadius: "8px", width: "100%" }}
-        >
-          <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-          <MapSearch markerPos={markerPos} setMarkerPos={setMarkerPos} />
-        </MapContainer>
-      </div>
+            <div className="map-wrapper">
+              <MapContainer
+                center={markerPos}
+                zoom={5}
+                style={{ height: "500px", borderRadius: "8px", width: "100%" }}
+              >
+                <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+                <MapSearch markerPos={markerPos} setMarkerPos={setMarkerPos} />
+              </MapContainer>
+            </div>
 
-            {/* Selected Address */}
             <div className="selected-address">
               <b>Selected Location:</b>
               <p>{selectedAddress}</p>
             </div>
 
-            {/* Actions */}
             <div className="modal-actions">
               <button onClick={() => setShowMap(false)} className="btn-cancel">
                 Cancel

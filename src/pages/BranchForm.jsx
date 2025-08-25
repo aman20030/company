@@ -10,15 +10,24 @@ export default function BranchForm({ onAddBranch }) {
     phone: "",
     address: "",
     geoLocation: "",
-      address2: "",
+     city: "",
     storePhone: "",
     apis: [{ apiName: "", apiUrl: "" }],
   });
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setBranchData({ ...branchData, [name]: value });
-  };
+  const { name, value } = e.target;
+
+  // ✅ Only alphabets & spaces allowed for branchName, branchPOC & city
+  if (["branchName", "branchPOC", "city"].includes(name) && !/^[a-zA-Z\s]*$/.test(value)) {
+    return;
+  }
+   if (name === "geoLocation" && !/^[0-9.,]*$/.test(value)) {
+    return;
+  }
+
+  setBranchData({ ...branchData, [name]: value });
+};
 
   const handlePhoneChange = (value) => {
     setBranchData({ ...branchData, phone: value });
@@ -45,10 +54,20 @@ export default function BranchForm({ onAddBranch }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     onAddBranch(branchData);
+    handleClear(); // ✅ submit ke baad form reset
   };
-   const handleClear = () => {
-    window.location.reload();
-  };
+  const handleClear = () => {
+  setBranchData({
+    branchName: "",
+    branchPOC: "",
+    phone: "",
+    address: "",
+    geoLocation: "",
+    city: "",
+    storePhone: "",
+    apis: [{ apiName: "", apiUrl: "" }],
+  });
+};
   return (
     <form className="form-container" onSubmit={handleSubmit}>
       <h3 className="form-title">Add a Branch:</h3>
@@ -101,9 +120,9 @@ export default function BranchForm({ onAddBranch }) {
 <div className="form-row">
   <input
     type="text"
-    name="address"
-    placeholder="Address"
-    value={branchData.address}
+    name="city"
+    placeholder="City"
+    value={branchData.city}
     onChange={handleChange}
   />
   <div className="phone-wrapper">
@@ -142,22 +161,24 @@ export default function BranchForm({ onAddBranch }) {
       <button type="button" className="add-btn" onClick={addNewApi}>
         + Add New API
       </button>
-      {/* ✅ Clear Button niche add kiya */}
-        <div className="clear-row">
-  <button
-    type="button"
-    className="clear-btn"
-    onClick={handleClear}
-  >
-    Clear
-  </button>
-</div>
-      {/* Submit */}
-      <div className="submit-row">
-        <button type="submit" className="submit-btn">
+      
+           {/* ✅ Submit and Clear Buttons side by side */}
+      <div className="button-row">
+        <button
+          type="submit"
+          className="submit-btn"
+        >
           Submit
         </button>
+        <button
+          type="button"
+          className="clear-btn"
+          onClick={handleClear}
+        >
+          Clear
+        </button>
       </div>
+      
     </form>
   );
 }

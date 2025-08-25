@@ -1,16 +1,16 @@
 html, body{
   height:auto;
   overflow:auto !important;
+  padding-right: 25px;
 }
-
 
 .onboard-header{
   display:flex;
   justify-content:space-between;
   align-items:center;
   margin:10px 40px;
-  
 }
+
 .actions{
   display:flex;
   gap:20px;
@@ -20,10 +20,9 @@ html, body{
 
 .client-onboarding{
   width:100%;
-/*  max-width:1024px;*/
   margin:15px auto;
-  
 }
+
 form{
   width:100%;
   background:#fff;
@@ -32,14 +31,14 @@ form{
   display:flex;
   flex-direction:column;
   gap:15px;
-   
 }
 
 .form-row{
   display:flex;
   gap:10px;
-   flex-wrap:wrap;
+  flex-wrap:wrap;
 }
+
 input,select,textarea{
   flex:1;
   padding:8px;
@@ -47,6 +46,7 @@ input,select,textarea{
   border:1px solid #ccc;
   border-radius:4px;
 }
+
 .phone-input{
   display:flex;
   gap:5px;
@@ -56,6 +56,7 @@ input,select,textarea{
   position:relative;
   flex:0.49;
 }
+
 .upload-input-wrapper input[type='text']{
   width:100%;
   padding:8px 10px 8px 8px;
@@ -63,6 +64,7 @@ input,select,textarea{
   border-radius:4px;
   cursor:pointer;
 }
+
 .upload-input-wrapper button{
   position:absolute;
   top:50%;
@@ -86,6 +88,7 @@ input,select,textarea{
   justify-content:flex-end;
   gap:10px;
 }
+
 .branch-buttons button{
   background:#fff;
   border:1px solid #2196f3;
@@ -103,35 +106,88 @@ input,select,textarea{
   margin-top: -20px;
 }
 
-
- .submit-btn {
-  max-width: 200px;   /* prevents button from being too wide */
-  width: 100%;        /* button will adjust inside max-width */
-  display: flex;       /* button behaves like normal inline element */
-  margin: 25px auto;           /* centers it horizontally */
-  background: transparent !important;
-  padding-left: 10px;
-}
+/* ✅ Button Wrapper - Complete Transparent */
 .btn-wrapper {
-  display: grid !important;
-  place-items: center !important;
-  width: 100%;                 /* make sure wrapper spans full width */
+  background: none !important;
+  padding: 0 !important;
+  border: none !important;
+  display: flex !important;
+  justify-content: center !important;
+  gap: 15px !important;
+  width: 100% !important;
+  margin: 25px auto !important;
 }
-.submit-btn button{
-  padding:8px 20px;
-  background:#2F4EE8;
-  color:#fff;
-  border:none;
-  border-radius:6px;
-  cursor:pointer;
-   outline: none;         /* button focus outline hatane ke liye */
-  box-shadow: none;  
+
+/* ✅ Button Row - Complete Transparent */
+.button-row {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  gap: 15px !important;
+  margin: 25px auto !important;
+  padding: 0 !important;
+  background: none !important;
+  border: none !important;
+  box-shadow: none !important;
+  width: 100% !important;
 }
+
+/* ✅ Submit Button - Individual Styling Only */
+.submit-btn,
+.submit-btn button,
+button.submit-btn {
+  padding: 10px 25px !important;
+  background: #2F4EE8 !important;
+  color: #fff !important;
+  border: none !important;
+  border-radius: 6px !important;
+  cursor: pointer !important;
+  outline: none !important;
+  box-shadow: 0 2px 6px rgba(47, 78, 232, 0.3) !important;
+  font-size: 14px !important;
+  font-weight: bold !important;
+  min-width: 90px !important;
+  height: 40px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  margin: 0 !important;
+}
+
+.submit-btn:hover,
 .submit-btn button:hover,
-.submit-btn button:focus {
-  outline: none;
-  box-shadow: none;
+button.submit-btn:hover {
+  background: #1e3fd6 !important;
+  transform: translateY(-2px) !important;
 }
+
+/* ✅ Clear Button - Individual Styling Only */
+.clear-btn,
+button.clear-btn {
+  background: #ffeb3b !important;
+  color: #333 !important;
+  font-weight: bold !important;
+  padding: 10px 25px !important;
+  border: none !important;
+  border-radius: 6px !important;
+  cursor: pointer !important;
+  font-size: 14px !important;
+  outline: none !important;
+  box-shadow: 0 2px 6px rgba(255, 235, 59, 0.3) !important;
+  min-width: 90px !important;
+  height: 40px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  margin: 0 !important;
+}
+
+.clear-btn:hover,
+button.clear-btn:hover {
+  background: #fdd835 !important;
+  transform: translateY(-2px) !important;
+}
+
 /* Phone input height like other fields */
 .phone-field {
   width: 100% !important;
@@ -144,14 +200,15 @@ input,select,textarea{
   width: 100% !important;
   height: 38px !important;
 }
+
 /* Modal Overlay */
 .modal-overlay {
   position: fixed;
   top: 0; 
   left: 0;
-  width: 100%; /* abhi full screen */
+  width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.3); /* light transparency */
+  background: rgba(0, 0, 0, 0.3);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -160,13 +217,10 @@ input,select,textarea{
 
 /* Modal Content - small popup */
 .modal-content {
-/*  max-height: 85vh; */  /* screen height ka 85% */
-  min-height: auto;   /* unnecessary extra height hatao */
-   /*overflow-y: auto;*/
+  min-height: auto;
   background: #fff;
-    padding: 20px;
+  padding: 20px;
   border-radius: 12px;
-  /*width: 900px; *//* small width */
   max-width: 90%;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
   position: relative;
@@ -182,6 +236,7 @@ input,select,textarea{
   padding: 10px 15px;
   border-radius: 8px 8px 0 0;
 }
+
 .modal-header-bar h3 {
   margin: 0;
   font-size: 18px;
@@ -194,17 +249,19 @@ input,select,textarea{
   color: white;
   cursor: pointer;
 }
+
 .map-wrapper {
   margin-top: 10px;
   border: 1px solid #ddd;
   border-radius: 8px;
   overflow: hidden;
 }
+
 .map-box {
-  height: 300px;   /* jitna chaahe badha */
-  width: 100%;      /* ya 100% */
-  max-width: 900px;  /* optional limit */
-  margin: auto;    /* center align */
+  height: 300px;
+  width: 100%;
+  max-width: 900px;
+  margin: auto;
   border-radius: 10px;
   overflow: hidden;
 }
@@ -217,12 +274,14 @@ input,select,textarea{
   border-radius: 6px;
   font-size: 14px;
 }
+
 .modal-actions {
   display: flex;
   justify-content: flex-end;
   gap: 10px;
   margin-top: 15px;
 }
+
 .btn-cancel {
   background: #ddd;
   border: none;
@@ -230,6 +289,7 @@ input,select,textarea{
   border-radius: 6px;
   cursor: pointer;
 }
+
 .btn-select {
   background: #1c9ba5;
   color: white;
@@ -238,6 +298,7 @@ input,select,textarea{
   border-radius: 6px;
   cursor: pointer;
 }
+
 /* Floating Current Location Button */
 .current-location-btn {
   position: absolute;
@@ -263,9 +324,91 @@ input,select,textarea{
   color: white;
 }
 
-@media (max-width:768px){
- 
+.branch-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 15px;
+}
 
+.branch-card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 12px 16px;
+  background-color: #f9f9f9;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  transition: transform 0.2s ease-in-out;
+}
+
+.branch-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+
+.branch-card h4 {
+  margin: 0 0 8px 0;
+  color: #1c9ba5;
+}
+
+.branch-card p {
+  margin: 4px 0;
+  font-size: 14px;
+}
+/* ✅ Branch List Scrollable */
+.branch-list-scroll {
+  max-height: 400px;       /* fixed height */
+  overflow-y: auto;        /* vertical scroll */
+  padding-right: 10px;     /* avoid scrollbar overlap */
+}
+
+/* ✅ Scrollbar Style (optional for beauty) */
+.branch-list-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+
+.branch-list-scroll::-webkit-scrollbar-thumb {
+  background: #1c9ba5;
+  border-radius: 4px;
+}
+
+.branch-list-scroll::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+.branch-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.edit-btn {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.delete-btn {
+  background-color: #f44336;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.edit-btn:hover {
+  background-color: #45a049;
+}
+
+.delete-btn:hover {
+  background-color: #d32f2f;
+}
+
+@media (max-width:768px){
   .form-row > *{
     flex:1 1 100%;
     min-width:100%;
@@ -275,6 +418,7 @@ input,select,textarea{
     flex:1 1 100%;
   }
 }
+
 @media(max-width:768px){
   .form-row{
     flex-wrap: wrap;
@@ -283,25 +427,48 @@ input,select,textarea{
     min-width:100%;
     flex:1 1 100%;
   }
-  
 }
-
 
 @media (max-width:768px){
   .client-onboarding{
     margin-left:0 !important;
     width:100%;
     padding:10px;
-    max-height:none;       /* <– don't restrict to 100vh */
-    overflow-y:visible;    /* <– allow normal scrolling */
+    max-height:none;
+    overflow-y:visible;
   }
 }
+
 @media (max-width: 768px) {
   .btn-wrapper {
-    display: grid !important;
-    place-items: center !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    background: none !important;
+    gap: 12px !important;
+    margin: 25px auto !important;
+    padding: 0 !important;
   }
+  
+  .button-row {
+    flex-direction: column !important;
+    gap: 12px !important;
+    background: none !important;
+    padding: 0 !important;
+  }
+  
   .submit-btn {
-    margin: 25px auto 0 !important;
+    margin: 0 !important;
+    background: none !important;
+    width: auto !important;
+    padding: 0 !important;
+  }
+  
+  .submit-btn button,
+  button.submit-btn,
+  .clear-btn,
+  button.clear-btn {
+    min-width: 120px !important;
+    width: auto !important;
   }
 }
