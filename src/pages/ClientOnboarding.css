@@ -876,6 +876,66 @@ button.clear-btn:hover {
 
 
 
+/* Header actions for branch list modal */
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
 
+.add-branch-header-btn {
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: white;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.add-branch-header-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: translateY(-1px);
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.add-first-branch-btn {
+  background: linear-gradient(135deg, #2F4EE8, #1E3FD6);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+  margin-top: 20px;
+  transition: all 0.3s ease;
+}
+
+.add-first-branch-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(47, 78, 232, 0.3);
+}
+
+.branch-form-container {
+  padding: 0;
+  max-height: calc(85vh - 100px);
+  overflow-y: auto;
+}
+
+.store-phone-row {
+  display: flex;
+  margin-bottom: 15px;
+}
 
 

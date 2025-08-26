@@ -6,14 +6,14 @@ import Select from "react-select";
 import axios from "axios";
 import { FaEdit, FaTrash, FaTimes } from "react-icons/fa";
 
-export default function BranchForm({ onAddBranch }) {
+export default function BranchForm({ onAddBranch, initialData = null }) {
   const [branchData, setBranchData] = useState({
     branchName: "",
     branchPOC: "",
     phone: "",
     address: "",
     geoLocation: "",
-     country: "",
+    country: "",
     state: "",
     city: "",
     storePhone: "",
@@ -22,6 +22,22 @@ export default function BranchForm({ onAddBranch }) {
   const [countryOptions, setCountryOptions] = useState([]);
   const [stateOptions, setStateOptions] = useState([]);
   const [cityOptions, setCityOptions] = useState([]);
+
+  // Pre-fill form when editing
+  useEffect(() => {
+    if (initialData) {
+      setBranchData(initialData);
+      // If country is pre-selected, load states
+      if (initialData.country) {
+        loadStates(initialData.country);
+      }
+      // If state is pre-selected, load cities
+      if (initialData.country && initialData.state) {
+        loadCities(initialData.country, initialData.state);
+      }
+    }
+  }, [initialData]);
+
   useEffect(() => {
     axios
       .get("https://countriesnow.space/api/v0.1/countries")
@@ -32,44 +48,50 @@ export default function BranchForm({ onAddBranch }) {
       })
       .catch((err) => console.error("Country fetch error:", err));
   }, []);
-  useEffect(() => {
-    if (!branchData.country) return;
 
+  const loadStates = (country) => {
     axios
       .post("https://countriesnow.space/api/v0.1/countries/states", {
-        country: branchData.country,
+        country: country,
       })
       .then((res) => {
         setStateOptions(
           res.data.data.states.map((s) => ({ label: s.name, value: s.name }))
         );
-        setBranchData((prev) => ({ ...prev, state: "", city: "" })); // reset state & city
-        setCityOptions([]);
       })
       .catch((err) => console.error("State fetch error:", err));
-  }, [branchData.country]);
- // ✅ Load cities when state changes
-useEffect(() => {
-  if (!branchData.country || !branchData.state) return;
+  };
 
-  axios
-    .post("https://countriesnow.space/api/v0.1/countries/state/cities", {
-      country: branchData.country,
-      state: branchData.state,
-    })
-    .then((res) => {
-      setCityOptions(
-        res.data.data.map((city) => ({ label: city, value: city }))
-      );
-      setBranchData((prev) => ({ ...prev, city: "" })); // reset city
-    })
-    .catch((err) => console.error("City fetch error:", err));
-}, [branchData.state, branchData.country]);
+  const loadCities = (country, state) => {
+    axios
+      .post("https://countriesnow.space/api/v0.1/countries/state/cities", {
+        country: country,
+        state: state,
+      })
+      .then((res) => {
+        setCityOptions(
+          res.data.data.map((city) => ({ label: city, value: city }))
+        );
+      })
+      .catch((err) => console.error("City fetch error:", err));
+  };
+
+  useEffect(() => {
+    if (!branchData.country) return;
+    loadStates(branchData.country);
+    setBranchData((prev) => ({ ...prev, state: "", city: "" }));
+    setCityOptions([]);
+  }, [branchData.country]);
+
+  useEffect(() => {
+    if (!branchData.country || !branchData.state) return;
+    loadCities(branchData.country, branchData.state);
+    setBranchData((prev) => ({ ...prev, city: "" }));
+  }, [branchData.state, branchData.country]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
 
-    // ✅ Only alphabets & spaces allowed for branchName, branchPOC & city
     if (
       ["branchName", "branchPOC", "country", "state", "city"].includes(name) &&
       !/^[a-zA-Z\s]*$/.test(value)
@@ -91,7 +113,6 @@ useEffect(() => {
     setBranchData({ ...branchData, storePhone: value });
   };
 
-  // API fields handlers
   const handleApiChange = (index, field, value) => {
     const newApis = [...branchData.apis];
     newApis[index][field] = value;
@@ -104,15 +125,18 @@ useEffect(() => {
       apis: [...branchData.apis, { apiName: "", apiUrl: "" }],
     });
   };
-   const removeApi = (index) => {
+
+  const removeApi = (index) => {
     const newApis = branchData.apis.filter((_, i) => i !== index);
     setBranchData({ ...branchData, apis: newApis });
   };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     onAddBranch(branchData);
-    handleClear(); // ✅ submit ke baad form reset
+    handleClear();
   };
+
   const handleClear = () => {
     setBranchData({
       branchName: "",
@@ -120,6 +144,8 @@ useEffect(() => {
       phone: "",
       address: "",
       geoLocation: "",
+      country: "",
+      state: "",
       city: "",
       storePhone: "",
       apis: [{ apiName: "", apiUrl: "" }],
@@ -127,9 +153,10 @@ useEffect(() => {
     setStateOptions([]);
     setCityOptions([]);
   };
+
   return (
     <form className="form-container" onSubmit={handleSubmit}>
-      <h3 className="form-title">Add a Branch:</h3>
+      <h3 className="form-title">{initialData ? "Edit Branch:" : "Add a Branch:"}</h3>
 
       {/* Row 1 */}
       <div className="form-row-3">
@@ -187,7 +214,7 @@ useEffect(() => {
         </div>
       </div>
 
-      {/* Row 3 → Address + Store Phone Number ek hi line me */}
+      {/* Row 3 - Country, State, City */}
       <div className="form-row">
         <div className="input-group select-wrapper">
           <Select
@@ -204,7 +231,7 @@ useEffect(() => {
           />
           <label>Select Country</label>
         </div>
-         <div className="input-group select-wrapper">
+        <div className="input-group select-wrapper">
           <Select
             options={stateOptions}
             value={stateOptions.find((s) => s.value === branchData.state) || null}
@@ -218,8 +245,7 @@ useEffect(() => {
           />
           <label>Select State</label>
         </div>
-        
-          <div className="input-group select-wrapper">
+        <div className="input-group select-wrapper">
           <Select
             options={cityOptions}
             value={cityOptions.find((c) => c.value === branchData.city) || null}
@@ -233,17 +259,18 @@ useEffect(() => {
           />
           <label>Select City</label>
         </div>
-        
-        <div className="store-phone-row">
-          <div className="phone-input-wrapper">
-            <PhoneInput
-              country={"in"}
-              value={branchData.storePhone}
-              onChange={handleStorePhoneChange}
-              inputClass="phone-field"
-            />
-            <label>Store Phone Number</label>
-          </div>
+      </div>
+
+      {/* Store Phone Number - Separate Row */}
+      <div className="store-phone-row">
+        <div className="phone-input-wrapper">
+          <PhoneInput
+            country={"in"}
+            value={branchData.storePhone}
+            onChange={handleStorePhoneChange}
+            inputClass="phone-field"
+          />
+          <label>Store Phone Number</label>
         </div>
       </div>
 
@@ -270,7 +297,6 @@ useEffect(() => {
             />
             <label>API URL</label>
           </div>
-           {/* ❌ Close button for API remove */}
           {branchData.apis.length > 1 && (
             <button
               type="button"
@@ -287,10 +313,9 @@ useEffect(() => {
         + Add New API
       </button>
 
-      {/* ✅ Submit and Clear Buttons side by side */}
       <div className="button-row">
         <button type="submit" className="submit-btn">
-          Submit
+          {initialData ? "Update" : "Submit"}
         </button>
         <button type="button" className="clear-btn" onClick={handleClear}>
           Clear

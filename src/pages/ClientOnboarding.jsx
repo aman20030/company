@@ -11,7 +11,6 @@ import { OpenStreetMapProvider, GeoSearchControl } from "leaflet-geosearch";
 import "leaflet-geosearch/dist/geosearch.css";
 import { FaTimes } from "react-icons/fa";
 
-
 // Fix default marker icon
 delete L.Icon.Default.prototype._getIconUrl;
 L.Icon.Default.mergeOptions({
@@ -32,6 +31,7 @@ export default function ClientOnboarding() {
     geoLocation: "",
     state: "",
     city: "",
+    country: "",
     billingTerms: "",
     contractStart: "",
     contractEnd: "",
@@ -47,7 +47,7 @@ export default function ClientOnboarding() {
   const [branches, setBranches] = useState([]);
   const [showBranchForm, setShowBranchForm] = useState(false);
   const [showBranchList, setShowBranchList] = useState(false);
-   const [branchFormData, setBranchFormData] = useState(null);
+  const [branchFormData, setBranchFormData] = useState(null);
 
   const [showMap, setShowMap] = useState(false);
   const [markerPos, setMarkerPos] = useState([20.5937, 78.9629]);
@@ -61,7 +61,7 @@ export default function ClientOnboarding() {
     )
       return;
     if (
-      ["clientName", "clientType", "accountManager", "state", "city"].includes(
+      ["clientName", "clientType", "accountManager", "state", "city", "country"].includes(
         name
       ) &&
       !/^[a-zA-Z\s]*$/.test(value)
@@ -77,21 +77,21 @@ export default function ClientOnboarding() {
 
     if (type === "logo") {
       if (!file.type.startsWith("image/")) {
-        alert("❌ Only image files allowed");
+        alert("Only image files allowed");
         return;
       }
       if (file.size > 1 * 1024 * 1024) {
-        alert("❌ Max 1MB");
+        alert("Max 1MB");
         return;
       }
       setClientLogo(file);
     } else if (type === "contract") {
       if (file.type !== "application/pdf") {
-        alert("❌ Only PDF allowed");
+        alert("Only PDF allowed");
         return;
       }
       if (file.size > 5 * 1024 * 1024) {
-        alert("❌ Max 5MB");
+        alert("Max 5MB");
         return;
       }
       setContractFile(file);
@@ -101,6 +101,7 @@ export default function ClientOnboarding() {
   const handleAddBranch = (branchData) => {
     setBranches([...branches, branchData]);
     setShowBranchForm(false);
+    setBranchFormData(null);
   };
 
   const handleClear = () => window.location.reload();
@@ -112,26 +113,25 @@ export default function ClientOnboarding() {
       formData.contractStart &&
       formData.contractEnd < formData.contractStart
     ) {
-      alert("❌ Contract End Date must be after Start Date!");
+      alert("Contract End Date must be after Start Date!");
       return;
     }
     console.log(formData, clientLogo, contractFile, branches);
   };
-// Delete function
-const handleDeleteBranch = (index) => {
-  const updatedBranches = [...branches];
-  updatedBranches.splice(index, 1);
-  setBranches(updatedBranches);
-};
 
-// Edit function
-const handleEditBranch = (index) => {
-  const branchToEdit = branches[index];
-  setBranchFormData(branchToEdit);  // form me data bhar do
-  setBranches(branches.filter((_, i) => i !== index)); // purana remove karo
-  setShowBranchList(false); // list band karo
-  setShowBranchForm(true); // form open karo
-};
+  const handleDeleteBranch = (index) => {
+    const updatedBranches = [...branches];
+    updatedBranches.splice(index, 1);
+    setBranches(updatedBranches);
+  };
+
+  const handleEditBranch = (index) => {
+    const branchToEdit = branches[index];
+    setBranchFormData(branchToEdit);
+    setBranches(branches.filter((_, i) => i !== index));
+    setShowBranchList(false);
+    setShowBranchForm(true);
+  };
 
   useEffect(() => {
     const fetchAddress = async () => {
@@ -189,11 +189,11 @@ const handleEditBranch = (index) => {
             setMarkerPos([latitude, longitude]);
             map.flyTo([latitude, longitude], 14);
           },
-          (err) => alert("❌ Unable to fetch location: " + err.message),
+          (err) => alert("Unable to fetch location: " + err.message),
           { enableHighAccuracy: true }
         );
       } else {
-        alert("❌ Geolocation not supported in this browser!");
+        alert("Geolocation not supported in this browser!");
       }
     };
 
@@ -244,7 +244,7 @@ const handleEditBranch = (index) => {
       <div className="client-onboarding">
         <form onSubmit={handleSubmit}>
           <div className="form-row">
-           <div className="input-group">
+            <div className="input-group">
               <input
                 type="text"
                 name="clientName"
@@ -267,7 +267,7 @@ const handleEditBranch = (index) => {
           </div>
 
           <div className="form-row">
-             <div className="input-group">
+            <div className="input-group">
               <input
                 type="text"
                 name="accountManager"
@@ -278,17 +278,17 @@ const handleEditBranch = (index) => {
               <label>Account Manager</label>
             </div>
             <div style={{ flex: 1.1 }}>
-               <div className="input-group phone-input-group">
-              <PhoneInput
-                country={"us"}
-                value={formData.phone}
-                onChange={(phone) => setFormData({ ...formData, phone })}
-                inputClass="phone-field"
-              />
-              <label>Phone</label>
+              <div className="input-group phone-input-group">
+                <PhoneInput
+                  country={"us"}
+                  value={formData.phone}
+                  onChange={(phone) => setFormData({ ...formData, phone })}
+                  inputClass="phone-field"
+                />
+                <label>Phone</label>
+              </div>
             </div>
-            </div>
-             <div className="input-group">
+            <div className="input-group">
               <input
                 type="text"
                 name="address"
@@ -328,7 +328,7 @@ const handleEditBranch = (index) => {
               />
               <label>City</label>
             </div>
-             <div className="input-group country-input">
+            <div className="input-group country-input">
               <input
                 type="text"
                 name="country"
@@ -341,7 +341,7 @@ const handleEditBranch = (index) => {
           </div>
 
           <div className="form-row">
-             <div className="input-group">
+            <div className="input-group">
               <input
                 type="number"
                 name="billingTerms"
@@ -375,29 +375,29 @@ const handleEditBranch = (index) => {
           </div>
 
           <div className="form-row">
-              <div className="input-group">
-            <input
-              type={!startFocus ? "text" : "date"}
-              placeholder="Contract Start Date"
-              name="contractStart"
-              value={formData.contractStart}
-              onChange={handleChange}
-              onFocus={() => setStartFocus(true)}
-              onBlur={() => setStartFocus(false)}
-            />
-             <label>Contract Start Date</label>
+            <div className="input-group">
+              <input
+                type={!startFocus ? "text" : "date"}
+                placeholder="Contract Start Date"
+                name="contractStart"
+                value={formData.contractStart}
+                onChange={handleChange}
+                onFocus={() => setStartFocus(true)}
+                onBlur={() => setStartFocus(false)}
+              />
+              <label>Contract Start Date</label>
             </div>
-              <div className="input-group">
-            <input
-              type={!endFocus ? "text" : "date"}
-              placeholder="Contract End Date"
-              name="contractEnd"
-              value={formData.contractEnd}
-              min={formData.contractStart}
-              onChange={handleChange}
-              onFocus={() => setEndFocus(true)}
-              onBlur={() => setEndFocus(false)}
-            />
+            <div className="input-group">
+              <input
+                type={!endFocus ? "text" : "date"}
+                placeholder="Contract End Date"
+                name="contractEnd"
+                value={formData.contractEnd}
+                min={formData.contractStart}
+                onChange={handleChange}
+                onFocus={() => setEndFocus(true)}
+                onBlur={() => setEndFocus(false)}
+              />
               <label>Contract End Date</label>
             </div>
           </div>
@@ -440,7 +440,13 @@ const handleEditBranch = (index) => {
             <button type="button" onClick={() => setShowBranchList(true)}>
               View Branches
             </button>
-            <button type="button" onClick={() => setShowBranchForm(true)}>
+            <button
+              type="button"
+              onClick={() => {
+                setBranchFormData(null);
+                setShowBranchForm(true);
+              }}
+            >
               Add Branch +
             </button>
           </div>
@@ -474,33 +480,24 @@ const handleEditBranch = (index) => {
       {showBranchForm && (
         <div className="modal-overlay">
           <div className="modal-content">
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                marginBottom: "15px",
-              }}
-            >
-              <h3>Add Branch</h3>
+            <div className="modal-header-bar">
+              <h3>{branchFormData ? "Edit Branch" : "Add Branch"}</h3>
               <button
-                style={{
-                  backgroundColor: "#f44336",
-                  color: "white",
-                  padding: "10px 25px",
-                  minWidth: "10px",
-                  height: "40px",
-                  border: "none",
-                  borderRadius: "8px",
-                  cursor: "pointer",
-                  fontSize: "15px",
-                  fontWeight: "600",
+                className="close-btn"
+                onClick={() => {
+                  setShowBranchForm(false);
+                  setBranchFormData(null);
                 }}
-                onClick={() => setShowBranchForm(false)}
               >
-               <FaTimes />
+                <FaTimes />
               </button>
             </div>
-            <BranchForm onAddBranch={handleAddBranch} />
+            <div className="branch-form-container">
+              <BranchForm 
+                onAddBranch={handleAddBranch} 
+                initialData={branchFormData}
+              />
+            </div>
           </div>
         </div>
       )}
@@ -509,34 +506,42 @@ const handleEditBranch = (index) => {
       {showBranchList && (
         <div className="modal-overlay">
           <div className="modal-content">
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                marginBottom: "15px",
-              }}
-            >
+            <div className="modal-header-bar">
               <h3>All Branches</h3>
-              <button
-                style={{
-                  backgroundColor: "#f44336",
-                  color: "white",
-                  padding: "10px 20px",
-                  minWidth: "10px",
-                  height: "30px",
-                  border: "none",
-                  borderRadius: "8px",
-                  cursor: "pointer",
-                  fontSize: "10px",
-                  fontWeight: "600",
-                }}
-                onClick={() => setShowBranchList(false)}
-              >
-                <FaTimes />
-              </button>
+              <div className="header-actions">
+                <button
+                  className="add-branch-header-btn"
+                  onClick={() => {
+                    setShowBranchList(false);
+                    setBranchFormData(null);
+                    setShowBranchForm(true);
+                  }}
+                >
+                  + Add Branch
+                </button>
+                <button
+                  className="close-btn"
+                  onClick={() => setShowBranchList(false)}
+                >
+                  <FaTimes />
+                </button>
+              </div>
             </div>
+            
             {branches.length === 0 ? (
-              <p>No branches added yet.</p>
+              <div className="empty-state">
+                <p>No branches added yet.</p>
+                <button
+                  className="add-first-branch-btn"
+                  onClick={() => {
+                    setShowBranchList(false);
+                    setBranchFormData(null);
+                    setShowBranchForm(true);
+                  }}
+                >
+                  + Add First Branch
+                </button>
+              </div>
             ) : (
               <div className="branch-list-scroll">
                 <div className="branch-cards">
@@ -573,24 +578,22 @@ const handleEditBranch = (index) => {
                         </ul>
                       </div>
 
-
-                       {/* ✅ Edit & Delete Buttons */}
-    <div className="branch-actions">
-      <button 
-        className="edit-btn" 
-        onClick={() => handleEditBranch(index)}
-       title="Edit"
+                      <div className="branch-actions">
+                        <button 
+                          className="edit-btn" 
+                          onClick={() => handleEditBranch(index)}
+                          title="Edit"
                         >
                           <FaEdit />
-      </button>
-      <button 
-        className="delete-btn" 
-        onClick={() => handleDeleteBranch(index)}
-       title="Delete"
+                        </button>
+                        <button 
+                          className="delete-btn" 
+                          onClick={() => handleDeleteBranch(index)}
+                          title="Delete"
                         >
                           <FaTrash />
-      </button>
-    </div>
+                        </button>
+                      </div>
                     </div>
                   ))}
                 </div>
