@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./ClientOnboarding.css";
-import { FaBell, FaUserCircle } from "react-icons/fa";
+import { FaBell, FaUserCircle, FaEdit, FaTrash } from "react-icons/fa";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import BranchForm from "./BranchForm";
@@ -9,6 +9,8 @@ import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import { OpenStreetMapProvider, GeoSearchControl } from "leaflet-geosearch";
 import "leaflet-geosearch/dist/geosearch.css";
+import { FaTimes } from "react-icons/fa";
+
 
 // Fix default marker icon
 delete L.Icon.Default.prototype._getIconUrl;
@@ -326,6 +328,16 @@ const handleEditBranch = (index) => {
               />
               <label>City</label>
             </div>
+             <div className="input-group country-input">
+              <input
+                type="text"
+                name="country"
+                value={formData.country}
+                onChange={handleChange}
+                required
+              />
+              <label>Country</label>
+            </div>
           </div>
 
           <div className="form-row">
@@ -475,7 +487,7 @@ const handleEditBranch = (index) => {
                   backgroundColor: "#f44336",
                   color: "white",
                   padding: "10px 25px",
-                  minWidth: "100px",
+                  minWidth: "10px",
                   height: "40px",
                   border: "none",
                   borderRadius: "8px",
@@ -485,7 +497,7 @@ const handleEditBranch = (index) => {
                 }}
                 onClick={() => setShowBranchForm(false)}
               >
-                Close
+               <FaTimes />
               </button>
             </div>
             <BranchForm onAddBranch={handleAddBranch} />
@@ -509,18 +521,18 @@ const handleEditBranch = (index) => {
                 style={{
                   backgroundColor: "#f44336",
                   color: "white",
-                  padding: "10px 25px",
-                  minWidth: "100px",
-                  height: "40px",
+                  padding: "10px 20px",
+                  minWidth: "10px",
+                  height: "30px",
                   border: "none",
                   borderRadius: "8px",
                   cursor: "pointer",
-                  fontSize: "15px",
+                  fontSize: "10px",
                   fontWeight: "600",
                 }}
                 onClick={() => setShowBranchList(false)}
               >
-                Close
+                <FaTimes />
               </button>
             </div>
             {branches.length === 0 ? (
@@ -567,14 +579,16 @@ const handleEditBranch = (index) => {
       <button 
         className="edit-btn" 
         onClick={() => handleEditBranch(index)}
-      >
-        Edit
+       title="Edit"
+                        >
+                          <FaEdit />
       </button>
       <button 
         className="delete-btn" 
         onClick={() => handleDeleteBranch(index)}
-      >
-        Delete
+       title="Delete"
+                        >
+                          <FaTrash />
       </button>
     </div>
                     </div>

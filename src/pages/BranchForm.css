@@ -75,6 +75,34 @@ body.modal-open {
   outline:none;   
   box-sizing: border-box; 
 } 
+.api-row {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 15px;
+}
+
+.remove-api-btn {
+  background: #ff4d4d;
+  border: none;
+  color: white;
+  font-size: 16px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.remove-api-btn:hover {
+  background: #e60000;
+}
+
+
 
 .phone-field {    
   width: 100% !important;   
@@ -89,11 +117,24 @@ body.modal-open {
 .phone-wrapper {   
   flex: 1;   /* equal space le */ 
 }  
+/* react-select dropdown upar rahe */
+.react-select__menu {
+  z-index: 9999 !important;
+}
 
 .react-tel-input .flag-dropdown {  
   border: none !important;   
   background: transparent !important; 
 } 
+.react-tel-input .form-control {
+  width: 100% !important;
+  height: 42px !important;
+   padding-left: 70px !important;  /* flag ke liye jagah */
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 15px;
+  box-sizing: border-box;
+}
 
 .phone-field::placeholder {   
   color: #999; 
@@ -112,7 +153,35 @@ body.modal-open {
 .add-btn:hover {   
   text-decoration: underline; 
 } 
+.select-wrapper {
+  position: relative;
+}
 
+.select-wrapper label {
+  position: absolute;
+  top: -8px;
+  left: 10px;
+  font-size: 12px;
+  color: #2962ff;
+  background: #fff;
+  padding: 0 4px;
+  z-index: 10;
+}
+.react-select__control {
+  border: 1px solid #dce1ff !important;
+  border-radius: 6px !important;
+  min-height: 40px !important;
+  font-size: 14px !important;
+}
+
+.react-select__value-container {
+  padding: 2px 8px !important;
+}
+
+.react-select__placeholder {
+  color: #999 !important;
+  font-size: 13px !important;
+}
 /* ✅ Button Row - Clear aur Submit side by side - FIXED */
 .button-row {   
   display: flex !important;
@@ -229,4 +298,154 @@ body.modal-open {
     font-size: 13px;     
     height: 34px !important;   
   }    
+}
+
+
+
+
+
+
+
+
+/* ✅ Phone Input Wrapper - Same styling as other input groups */
+.phone-input-wrapper {
+  position: relative;
+  flex: 1;
+}
+
+.phone-input-wrapper label {
+  position: absolute;
+  top: -8px;
+  left: 10px;
+  font-size: 12px;
+  color: #2962ff;
+  background: #fff;
+  padding: 0 4px;
+  z-index: 10;
+  font-weight: normal;
+}
+
+/* ✅ Phone field styling - consistent with other inputs */
+.phone-field {
+  width: 100% !important;
+  height: 42px !important;
+  border: 1px solid #dce1ff !important;
+  border-radius: 6px !important;
+  padding-left: 70px !important;  /* flag ke liye jagah */
+  font-size: 14px !important;
+  box-sizing: border-box !important;
+  background: #fff !important;
+}
+
+/* ✅ React-tel-input container styling */
+.phone-input-wrapper .react-tel-input {
+  position: relative;
+  width: 100%;
+}
+
+.phone-input-wrapper .react-tel-input .form-control {
+  width: 100% !important;
+  height: 42px !important;
+  padding-left: 70px !important;
+  border: 1px solid #dce1ff !important;
+  border-radius: 6px !important;
+  font-size: 14px !important;
+  box-sizing: border-box !important;
+  background: #fff !important;
+}
+
+/* ✅ Flag dropdown styling */
+.phone-input-wrapper .react-tel-input .flag-dropdown {
+  border: none !important;
+  background: transparent !important;
+  position: absolute !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  left: 8px !important;
+  z-index: 5 !important;
+}
+
+/* ✅ Phone wrapper for the row layout */
+.phone-wrapper {
+  flex: 1;
+}
+
+/* ✅ Form row styling remains same */
+.form-row {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 15px;
+  align-items: flex-start;
+}
+.store-phone-row {
+  display: flex;
+  margin-bottom: 15px;
+}
+/* ✅ Input group common styling - make sure all labels look same */
+.input-group {
+  position: relative;
+  flex: 1;
+}
+
+.input-group label {
+  position: absolute;
+  top: -8px;
+  left: 10px;
+  font-size: 12px;
+  color: #2962ff;
+  background: #fff;
+  padding: 0 4px;
+  z-index: 10;
+  font-weight: normal;
+}
+
+.input-group input {
+  width: 100%;
+  height: 42px;
+  padding: 10px 12px;
+  border: 1px solid #dce1ff;
+  border-radius: 6px;
+  font-size: 14px;
+  outline: none;
+  box-sizing: border-box;
+  background: #fff;
+}
+
+/* ✅ Select wrapper styling */
+.select-wrapper {
+  position: relative;
+  flex: 1;
+}
+
+.select-wrapper label {
+  position: absolute;
+  top: -8px;
+  left: 10px;
+  font-size: 12px;
+  color: #2962ff;
+  background: #fff;
+  padding: 0 4px;
+  z-index: 10;
+  font-weight: normal;
+}
+
+.react-select__control {
+  border: 1px solid #dce1ff !important;
+  border-radius: 6px !important;
+  min-height: 42px !important;
+  font-size: 14px !important;
+  background: #fff !important;
+}
+
+/* ✅ Responsive design */
+@media (max-width: 768px) {
+  .form-row {
+    flex-direction: column;
+  }
+  
+  .phone-input-wrapper,
+  .phone-wrapper {
+    width: 100%;
+    flex: none;
+  }
 }

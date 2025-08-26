@@ -93,7 +93,7 @@ textarea {
   top: -8px;
   left: 8px;
   font-size: 12px;
-  color: #1c9ba5;
+  color: #2F4EE8;
 }
 
 /* ✅ Phone input group - same structure */
@@ -109,7 +109,7 @@ textarea {
   left: 8px;
   font-size: 12px;
   background: white;
-  color: #1c9ba5;
+  color: #2F4EE8;
   padding: 0 4px;
   z-index: 10;
 }
@@ -217,7 +217,11 @@ input[name="contractEnd"] {
   margin-top: 0;
   resize: vertical;
 }
-
+.city-input, 
+.country-input {
+  flex: 0.5;   /* ✅ Half width */
+  min-width: 150px;
+}
 /* ✅ Button Wrapper - Complete Transparent */
 .btn-wrapper {
   background: none !important;
@@ -473,6 +477,12 @@ button.clear-btn:hover {
 .delete-btn:hover {
   background-color: #d32f2f;
 }
+.city-input, 
+.country-input {
+  flex: 0.5;   /* ✅ Half width */
+  min-width: 150px;
+}
+
 
 /* ✅ Responsive Design */
 @media (max-width: 768px) {
@@ -525,3 +535,347 @@ button.clear-btn:hover {
     width: auto !important;
   }
 }
+
+
+
+
+/* ✅ Modal Overlay - Modern Design with better centering */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6));
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  backdrop-filter: blur(5px);
+  animation: fadeIn 0.3s ease;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* ✅ Modal Content - Much smaller height for better visibility */
+.modal-content {
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+  max-width: 85%;
+  max-height: 85vh;
+  width: 900px;
+  display: flex;
+  flex-direction: column;
+  animation: slideUp 0.4s ease;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  overflow: hidden;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* ✅ Modal Header - Professional */
+.modal-header-bar {
+  background: linear-gradient(135deg, #2F4EE8, #1E3FD6);
+  color: white;
+  padding: 20px 25px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.modal-header-bar h3 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.close-btn {
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  color: white;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.close-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(1.1);
+}
+
+/* ✅ Branch List Container - Much more conservative height */
+.branch-list-scroll {
+  flex: 1;
+  overflow-y: auto;
+  padding: 15px 20px 50px 20px;
+  background: #f8faff;
+  min-height: 0;
+  max-height: calc(85vh - 150px);
+}
+
+.branch-list-scroll::-webkit-scrollbar {
+  width: 8px;
+}
+
+.branch-list-scroll::-webkit-scrollbar-track {
+  background: #e0e7ff;
+  border-radius: 4px;
+}
+
+.branch-list-scroll::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #2F4EE8, #1E3FD6);
+  border-radius: 4px;
+}
+
+.branch-list-scroll::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, #1E3FD6, #0d2db8);
+}
+
+/* ✅ Branch Cards Grid */
+.branch-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 20px;
+}
+
+/* ✅ Individual Branch Card - Modern Design with extra bottom margin */
+.branch-card {
+  background: #ffffff;
+  border: 1px solid #e0e7ff;
+  border-radius: 12px;
+  padding: 20px;
+  position: relative;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(47, 78, 232, 0.08);
+  overflow: hidden;
+  margin-bottom: 30px;
+}
+
+.branch-card:last-child {
+  margin-bottom: 50px;
+}
+
+.branch-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(135deg, #2F4EE8, #1E3FD6);
+}
+
+.branch-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(47, 78, 232, 0.15);
+  border-color: #2F4EE8;
+}
+
+/* ✅ Branch Card Header */
+.branch-card h3 {
+  margin: 0 0 15px 0;
+  font-size: 18px;
+  font-weight: 700;
+  color: #1a202c;
+  padding-bottom: 8px;
+  border-bottom: 2px solid #e0e7ff;
+}
+
+/* ✅ Branch Info Styling */
+.branch-card p {
+  margin: 8px 0;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #4a5568;
+  display: flex;
+  align-items: center;
+}
+
+.branch-card p strong {
+  color: #2d3748;
+  font-weight: 600;
+  min-width: 80px;
+  margin-right: 10px;
+}
+
+/* ✅ API List Styling */
+.branch-card div {
+  margin-top: 15px;
+}
+
+.branch-card div strong {
+  color: #2F4EE8;
+  font-weight: 600;
+  font-size: 15px;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.branch-card ul {
+  margin: 8px 0 0 0;
+  padding-left: 0;
+  list-style: none;
+}
+
+.branch-card li {
+  background: #f7faff;
+  border: 1px solid #e0e7ff;
+  border-radius: 6px;
+  padding: 8px 12px;
+  margin-bottom: 6px;
+  font-size: 13px;
+  color: #4a5568;
+  transition: all 0.2s ease;
+}
+
+.branch-card li:hover {
+  background: #eef2ff;
+  border-color: #2F4EE8;
+}
+
+.branch-card li::before {
+  content: '🔗';
+  margin-right: 8px;
+}
+
+/* ✅ Branch Actions - Modern Buttons */
+.branch-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 20px;
+  padding-top: 15px;
+  border-top: 1px solid #e0e7ff;
+}
+
+.edit-btn,
+.delete-btn {
+  border: none;
+  padding: 10px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 45px;
+  height: 40px;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.edit-btn {
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: white;
+}
+
+.edit-btn:hover {
+  background: linear-gradient(135deg, #059669, #047857);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+}
+
+.delete-btn {
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+  color: white;
+}
+
+.delete-btn:hover {
+  background: linear-gradient(135deg, #dc2626, #b91c1c);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+}
+
+/* ✅ Empty State */
+.modal-content p {
+  text-align: center;
+  font-size: 16px;
+  color: #6b7280;
+  margin: 40px 0;
+  font-style: italic;
+}
+
+/* ✅ Responsive Design */
+@media (max-width: 768px) {
+  .modal-content {
+    width: 95%;
+    margin: 10px;
+    max-height: 85vh;
+  }
+
+  .branch-cards {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+
+  .branch-card {
+    padding: 15px;
+  }
+
+  .branch-list-scroll {
+    padding: 15px;
+    max-height: 400px;
+  }
+
+  .modal-header-bar {
+    padding: 15px 20px;
+  }
+
+  .modal-header-bar h3 {
+    font-size: 18px;
+  }
+
+  .branch-actions {
+    gap: 8px;
+  }
+
+  .edit-btn,
+  .delete-btn {
+    padding: 8px 12px;
+    min-width: 40px;
+    height: 36px;
+  }
+}
+
+/* ✅ Loading State Animation */
+@keyframes shimmer {
+  0% { background-position: -200px 0; }
+  100% { background-position: calc(200px + 100%) 0; }
+}
+
+.branch-card.loading {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200px 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+
+
+
+
+
