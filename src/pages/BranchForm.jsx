@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import "./BranchForm.css";
+import Select from "react-select";
+import axios from "axios";
 
 export default function BranchForm({ onAddBranch }) {
   const [branchData, setBranchData] = useState({
@@ -14,7 +16,19 @@ export default function BranchForm({ onAddBranch }) {
     storePhone: "",
     apis: [{ apiName: "", apiUrl: "" }],
   });
-
+  const [cityOptions, setCityOptions] = useState([]);
+  useEffect(() => {
+    axios
+      .post("https://countriesnow.space/api/v0.1/countries/cities", {
+        country: "India",
+      })
+      .then((res) => {
+        setCityOptions(
+          res.data.data.map((city) => ({ label: city, value: city }))
+        );
+      })
+      .catch((err) => console.error("City fetch error:", err));
+  }, []);
   const handleChange = (e) => {
   const { name, value } = e.target;
 
@@ -118,13 +132,16 @@ export default function BranchForm({ onAddBranch }) {
       
       {/* Row 3 → Address + Store Phone Number ek hi line me */}
 <div className="form-row">
-  <input
-    type="text"
-    name="city"
-    placeholder="City"
-    value={branchData.city}
-    onChange={handleChange}
-  />
+     <Select
+          options={cityOptions}
+          value={cityOptions.find((c) => c.value === branchData.city) || null}
+          onChange={(option) =>
+            setBranchData({ ...branchData, city: option.value })
+          }
+          placeholder="Select City"
+          isSearchable
+          className="city-dropdown"
+        />
   <div className="phone-wrapper">
     <PhoneInput
       country={"in"}

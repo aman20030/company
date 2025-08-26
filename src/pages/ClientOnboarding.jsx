@@ -242,47 +242,60 @@ const handleEditBranch = (index) => {
       <div className="client-onboarding">
         <form onSubmit={handleSubmit}>
           <div className="form-row">
-            <input
-              type="text"
-              name="clientName"
-              placeholder="Client Name"
-              value={formData.clientName}
-              onChange={handleChange}
-            />
-            <input
-              type="text"
-              name="clientType"
-              placeholder="Client Type"
-              value={formData.clientType}
-              onChange={handleChange}
-            />
+           <div className="input-group">
+              <input
+                type="text"
+                name="clientName"
+                value={formData.clientName}
+                onChange={handleChange}
+                required
+              />
+              <label>Client Name</label>
+            </div>
+            <div className="input-group">
+              <input
+                type="text"
+                name="clientType"
+                value={formData.clientType}
+                onChange={handleChange}
+                required
+              />
+              <label>Client Type</label>
+            </div>
           </div>
 
           <div className="form-row">
-            <input
-              type="text"
-              name="accountManager"
-              placeholder="Account Manager"
-              value={formData.accountManager}
-              onChange={handleChange}
-            />
+             <div className="input-group">
+              <input
+                type="text"
+                name="accountManager"
+                value={formData.accountManager}
+                onChange={handleChange}
+                required
+              />
+              <label>Account Manager</label>
+            </div>
             <div style={{ flex: 1.1 }}>
+               <div className="input-group phone-input-group">
               <PhoneInput
                 country={"us"}
-                placeholder="Phone"
                 value={formData.phone}
                 onChange={(phone) => setFormData({ ...formData, phone })}
                 inputClass="phone-field"
               />
+              <label>Phone</label>
             </div>
-            <input
-              type="text"
-              name="address"
-              placeholder="Address"
-              value={formData.address}
-              readOnly
-              onClick={() => setShowMap(true)}
-            />
+            </div>
+             <div className="input-group">
+              <input
+                type="text"
+                name="address"
+                value={formData.address}
+                readOnly
+                onClick={() => setShowMap(true)}
+              />
+              <label>Address</label>
+            </div>
             <input
               type="text"
               name="geoLocation"
@@ -293,30 +306,39 @@ const handleEditBranch = (index) => {
           </div>
 
           <div className="form-row">
-            <input
-              type="text"
-              name="state"
-              placeholder="State"
-              value={formData.state}
-              onChange={handleChange}
-            />
-            <input
-              type="text"
-              name="city"
-              placeholder="City"
-              value={formData.city}
-              onChange={handleChange}
-            />
+            <div className="input-group">
+              <input
+                type="text"
+                name="state"
+                value={formData.state}
+                onChange={handleChange}
+                required
+              />
+              <label>State</label>
+            </div>
+            <div className="input-group">
+              <input
+                type="text"
+                name="city"
+                value={formData.city}
+                onChange={handleChange}
+                required
+              />
+              <label>City</label>
+            </div>
           </div>
 
           <div className="form-row">
-            <input
-              type="number"
-              name="billingTerms"
-              placeholder="Billing Terms Days"
-              value={formData.billingTerms}
-              onChange={handleChange}
-            />
+             <div className="input-group">
+              <input
+                type="number"
+                name="billingTerms"
+                value={formData.billingTerms}
+                onChange={handleChange}
+                required
+              />
+              <label>Billing Terms (Days)</label>
+            </div>
             <div className="upload-input-wrapper">
               <input
                 type="text"
@@ -341,6 +363,7 @@ const handleEditBranch = (index) => {
           </div>
 
           <div className="form-row">
+              <div className="input-group">
             <input
               type={!startFocus ? "text" : "date"}
               placeholder="Contract Start Date"
@@ -350,6 +373,9 @@ const handleEditBranch = (index) => {
               onFocus={() => setStartFocus(true)}
               onBlur={() => setStartFocus(false)}
             />
+             <label>Contract Start Date</label>
+            </div>
+              <div className="input-group">
             <input
               type={!endFocus ? "text" : "date"}
               placeholder="Contract End Date"
@@ -360,16 +386,21 @@ const handleEditBranch = (index) => {
               onFocus={() => setEndFocus(true)}
               onBlur={() => setEndFocus(false)}
             />
+              <label>Contract End Date</label>
+            </div>
           </div>
 
           <div className="form-row">
-            <input
-              type="number"
-              name="invoiceProcessing"
-              placeholder="Invoice Processing Days"
-              value={formData.invoiceProcessing}
-              onChange={handleChange}
-            />
+            <div className="input-group">
+              <input
+                type="number"
+                name="invoiceProcessing"
+                value={formData.invoiceProcessing}
+                onChange={handleChange}
+                required
+              />
+              <label>Invoice Processing Days</label>
+            </div>
             <div className="upload-input-wrapper">
               <input
                 type="text"

@@ -35,75 +35,187 @@ form{
 
 .form-row{
   display:flex;
-  gap:10px;
+  gap:15px; /* ✅ Consistent gap */
   flex-wrap:wrap;
+  align-items: flex-end; /* ✅ Align all items to bottom */
 }
 
-input,select,textarea{
-  flex:1;
-  padding:8px;
-  font-size:14px;
-  border:1px solid #ccc;
-  border-radius:4px;
+/* ✅ Base input styling - ALL inputs same height */
+input, select, textarea{
+  padding: 12px 10px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  outline: none;
+  box-sizing: border-box;
+  height: 44px; /* ✅ Fixed height for all inputs */
 }
 
-.phone-input{
-  display:flex;
-  gap:5px;
+textarea {
+  height: 80px; /* Exception for textarea */
+  resize: vertical;
 }
 
+.input-group {
+  position: relative;
+  flex: 1;
+  min-width: 200px; /* ✅ Minimum width for consistency */
+}
+
+.input-group input {
+  width: 100%;
+  padding: 12px 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  outline: none;
+  font-size: 14px;
+  background: white;
+  height: 44px; /* ✅ Same height as other inputs */
+  box-sizing: border-box;
+}
+
+.input-group label {
+  position: absolute;
+  left: 12px;
+  top: 12px;
+  color: #888;
+  font-size: 14px;
+  background: white;
+  transition: 0.2s ease all;
+  padding: 0 4px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.input-group input:focus + label,
+.input-group input:valid + label,
+.input-group input:not(:placeholder-shown) + label {
+  top: -8px;
+  left: 8px;
+  font-size: 12px;
+  color: #1c9ba5;
+}
+
+/* ✅ Phone input group - same structure */
+.phone-input-group {
+  flex: 1;
+  position: relative;
+  min-width: 200px;
+}
+
+.phone-input-group label {
+  position: absolute;
+  top: -8px;
+  left: 8px;
+  font-size: 12px;
+  background: white;
+  color: #1c9ba5;
+  padding: 0 4px;
+  z-index: 10;
+}
+
+/* ✅ Phone field styling to match other inputs */
+.phone-field {
+  width: 100% !important;
+  height: 44px !important;
+  font-size: 14px !important;
+  border: 1px solid #ccc !important;
+  border-radius: 6px !important;
+  box-sizing: border-box !important;
+}
+
+.react-tel-input .form-control {
+  width: 100% !important;
+  height: 44px !important;
+  border: 1px solid #ccc !important;
+  border-radius: 6px !important;
+}
+
+/* ✅ Upload input wrapper - consistent with other inputs */
 .upload-input-wrapper{
-  position:relative;
-  flex:0.49;
+  position: relative;
+  flex: 1;
+  min-width: 200px;
+  height: 44px; /* ✅ Same height container */
 }
 
 .upload-input-wrapper input[type='text']{
-  width:100%;
-  padding:8px 10px 8px 8px;
-  border:1px solid #ccc;
-  border-radius:4px;
-  cursor:pointer;
+  width: 100%;
+  padding: 12px 80px 12px 12px; /* ✅ Space for button */
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  cursor: pointer;
+  height: 44px;
+  box-sizing: border-box;
+  font-size: 14px;
 }
 
 .upload-input-wrapper button{
-  position:absolute;
-  top:50%;
-  right:4px;
-  transform:translateY(-50%);
+  position: absolute;
+  top: 50%;
+  right: 4px;
+  transform: translateY(-50%);
   background: #244EE8;
-  color:white;
-  padding:6px 14px;
-  border:none;
-  border-radius:4px;
-  cursor:pointer;
+  color: white;
+  padding: 6px 14px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+  height: 32px;
 }
 
-.form-row input[name='billingTerms'],
-.form-row input[name='invoiceProcessing']{
-  flex:0.49;
+/* ✅ Standalone inputs without input-group */
+input[name='geoLocation'] {
+  flex: 0.8;
+  min-width: 150px;
+  height: 44px;
+  padding: 12px 10px;
+  font-size: 14px;
+}
+
+/* ✅ Date inputs - consistent styling */
+input[type="date"],
+input[name="contractStart"],
+input[name="contractEnd"] {
+  height: 44px !important;
+  padding: 12px 10px !important;
 }
 
 .branch-buttons{
-  display:flex;
-  justify-content:flex-end;
-  gap:10px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 10px;
 }
 
 .branch-buttons button{
-  background:#fff;
-  border:1px solid #2196f3;
-  padding:6px 12px;
-  border-radius:4px;
-  cursor:pointer;
+  background: #fff;
+  border: 1px solid #2196f3;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
   color: #1E38A8;
   font-family: Lexend;
   font-size: 16px;
+  height: 40px;
+}
+
+.sla-section {
+  margin-top: 10px;
+}
+
+.sla-section label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
 }
 
 .sla-section textarea{
-  width:100%;
-  height:60px;
-  margin-top: -20px;
+  width: 100%;
+  height: 80px;
+  margin-top: 0;
+  resize: vertical;
 }
 
 /* ✅ Button Wrapper - Complete Transparent */
@@ -188,19 +300,6 @@ button.clear-btn:hover {
   transform: translateY(-2px) !important;
 }
 
-/* Phone input height like other fields */
-.phone-field {
-  width: 100% !important;
-  height: 38px !important;
-  font-size:14px !important;
-}
-
-/* Remove padding issue around flag box */
-.react-tel-input .form-control {
-  width: 100% !important;
-  height: 38px !important;
-}
-
 /* Modal Overlay */
 .modal-overlay {
   position: fixed;
@@ -257,16 +356,7 @@ button.clear-btn:hover {
   overflow: hidden;
 }
 
-.map-box {
-  height: 300px;
-  width: 100%;
-  max-width: 900px;
-  margin: auto;
-  border-radius: 10px;
-  overflow: hidden;
-}
-
-.selected-address-box {
+.selected-address {
   margin-top: 12px;
   padding: 10px;
   background: #e6f5f5;
@@ -299,34 +389,9 @@ button.clear-btn:hover {
   cursor: pointer;
 }
 
-/* Floating Current Location Button */
-.current-location-btn {
-  position: absolute;
-  bottom: 15px;
-  right: 15px;
-  z-index: 1000;
-  background: white;
-  border: 2px solid #1c9ba5;
-  color: #1c9ba5;
-  font-size: 18px;
-  border-radius: 50%;
-  width: 40px;
-  height: 40px;
-  cursor: pointer;
-  box-shadow: 0px 2px 6px rgba(0,0,0,0.2);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.current-location-btn:hover {
-  background: #1c9ba5;
-  color: white;
-}
-
 .branch-cards {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 15px;
 }
 
@@ -344,7 +409,7 @@ button.clear-btn:hover {
   box-shadow: 0 4px 10px rgba(0,0,0,0.15);
 }
 
-.branch-card h4 {
+.branch-card h3 {
   margin: 0 0 8px 0;
   color: #1c9ba5;
 }
@@ -353,14 +418,14 @@ button.clear-btn:hover {
   margin: 4px 0;
   font-size: 14px;
 }
+
 /* ✅ Branch List Scrollable */
 .branch-list-scroll {
-  max-height: 400px;       /* fixed height */
-  overflow-y: auto;        /* vertical scroll */
-  padding-right: 10px;     /* avoid scrollbar overlap */
+  max-height: 400px;
+  overflow-y: auto;
+  padding-right: 10px;
 }
 
-/* ✅ Scrollbar Style (optional for beauty) */
 .branch-list-scroll::-webkit-scrollbar {
   width: 6px;
 }
@@ -373,6 +438,7 @@ button.clear-btn:hover {
 .branch-list-scroll::-webkit-scrollbar-track {
   background: #f1f1f1;
 }
+
 .branch-actions {
   display: flex;
   justify-content: flex-end;
@@ -408,38 +474,32 @@ button.clear-btn:hover {
   background-color: #d32f2f;
 }
 
-@media (max-width:768px){
-  .form-row > *{
-    flex:1 1 100%;
-    min-width:100%;
-  }
-
-  .upload-input-wrapper{
-    flex:1 1 100%;
-  }
-}
-
-@media(max-width:768px){
-  .form-row{
-    flex-wrap: wrap;
-  }
-  .form-row > *{
-    min-width:100%;
-    flex:1 1 100%;
-  }
-}
-
-@media (max-width:768px){
-  .client-onboarding{
-    margin-left:0 !important;
-    width:100%;
-    padding:10px;
-    max-height:none;
-    overflow-y:visible;
-  }
-}
-
+/* ✅ Responsive Design */
 @media (max-width: 768px) {
+  .form-row {
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .form-row > * {
+    flex: 1 1 100%;
+    min-width: 100%;
+  }
+
+  .input-group,
+  .phone-input-group,
+  .upload-input-wrapper {
+    min-width: 100%;
+  }
+
+  .client-onboarding {
+    margin-left: 0 !important;
+    width: 100%;
+    padding: 10px;
+    max-height: none;
+    overflow-y: visible;
+  }
+
   .btn-wrapper {
     display: flex !important;
     flex-direction: column !important;
@@ -454,13 +514,6 @@ button.clear-btn:hover {
     flex-direction: column !important;
     gap: 12px !important;
     background: none !important;
-    padding: 0 !important;
-  }
-  
-  .submit-btn {
-    margin: 0 !important;
-    background: none !important;
-    width: auto !important;
     padding: 0 !important;
   }
   
