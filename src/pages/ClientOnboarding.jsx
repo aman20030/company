@@ -9,6 +9,7 @@ import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import { OpenStreetMapProvider, GeoSearchControl } from "leaflet-geosearch";
 import "leaflet-geosearch/dist/geosearch.css";
+import axios from "axios";
 
 // Fix default marker icon
 delete L.Icon.Default.prototype._getIconUrl;
@@ -52,24 +53,67 @@ export default function ClientOnboarding() {
   const [markerPos, setMarkerPos] = useState([20.5937, 78.9629]);
   const [selectedAddress, setSelectedAddress] = useState("");
 
+  // 🌍 Country → State → City data
+  const [countries, setCountries] = useState([]);
+  const [states, setStates] = useState([]);
+  const [cities, setCities] = useState([]);
+
+  // Load countries
+  useEffect(() => {
+    axios.get("https://countriesnow.space/api/v0.1/countries")
+      .then(res => {
+        setCountries(res.data.data.map(c => c.country));
+      })
+      .catch(err => console.error("Country fetch error:", err));
+  }, []);
+
+  // When country changes → fetch states
+  const handleCountryChange = async (e) => {
+    const country = e.target.value;
+    setFormData({ ...formData, country, state: "", city: "" });
+    setCities([]);
+    try {
+      const res = await axios.post("https://countriesnow.space/api/v0.1/countries/states", {
+        country
+      });
+      setStates(res.data.data.states.map(s => s.name));
+    } catch (err) {
+      console.error("State fetch error:", err);
+    }
+  };
+
+  // When state changes → fetch cities
+  const handleStateChange = async (e) => {
+    const state = e.target.value;
+    setFormData({ ...formData, state, city: "" });
+    try {
+      const res = await axios.post("https://countriesnow.space/api/v0.1/countries/state/cities", {
+        country: formData.country,
+        state
+      });
+      setCities(res.data.data);
+    } catch (err) {
+      console.error("City fetch error:", err);
+    }
+  };
+
+  // When city changes
+  const handleCityChange = (e) => {
+    setFormData({ ...formData, city: e.target.value });
+  };
+
+  // Handle normal input change
   const handleChange = (e) => {
     const { name, value } = e.target;
     if (
       (name === "billingTerms" || name === "invoiceProcessing") &&
       !/^\d*$/.test(value)
-    )
-      return;
-    if (
-      ["clientName", "clientType", "accountManager", "state", "city", "country"].includes(
-        name
-      ) &&
-      !/^[a-zA-Z\s]*$/.test(value)
-    ) {
-      return;
-    }
+    ) return;
+
     setFormData({ ...formData, [name]: value });
   };
 
+  // File Upload
   const handleFileChange = (e, type) => {
     const file = e.target.files[0];
     if (!file) return;
@@ -97,10 +141,25 @@ export default function ClientOnboarding() {
     }
   };
 
+  // Branch Functions
   const handleAddBranch = (branchData) => {
     setBranches([...branches, branchData]);
     setShowBranchForm(false);
     setBranchFormData(null);
+  };
+
+  const handleDeleteBranch = (index) => {
+    const updatedBranches = [...branches];
+    updatedBranches.splice(index, 1);
+    setBranches(updatedBranches);
+  };
+
+  const handleEditBranch = (index) => {
+    const branchToEdit = branches[index];
+    setBranchFormData(branchToEdit);
+    setBranches(branches.filter((_, i) => i !== index));
+    setShowBranchList(false);
+    setShowBranchForm(true);
   };
 
   const handleClear = () => window.location.reload();
@@ -118,20 +177,7 @@ export default function ClientOnboarding() {
     console.log(formData, clientLogo, contractFile, branches);
   };
 
-  const handleDeleteBranch = (index) => {
-    const updatedBranches = [...branches];
-    updatedBranches.splice(index, 1);
-    setBranches(updatedBranches);
-  };
-
-  const handleEditBranch = (index) => {
-    const branchToEdit = branches[index];
-    setBranchFormData(branchToEdit);
-    setBranches(branches.filter((_, i) => i !== index));
-    setShowBranchList(false);
-    setShowBranchForm(true);
-  };
-
+  // Reverse geocode fetch
   useEffect(() => {
     const fetchAddress = async () => {
       const [lat, lon] = markerPos;
@@ -158,6 +204,7 @@ export default function ClientOnboarding() {
     setShowMap(false);
   };
 
+  // Map Search
   function MapSearch({ markerPos, setMarkerPos }) {
     const map = useMapEvents({});
     useEffect(() => {
@@ -242,6 +289,7 @@ export default function ClientOnboarding() {
 
       <div className="client-onboarding">
         <form onSubmit={handleSubmit}>
+          {/* Client Name + Type */}
           <div className="form-row">
             <div className="input-group">
               <input
@@ -265,6 +313,7 @@ export default function ClientOnboarding() {
             </div>
           </div>
 
+          {/* Manager + Phone + Address */}
           <div className="form-row">
             <div className="input-group">
               <input
@@ -303,45 +352,62 @@ export default function ClientOnboarding() {
                 name="geoLocation"
                 value={formData.geoLocation}
                 readOnly
-                required // Added to make the label float by default
               />
               <label>Geo Location</label>
             </div>
           </div>
 
+          {/* 🌍 Country → State → City */}
           <div className="form-row">
             <div className="input-group">
-              <input
-                type="text"
-                name="state"
-                value={formData.state}
-                onChange={handleChange}
-                required
-              />
-              <label>State</label>
-            </div>
-            <div className="input-group">
-              <input
-                type="text"
-                name="city"
-                value={formData.city}
-                onChange={handleChange}
-                required
-              />
-              <label>City</label>
-            </div>
-            <div className="input-group country-input">
-              <input
-                type="text"
+              <select
                 name="country"
                 value={formData.country}
-                onChange={handleChange}
+                onChange={handleCountryChange}
                 required
-              />
+              >
+                <option value="">Select Country</option>
+                {countries.map((c, i) => (
+                  <option key={i} value={c}>{c}</option>
+                ))}
+              </select>
               <label>Country</label>
+            </div>
+
+            <div className="input-group">
+              <select
+                name="state"
+                value={formData.state}
+                onChange={handleStateChange}
+                disabled={!states.length}
+                required
+              >
+                <option value="">Select State</option>
+                {states.map((s, i) => (
+                  <option key={i} value={s}>{s}</option>
+                ))}
+              </select>
+              <label>State</label>
+            </div>
+
+            <div className="input-group">
+              <select
+                name="city"
+                value={formData.city}
+                onChange={handleCityChange}
+                disabled={!cities.length}
+                required
+              >
+                <option value="">Select City</option>
+                {cities.map((ct, i) => (
+                  <option key={i} value={ct}>{ct}</option>
+                ))}
+              </select>
+              <label>City</label>
             </div>
           </div>
 
+          {/* Billing + Logo */}
           <div className="form-row">
             <div className="input-group">
               <input
@@ -359,7 +425,7 @@ export default function ClientOnboarding() {
                 readOnly
                 value={clientLogo ? clientLogo.name : ""}
                 onClick={() => document.getElementById("logoFile").click()}
-                required // Added to make the label float
+                required
               />
               <label>Upload Client Logo</label>
               <input
@@ -378,6 +444,7 @@ export default function ClientOnboarding() {
             </div>
           </div>
 
+          {/* Contract Dates */}
           <div className="form-row">
             <div className="input-group">
               <input
@@ -406,6 +473,7 @@ export default function ClientOnboarding() {
             </div>
           </div>
 
+          {/* Invoice + Contract Upload */}
           <div className="form-row">
             <div className="input-group">
               <input
@@ -423,7 +491,7 @@ export default function ClientOnboarding() {
                 readOnly
                 value={contractFile ? contractFile.name : ""}
                 onClick={() => document.getElementById("contractFile").click()}
-                required // Added to make the label float
+                required
               />
               <label>Contract Upload (PDF)</label>
               <input
@@ -442,6 +510,7 @@ export default function ClientOnboarding() {
             </div>
           </div>
 
+          {/* Branch Section */}
           <div className="branch-buttons">
             <button type="button" onClick={() => setShowBranchList(true)}>
               View Branches
@@ -457,10 +526,9 @@ export default function ClientOnboarding() {
             </button>
           </div>
 
+          {/* SLA */}
           <div className="sla-section">
-            <label>
-              <b>SLA</b>
-            </label>
+            <label><b>SLA</b></label>
             <textarea
               name="sla"
               value={formData.sla}
@@ -469,14 +537,11 @@ export default function ClientOnboarding() {
             ></textarea>
           </div>
 
+          {/* Submit + Clear */}
           <div className="btn-wrapper">
             <div className="button-row">
-              <button type="submit" className="submit-btn">
-                Submit
-              </button>
-              <button type="button" className="clear-btn" onClick={handleClear}>
-                Clear
-              </button>
+              <button type="submit" className="submit-btn">Submit</button>
+              <button type="button" className="clear-btn" onClick={handleClear}>Clear</button>
             </div>
           </div>
         </form>
