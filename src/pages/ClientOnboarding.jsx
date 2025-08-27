@@ -544,59 +544,59 @@ export default function ClientOnboarding() {
               </div>
             ) : (
               <div className="branch-list-scroll">
-                <div className="branch-cards">
-                  {branches.map((branch, index) => (
-                    <div key={index} className="branch-card">
-                      <h3>{branch.branchName}</h3>
-                      <p>
-                        <strong>POC:</strong> {branch.branchPOC}
-                      </p>
-                      <p>
-                        <strong>Phone:</strong> {branch.phone}
-                      </p>
-                      <p>
-                        <strong>Store Phone:</strong> {branch.storePhone}
-                      </p>
-                      <p>
-                        <strong>Address:</strong> {branch.address}
-                      </p>
-                      <p>
-                        <strong>Geo:</strong> {branch.geoLocation}
-                      </p>
-                      <p>
-                        <strong>City:</strong> {branch.city}
-                      </p>
-
-                      <div>
-                        <strong>APIs:</strong>
-                        <ul>
-                          {branch.apis.map((api, i) => (
-                            <li key={i}>
-                              {api.apiName} → {api.apiUrl}
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-
-                      <div className="branch-actions">
-                        <button 
-                          className="edit-btn" 
-                          onClick={() => handleEditBranch(index)}
-                          title="Edit"
-                        >
-                          <FaEdit />
-                        </button>
-                        <button 
-                          className="delete-btn" 
-                          onClick={() => handleDeleteBranch(index)}
-                          title="Delete"
-                        >
-                          <FaTrash />
-                        </button>
-                      </div>
-                    </div>
-                  ))}
-                </div>
+                <table className="branch-table">
+                  <thead>
+                    <tr>
+                      <th>Branch Name</th>
+                      <th>POC Name</th>
+                      <th>Phone</th>
+                      <th>Store Phone</th>
+                      <th>Address</th>
+                      <th>City</th>
+                      <th>State</th>
+                      <th>Country</th>
+                      <th>Geo Location</th>
+                      <th>APIs</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {branches.map((branch, index) => (
+                      <tr key={index}>
+                        <td>{branch.branchName}</td>
+                        <td>{branch.branchPOC}</td>
+                        <td>{branch.phone}</td>
+                        <td>{branch.storePhone}</td>
+                        <td>{branch.address}</td>
+                        <td>{branch.city}</td>
+                        <td>{branch.state}</td>
+                        <td>{branch.country}</td>
+                        <td>{branch.geoLocation}</td>
+                        <td>
+                          {branch.apis && branch.apis.map(api => api.apiName).join(', ')}
+                        </td>
+                        <td>
+                          <div className="branch-actions-table">
+                            <button
+                              className="edit-btn"
+                              onClick={() => handleEditBranch(index)}
+                              title="Edit"
+                            >
+                              <FaEdit />
+                            </button>
+                            <button
+                              className="delete-btn"
+                              onClick={() => handleDeleteBranch(index)}
+                              title="Delete"
+                            >
+                              <FaTrash />
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
               </div>
             )}
           </div>

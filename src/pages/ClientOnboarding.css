@@ -939,3 +939,48 @@ button.clear-btn:hover {
 }
 
 
+/* Styles for the new Branch Table */
+.branch-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+  font-size: 14px;
+}
+
+.branch-table th,
+.branch-table td {
+  border: 1px solid #e0e0e0;
+  padding: 10px 14px;
+  text-align: left;
+  vertical-align: middle;
+}
+
+.branch-table thead {
+  background-color: #f8faff;
+}
+
+.branch-table th {
+  font-weight: 600;
+  color: #333;
+}
+
+.branch-table tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.branch-table tbody tr:hover {
+  background-color: #f1f5f8;
+}
+
+/* Actions buttons inside the table */
+.branch-actions-table {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}
+
+.branch-actions-table .edit-btn,
+.branch-actions-table .delete-btn {
+  padding: 6px 10px;
+}
