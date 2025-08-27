@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./ClientOnboarding.css";
-import { FaBell, FaUserCircle, FaEdit, FaTrash } from "react-icons/fa";
+import { FaBell, FaUserCircle, FaEdit, FaTrash, FaTimes, FaUpload } from "react-icons/fa"; 
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import BranchForm from "./BranchForm";
@@ -9,7 +9,6 @@ import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import { OpenStreetMapProvider, GeoSearchControl } from "leaflet-geosearch";
 import "leaflet-geosearch/dist/geosearch.css";
-import { FaTimes } from "react-icons/fa";
 
 // Fix default marker icon
 delete L.Icon.Default.prototype._getIconUrl;
@@ -298,13 +297,16 @@ export default function ClientOnboarding() {
               />
               <label>Address</label>
             </div>
-            <input
-              type="text"
-              name="geoLocation"
-              placeholder="Geo Location"
-              value={formData.geoLocation}
-              readOnly
-            />
+            <div className="input-group">
+              <input
+                type="text"
+                name="geoLocation"
+                value={formData.geoLocation}
+                readOnly
+                required // Added to make the label float by default
+              />
+              <label>Geo Location</label>
+            </div>
           </div>
 
           <div className="form-row">
@@ -351,14 +353,15 @@ export default function ClientOnboarding() {
               />
               <label>Billing Terms (Days)</label>
             </div>
-            <div className="upload-input-wrapper">
+            <div className="input-group upload-input-wrapper">
               <input
                 type="text"
-                placeholder="Upload Client Logo"
                 readOnly
                 value={clientLogo ? clientLogo.name : ""}
                 onClick={() => document.getElementById("logoFile").click()}
+                required // Added to make the label float
               />
+              <label>Upload Client Logo</label>
               <input
                 type="file"
                 id="logoFile"
@@ -367,9 +370,10 @@ export default function ClientOnboarding() {
               />
               <button
                 type="button"
+                title="Upload Logo"
                 onClick={() => document.getElementById("logoFile").click()}
               >
-                Upload
+                <FaUpload />
               </button>
             </div>
           </div>
@@ -413,14 +417,15 @@ export default function ClientOnboarding() {
               />
               <label>Invoice Processing Days</label>
             </div>
-            <div className="upload-input-wrapper">
+            <div className="input-group upload-input-wrapper">
               <input
                 type="text"
-                placeholder="Contract Upload (PDF)"
                 readOnly
                 value={contractFile ? contractFile.name : ""}
                 onClick={() => document.getElementById("contractFile").click()}
+                required // Added to make the label float
               />
+              <label>Contract Upload (PDF)</label>
               <input
                 type="file"
                 id="contractFile"
@@ -429,9 +434,10 @@ export default function ClientOnboarding() {
               />
               <button
                 type="button"
+                title="Upload Contract"
                 onClick={() => document.getElementById("contractFile").click()}
               >
-                Upload
+                <FaUpload />
               </button>
             </div>
           </div>
