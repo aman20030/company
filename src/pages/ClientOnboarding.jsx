@@ -1,6 +1,14 @@
 import React, { useState, useEffect } from "react";
 import "./ClientOnboarding.css";
-import { FaBell, FaUserCircle, FaEdit, FaTrash, FaTimes, FaUpload } from "react-icons/fa"; 
+import {
+  FaBell,
+  FaUserCircle,
+  FaEdit,
+  FaTrash,
+  FaTimes,
+  FaUpload,
+  FaEye,
+} from "react-icons/fa";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import BranchForm from "./BranchForm";
@@ -60,11 +68,12 @@ export default function ClientOnboarding() {
 
   // Load countries
   useEffect(() => {
-    axios.get("https://countriesnow.space/api/v0.1/countries")
-      .then(res => {
-        setCountries(res.data.data.map(c => c.country));
+    axios
+      .get("https://countriesnow.space/api/v0.1/countries")
+      .then((res) => {
+        setCountries(res.data.data.map((c) => c.country));
       })
-      .catch(err => console.error("Country fetch error:", err));
+      .catch((err) => console.error("Country fetch error:", err));
   }, []);
 
   // When country changes → fetch states
@@ -73,10 +82,13 @@ export default function ClientOnboarding() {
     setFormData({ ...formData, country, state: "", city: "" });
     setCities([]);
     try {
-      const res = await axios.post("https://countriesnow.space/api/v0.1/countries/states", {
-        country
-      });
-      setStates(res.data.data.states.map(s => s.name));
+      const res = await axios.post(
+        "https://countriesnow.space/api/v0.1/countries/states",
+        {
+          country,
+        }
+      );
+      setStates(res.data.data.states.map((s) => s.name));
     } catch (err) {
       console.error("State fetch error:", err);
     }
@@ -87,10 +99,13 @@ export default function ClientOnboarding() {
     const state = e.target.value;
     setFormData({ ...formData, state, city: "" });
     try {
-      const res = await axios.post("https://countriesnow.space/api/v0.1/countries/state/cities", {
-        country: formData.country,
-        state
-      });
+      const res = await axios.post(
+        "https://countriesnow.space/api/v0.1/countries/state/cities",
+        {
+          country: formData.country,
+          state,
+        }
+      );
       setCities(res.data.data);
     } catch (err) {
       console.error("City fetch error:", err);
@@ -108,7 +123,8 @@ export default function ClientOnboarding() {
     if (
       (name === "billingTerms" || name === "invoiceProcessing") &&
       !/^\d*$/.test(value)
-    ) return;
+    )
+      return;
 
     setFormData({ ...formData, [name]: value });
   };
@@ -297,6 +313,7 @@ export default function ClientOnboarding() {
                 name="clientName"
                 value={formData.clientName}
                 onChange={handleChange}
+                placeholder=""
                 required
               />
               <label>Client Name</label>
@@ -328,7 +345,7 @@ export default function ClientOnboarding() {
             <div style={{ flex: 1.1 }}>
               <div className="input-group phone-input-group">
                 <PhoneInput
-                  country={"us"}
+                  country={"in"}
                   value={formData.phone}
                   onChange={(phone) => setFormData({ ...formData, phone })}
                   inputClass="phone-field"
@@ -368,7 +385,9 @@ export default function ClientOnboarding() {
               >
                 <option value="">Select Country</option>
                 {countries.map((c, i) => (
-                  <option key={i} value={c}>{c}</option>
+                  <option key={i} value={c}>
+                    {c}
+                  </option>
                 ))}
               </select>
               <label>Country</label>
@@ -384,7 +403,9 @@ export default function ClientOnboarding() {
               >
                 <option value="">Select State</option>
                 {states.map((s, i) => (
-                  <option key={i} value={s}>{s}</option>
+                  <option key={i} value={s}>
+                    {s}
+                  </option>
                 ))}
               </select>
               <label>State</label>
@@ -400,7 +421,9 @@ export default function ClientOnboarding() {
               >
                 <option value="">Select City</option>
                 {cities.map((ct, i) => (
-                  <option key={i} value={ct}>{ct}</option>
+                  <option key={i} value={ct}>
+                    {ct}
+                  </option>
                 ))}
               </select>
               <label>City</label>
@@ -510,38 +533,54 @@ export default function ClientOnboarding() {
             </div>
           </div>
 
-          {/* Branch Section */}
-          <div className="branch-buttons">
-            <button type="button" onClick={() => setShowBranchList(true)}>
-              View Branches
-            </button>
-            <button
-              type="button"
-              onClick={() => {
-                setBranchFormData(null);
-                setShowBranchForm(true);
-              }}
-            >
-              Add Branch +
-            </button>
-          </div>
-
           {/* SLA */}
           <div className="sla-section">
-            <label><b>SLA</b></label>
-            <textarea
+            <div className="input-group">
+              <textarea
               name="sla"
               value={formData.sla}
               onChange={handleChange}
-              placeholder="SLA"
+              placeholder=""
             ></textarea>
+             <label htmlFor="sla">SLA</label>
+            </div>
+            
+          </div>
+
+          {/* Additional Branches Section */}
+          <div className="additional-branches-section">
+            <h3>
+              Additional Branches{" "}
+              {branches.length > 0 && (
+                <span className="branch-count-badge">({branches.length})</span>
+              )}
+            </h3>
+
+            <div className="branch-buttons">
+              <button type="button" onClick={() => setShowBranchList(true)}>
+                <FaEye /> View/Edit Branches
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  setBranchFormData(null);
+                  setShowBranchForm(true);
+                }}
+              >
+                + Add Branch
+              </button>
+            </div>
           </div>
 
           {/* Submit + Clear */}
           <div className="btn-wrapper">
             <div className="button-row">
-              <button type="submit" className="submit-btn">Submit</button>
-              <button type="button" className="clear-btn" onClick={handleClear}>Clear</button>
+              <button type="submit" className="submit-btn">
+                Submit
+              </button>
+              <button type="button" className="clear-btn" onClick={handleClear}>
+                Clear
+              </button>
             </div>
           </div>
         </form>
@@ -564,8 +603,8 @@ export default function ClientOnboarding() {
               </button>
             </div>
             <div className="branch-form-container">
-              <BranchForm 
-                onAddBranch={handleAddBranch} 
+              <BranchForm
+                onAddBranch={handleAddBranch}
                 initialData={branchFormData}
               />
             </div>
@@ -598,7 +637,7 @@ export default function ClientOnboarding() {
                 </button>
               </div>
             </div>
-            
+
             {branches.length === 0 ? (
               <div className="empty-state">
                 <p>No branches added yet.</p>
@@ -644,7 +683,8 @@ export default function ClientOnboarding() {
                         <td>{branch.country}</td>
                         <td>{branch.geoLocation}</td>
                         <td>
-                          {branch.apis && branch.apis.map(api => api.apiName).join(', ')}
+                          {branch.apis &&
+                            branch.apis.map((api) => api.apiName).join(", ")}
                         </td>
                         <td>
                           <div className="branch-actions-table">

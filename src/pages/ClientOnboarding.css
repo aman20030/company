@@ -101,6 +101,7 @@ textarea {
   flex: 1;
   position: relative;
   min-width: 200px;
+   z-index: 2000;
 }
 
 .phone-input-group label {
@@ -189,16 +190,28 @@ input[name="contractEnd"] {
   margin-top: 10px;
 }
 
-.branch-buttons button{
-  background: #fff;
-  border: 1px solid #2196f3;
+/* ✅ Updated Branch Buttons as per requirement */
+.branch-buttons button {
+  background: #2F4EE8;  /* Blue background */
+  color: #ffffff;      /* White text color */
+  border: none;         /* Border hata diya, solid color pe accha lagega */
   padding: 8px 16px;
-  border-radius: 6px;
+  border-radius: 50px;
   cursor: pointer;
-  color: #1E38A8;
   font-family: Lexend;
-  font-size: 16px;
+   font-size: 0.85rem;
   height: 40px;
+  font-weight: 600; /* Text ko thoda bold kar diya for better look */
+  transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transition */
+   display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Optional: Hover effect for better user experience */
+.branch-buttons button:hover {
+  background: #1e3fd6; /* Thoda dark blue on hover */
+  transform: translateY(-2px); /* Button thoda upar uthega */
 }
 
 .sla-section {
@@ -208,7 +221,7 @@ input[name="contractEnd"] {
 .sla-section label {
   display: block;
   margin-bottom: 8px;
-  font-weight: bold;
+  color: #0d2db8;
 }
 
 .sla-section textarea{
@@ -995,19 +1008,27 @@ button.clear-btn:hover {
 .input-group {
   position: relative;
   flex: 1;
+  min-width: 200px;
 }
 
 /* Input + Select Common Style */
 .input-group input,
-.input-group select {
+.input-group select,
+.input-group textarea {
   width: 100%;
-  padding: 12px;
-  font-size: 14px;
+  padding: 12px 10px;
   border: 1px solid #ccc;
   border-radius: 6px;
-  background: #fff;
   outline: none;
+  font-size: 14px;
+  background: white;
+  height: 44px;
+  box-sizing: border-box;
   transition: border-color 0.3s ease;
+}
+.input-group textarea {
+  height: 80px;
+  resize: vertical;
 }
 
 /* On focus */
@@ -1019,15 +1040,31 @@ button.clear-btn:hover {
 /* Floating label */
 .input-group label {
   position: absolute;
-  top: 50%;
   left: 12px;
-  transform: translateY(-50%);
-  background: #fff;
-  padding: 0 5px;
-  color: #777;
+  top: 12px;
+  color: #888;
   font-size: 14px;
+  background: white;
+  transition: all 0.2s ease;
+  padding: 0 4px;
   pointer-events: none;
-  transition: all 0.2s ease-in-out;
+  z-index: 1;
+}
+.input-group input:focus + label,
+.input-group input:valid + label,
+.input-group input:not(:placeholder-shown) + label,
+.input-group input[value]:not([value=""]) + label,
+.input-group select:focus + label,
+.input-group select:valid + label,
+.input-group select:not([value=""]) + label,
+.input-group textarea:focus + label,
+.input-group textarea:valid + label,
+.input-group textarea:not(:placeholder-shown) + label {
+  top: -8px;
+  left: 8px;
+  font-size: 12px;
+  color: #2F4EE8;
+  font-weight: 500;
 }
 
 /* Label float when input filled OR focused */
@@ -1040,9 +1077,26 @@ button.clear-btn:hover {
   font-size: 12px;
   color: #4a90e2;
 }
+.input-group input:focus,
+.input-group select:focus,
+.input-group textarea:focus {
+  border-color: #2F4EE8;
+  box-shadow: 0 0 0 2px rgba(47, 78, 232, 0.1);
+}
+.input-group select option:first-child {
+  color: #999;
+}
 
+.input-group select:invalid {
+  color: #999;
+}
+
+.input-group select:valid {
+  color: #333;
+}
 /* Disabled dropdown */
-.input-group select:disabled {
+.input-group select:disabled,
+.input-group input:disabled {
   background: #f5f5f5;
   color: #999;
   cursor: not-allowed;
@@ -1051,7 +1105,10 @@ button.clear-btn:hover {
   position: relative;
   z-index: 10;
 }
-
+.input-group select:disabled + label,
+.input-group input:disabled + label {
+  color: #999;
+}
 /* Force dropdown to open downward */
 select {
   direction: ltr;
@@ -1059,4 +1116,50 @@ select {
 
 select option {
   direction: ltr;
+}
+/* === 🌿 ADDITIONAL BRANCHES SECTION (UPDATED) === */
+
+.additional-branches-section {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  background-color: var(--light-bg);
+  border-radius: var(--border-radius);
+/*  border: 1px solid #e9ecef;*/
+  
+  /* --- New lines for alignment --- */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.additional-branches-section h3 {
+  margin: 0; /* Reset margin */
+  color: #333;
+  font-size: 1.2rem; /* Optional: Adjust font size */
+}
+
+.branch-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+}
+.additional-branches-section h3 {
+    color: #34495e; /* Thoda professional dark blue-gray color */
+  font-weight: 600;
+  font-size: 0.95rem; /* Uppercase ke saath yeh size sahi lagega */
+  text-transform: uppercase; /* Saare akshar bade */
+  letter-spacing: 0.8px; /* Aksharon ke beech halki space */
+  
+  /* Yeh line icon aur text ko align karne ke liye hai */
+  display: flex;
+  align-items: center;
+}
+.additional-branches-section h3::before {
+  content: ''; /* Pseudo-element banane ke liye zaroori hai */
+  display: inline-block;
+  width: 4px;
+  height: 18px;
+  background-color: var(--primary-color);
+  margin-right: 12px; /* Line aur text ke beech space */
+  border-radius: 2px; /* Line ke kone halke se gol */
 }

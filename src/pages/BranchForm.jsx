@@ -192,7 +192,7 @@ export default function BranchForm({ onAddBranch, initialData = null }) {
       </div>
 
       {/* Row 2 */}
-      <div className="form-row-2">
+    <div className="form-row">
         <div className="input-group">
           <input
             type="text"
@@ -203,6 +203,9 @@ export default function BranchForm({ onAddBranch, initialData = null }) {
           />
           <label>Address</label>
         </div>
+      </div>
+       {/* Store Phone Number - Separate Row */}
+      <div className="form-row-2">
         <div className="input-group">
           <input
             type="text"
@@ -212,8 +215,16 @@ export default function BranchForm({ onAddBranch, initialData = null }) {
           />
           <label>Geo Location</label>
         </div>
+        <div className="phone-input-wrapper">
+          <PhoneInput
+            country={"in"}
+            value={branchData.storePhone}
+            onChange={handleStorePhoneChange}
+            inputClass="phone-field"
+          />
+          <label>Store Phone Number</label>
+        </div>
       </div>
-
       {/* Row 3 - Country, State, City */}
       <div className="form-row">
         <div className="input-group select-wrapper">
@@ -261,18 +272,7 @@ export default function BranchForm({ onAddBranch, initialData = null }) {
         </div>
       </div>
 
-      {/* Store Phone Number - Separate Row */}
-      <div className="store-phone-row">
-        <div className="phone-input-wrapper">
-          <PhoneInput
-            country={"in"}
-            value={branchData.storePhone}
-            onChange={handleStorePhoneChange}
-            inputClass="phone-field"
-          />
-          <label>Store Phone Number</label>
-        </div>
-      </div>
+     
 
       {/* API Section */}
       {branchData.apis.map((api, index) => (
