@@ -637,6 +637,17 @@ export default function ClientOnboarding() {
                 </button>
               </div>
             </div>
+             {/* 👇 Ye naya add karna hai */}
+      <div className="branch-summary">
+  <div className="summary-box">
+    <div className="summary-title">Total Branches</div>
+    <div className="summary-count">{1 + branches.length}</div>
+  </div>
+  <div className="summary-box">
+    <div className="summary-title">Additional Branches</div>
+    <div className="summary-count">{branches.length}</div>
+  </div>
+</div>
 
             {branches.length === 0 ? (
               <div className="empty-state">

@@ -1163,3 +1163,39 @@ select option {
   margin-right: 12px; /* Line aur text ke beech space */
   border-radius: 2px; /* Line ke kone halke se gol */
 }
+.branch-summary {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  margin: 20px 0;
+}
+
+.branch-summary .summary-box {
+  background: #f8faff;
+  border: 1px solid #e0e6ff;
+  border-radius: 10px;
+  padding: 15px 25px;
+  text-align: center;
+  min-width: 180px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  transition: all 0.2s ease-in-out;
+}
+
+.branch-summary .summary-box:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.branch-summary .summary-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #555;
+  margin-bottom: 8px;
+  letter-spacing: 0.3px;
+}
+
+.branch-summary .summary-count {
+  font-size: 22px;
+  font-weight: 700;
+  color: #2d5be3; /* Blue accent */
+}
