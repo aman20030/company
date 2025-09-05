@@ -10,6 +10,7 @@ import Login from "./components/Login";
 import ForgotPassword from "./components/ForgotPassword";
 import BranchForm from "./pages/BranchForm";
 import MainLayout from "./layouts/MainLayout";
+import AdminConsole from "./pages/AdminConsole";
 
 function Layout() {
   const location = useLocation();
@@ -30,6 +31,8 @@ function Layout() {
           <Route path="/login" element={<Login />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/branch-form" element={<BranchForm />} />
+          <Route path="/admin" element={<AdminConsole />}/>
+           <Route path="/client/edit/:clientId" element={<ClientOnboarding />} />
         </Routes>
       </div>
     </div>

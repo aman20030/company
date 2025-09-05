@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
 html, body{
   height:auto;
   overflow:auto !important;
@@ -31,6 +32,7 @@ form{
   display:flex;
   flex-direction:column;
   gap:15px;
+   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
 }
 
 .form-row{
@@ -60,6 +62,7 @@ textarea {
   position: relative;
   flex: 1;
   min-width: 200px; /* ✅ Minimum width for consistency */
+  font-family: 'Poppins', sans-serif;
 }
 
 .input-group input {
@@ -265,56 +268,102 @@ input[name="contractEnd"] {
 .submit-btn,
 .submit-btn button,
 button.submit-btn {
-  padding: 10px 25px !important;
-  background: #2F4EE8 !important;
-  color: #fff !important;
+  background: linear-gradient(135deg, #ff6b9d 0%, #c44569 25%, #3c6382 75%, #2F4EE8 100%) !important;
+  color: white !important;
   border: none !important;
-  border-radius: 6px !important;
+  border-radius: 12px !important;
+  padding: 12px 28px !important;
   cursor: pointer !important;
   outline: none !important;
-  box-shadow: 0 2px 6px rgba(47, 78, 232, 0.3) !important;
+  box-shadow: 0 4px 15px rgba(255, 107, 157, 0.3) !important;
   font-size: 14px !important;
-  font-weight: bold !important;
-  min-width: 90px !important;
-  height: 40px !important;
+  font-weight: 700 !important;
+  min-width: 120px !important;
+  height: 44px !important;
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
   margin: 0 !important;
+  transition: all 0.3s ease !important;
+  letter-spacing: 0.5px !important;
+  text-transform: uppercase !important;
+  position: relative !important;
+  overflow: hidden !important;
 }
+
 
 .submit-btn:hover,
 .submit-btn button:hover,
 button.submit-btn:hover {
-  background: #1e3fd6 !important;
-  transform: translateY(-2px) !important;
+  background: linear-gradient(135deg, #ff5582 0%, #b33951 25%, #2f5582 75%, #1e3fd6 100%) !important;
+  transform: translateY(-3px) scale(1.02) !important;
+  box-shadow: 0 8px 25px rgba(255, 107, 157, 0.4) !important;
+}
+/* Animated Gradient Effect */
+.submit-btn::before,
+.submit-btn button::before,
+button.submit-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.submit-btn:hover::before,
+.submit-btn button:hover::before,
+button.submit-btn:hover::before {
+  left: 100%;
 }
 
 /* ✅ Clear Button - Individual Styling Only */
 .clear-btn,
 button.clear-btn {
-  background: #ffeb3b !important;
-  color: #333 !important;
-  font-weight: bold !important;
-  padding: 10px 25px !important;
+  background: linear-gradient(135deg, #FFD54F 0%, #FF8A65 50%, #ff6b9d 100%) !important;
+  color: white !important;
+  font-weight: 700 !important;
+  padding: 12px 28px !important;
   border: none !important;
-  border-radius: 6px !important;
+  border-radius: 12px !important;
   cursor: pointer !important;
   font-size: 14px !important;
   outline: none !important;
-  box-shadow: 0 2px 6px rgba(255, 235, 59, 0.3) !important;
-  min-width: 90px !important;
-  height: 40px !important;
+  box-shadow: 0 4px 15px rgba(255, 138, 101, 0.3) !important;
+  min-width: 120px !important;
+  height: 44px !important;
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
   margin: 0 !important;
+  transition: all 0.3s ease !important;
+  letter-spacing: 0.5px !important;
+  text-transform: uppercase !important;
+  position: relative !important;
+  overflow: hidden !important;
 }
 
 .clear-btn:hover,
 button.clear-btn:hover {
-  background: #fdd835 !important;
-  transform: translateY(-2px) !important;
+  background: linear-gradient(135deg, #FFC107 0%, #FF7043 50%, #ff5582 100%) !important;
+  transform: translateY(-3px) scale(1.02) !important;
+  box-shadow: 0 8px 25px rgba(255, 138, 101, 0.5) !important;
+}
+/* Button Container */
+.btn-wrapper,
+.button-row {
+  background: none !important;
+  padding: 0 !important;
+  border: none !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  gap: 20px !important;
+  width: 100% !important;
+  margin: 30px auto !important;
+  box-shadow: none !important;
 }
 
 /* Modal Overlay */
@@ -996,6 +1045,7 @@ button.clear-btn:hover {
 .branch-actions-table .edit-btn,
 .branch-actions-table .delete-btn {
   padding: 6px 10px;
+  
 }
 /* Form Row */
 .form-row {
@@ -1198,4 +1248,247 @@ select option {
   font-size: 22px;
   font-weight: 700;
   color: #2d5be3; /* Blue accent */
+}
+/* Purane code ko hatakar yeh code daalein */
+/* Base style for the button */
+.branch-buttons .gradient-button {
+  background: linear-gradient(to right, #F957A2, #6A67F3);
+  border: none;
+  color: white;
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 25px;
+  cursor: pointer;
+  /* Add box-shadow and transform to the transition */
+  transition: all 0.3s ease; 
+  box-shadow: 0 4px 15px 0 rgba(175, 102, 232, 0.4);
+}
+
+/* Style for the button ON HOVER */
+.branch-buttons .gradient-button:hover {
+  /* Re-apply the gradient to prevent it from changing */
+  background: linear-gradient(to right, #F957A2, #6A67F3); 
+  
+  /* Make the shadow a bit stronger on hover */
+  box-shadow: 0 6px 20px 0 rgba(175, 102, 232, 0.6); 
+  
+  /* Keep the zoom effect */
+  transform: scale(1.05); 
+}
+/* Inline Branch List Styling */
+.inline-branch-list {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.inline-branch-list .modal-header-bar {
+  padding: 0 0 1rem 0; /* Adjust padding as it's not a modal anymore */
+  border-bottom: 1px solid #ddd;
+}
+/* ========================================================= */
+/* =========== Branch List Header Fix (Desktop) ============ */
+/* ========================================================= */
+
+.inline-branch-list .modal-header-bar {
+  /* Step 1: Blue background hatana */
+  background: none; 
+  background-color: transparent;
+
+  /* Step 2: Baaki styles ko theek karna */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 0 1rem 0;
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 1rem;
+}
+
+.inline-branch-list .modal-header-bar h3 {
+    color: #333; /* Title ka color theek karna */
+    margin: 0;
+}
+
+/* Step 3: Header ke andar waale button ko style karna */
+.add-branch-header-btn {
+  background-color: #eef2ff; /* Light, clean background */
+  color: #4f46e5; /* Professional blue text color */
+  border: 1px solid #c7d2fe;
+  font-weight: bold;
+  padding: 8px 16px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.add-branch-header-btn:hover {
+  background-color: #e0e7ff;
+  border-color: #a5b4fc;
+  transform: translateY(-2px);
+}
+
+
+/* ====================================================== */
+/* =========== Responsive Fix for Header ================ */
+/* ====================================================== */
+
+@media (max-width: 768px) {
+  .inline-branch-list .modal-header-bar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  /* Button ko poori width dena mobile par */
+  .add-branch-header-btn {
+    width: 100%;
+  }
+}
+/* Style for the "+ Add First Branch" button */
+.empty-state .add-first-branch-btn {
+  background: linear-gradient(to right, #F957A2, #6A67F3); /* Yahi gradient color hai */
+  border: none;
+  color: white;
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 25px; /* Submit button jaisa rounded corner */
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px 0 rgba(175, 102, 232, 0.4); /* Glowing shadow effect */
+  margin-top: 1rem; /* Upar wale text se thoda space */
+  display: inline-flex; /* Icon ke liye */
+  align-items: center; /* Icon aur text ko center karne ke liye */
+  gap: 0.5rem; /* Icon aur text ke beech space */
+}
+
+.empty-state .add-first-branch-btn:hover {
+  transform: scale(1.05); /* Hover effect */
+  box-shadow: 0 6px 20px 0 rgba(175, 102, 232, 0.6);
+}
+
+/* Responsive adjustment for this button */
+@media (max-width: 768px) {
+  .empty-state .add-first-branch-btn {
+    width: 100%; /* Mobile par poori width lega */
+    justify-content: center; /* Text aur icon ko center karega */
+  }
+}
+/* Header ke Add Branch button ko gradient style dena */
+.add-branch-header-btn {
+  background: linear-gradient(to right, #F957A2, #6A67F3);
+  border: none;
+  color: white;
+  padding: 10px 20px; /* Thoda chota size header ke liye */
+  font-size: 14px;   /* Thoda chota font */
+  font-weight: bold;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px 0 rgba(175, 102, 232, 0.4);
+}
+
+.add-branch-header-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 20px 0 rgba(175, 102, 232, 0.6);
+}
+.upload-input-wrapper .gradient-upload-btn {
+  /* Required Gradient Colors */
+  background: linear-gradient(to right, #F957A2, #6A67F3) !important;
+  
+  /* Styling to match submit button */
+  border: none !important;
+  color: white !important;
+  font-weight: bold !important; /* Bold text like submit button */
+  font-size: 15px !important; /* Font size like submit button */
+  
+  /* Sizing and Shape */
+  height: 44px !important; /* Same height as input */
+  padding: 10px 15px !important;
+  border-radius: 0 6px 6px 0 !important; /* Right corners rounded */
+  
+  /* Visuals */
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px 0 rgba(175, 102, 232, 0.4) !important; /* Submit button jaisa shadow */
+}
+
+/* Hover effect */
+.upload-input-wrapper .gradient-upload-btn:hover {
+ 
+  box-shadow: 0 6px 20px 0 rgba(175, 102, 232, 0.6) !important;
+}
+.branch-actions-table .edit-btn {
+  background: linear-gradient(to right, #56ab2f, #a8e063); /* Fresh Green Gradient */
+  box-shadow: 0 2px 8px rgba(115, 182, 94, 0.4); /* Green Shadow */
+}
+
+.branch-actions-table .edit-btn:hover {
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 4px 12px rgba(115, 182, 94, 0.6);
+}
+
+/* 🔴 Delete Button - RED GRADIENT 🔴 */
+.branch-actions-table .delete-btn {
+  background: linear-gradient(to right, #FF416C, #FF4B2B); /* Warning Red/Orange Gradient */
+  box-shadow: 0 2px 8px rgba(255, 65, 108, 0.4); /* Red Shadow */
+}
+
+.branch-actions-table .delete-btn:hover {
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 4px 12px rgba(255, 65, 108, 0.6);
+}
+
+
+/* Step 1: Dono main containers ko ek jaisa size dena */
+.client-onboarding,
+.inline-branch-list {
+  /* Dono sections ki max-width 1200px set kar di */
+  max-width: 1200px;
+  
+  /* Dono ko page ke center mein le aaye */
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Thoda vertical space add karna */
+.client-onboarding {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+.inline-branch-list {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+
+/* Step 2: Table ke andar scrollbar laana */
+.branch-list-scroll {
+  overflow-x: auto; /* Yahi line table ko scrollable banati hai */
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+}
+
+.branch-table {
+  width: 100%;
+  min-width: 900px; /* Table ka content isse kam hone par scrollbar aayega */
+  border-collapse: collapse;
 }

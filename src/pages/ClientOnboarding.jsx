@@ -18,6 +18,7 @@ import L from "leaflet";
 import { OpenStreetMapProvider, GeoSearchControl } from "leaflet-geosearch";
 import "leaflet-geosearch/dist/geosearch.css";
 import axios from "axios";
+import { useParams, useNavigate } from "react-router-dom";
 
 // Fix default marker icon
 delete L.Icon.Default.prototype._getIconUrl;
@@ -45,7 +46,11 @@ export default function ClientOnboarding() {
     contractEnd: "",
     invoiceProcessing: "",
     sla: "",
+    clientLogoUrl: "",
   });
+     const { clientId } = useParams(); // URL se 'clientId' nikalega
+  const navigate = useNavigate();   // Page redirect karne ke liye
+  const isEditMode = Boolean(clientId); // Check karega ki edit mode hai ya nahi
 
   const [clientLogo, setClientLogo] = useState(null);
   const [contractFile, setContractFile] = useState(null);
@@ -65,6 +70,26 @@ export default function ClientOnboarding() {
   const [countries, setCountries] = useState([]);
   const [states, setStates] = useState([]);
   const [cities, setCities] = useState([]);
+
+
+   useEffect(() => {
+    if (isEditMode) {
+      const allClients = JSON.parse(localStorage.getItem("clients")) || [];
+      // String ID ko Number ID se match karne ke liye '==' use karein
+      const clientToEdit = allClients.find(c => c.id == clientId);
+      if (clientToEdit) {
+        const { branches, ...mainClientData } = clientToEdit;
+        
+        // Main form data set karein
+        setFormData(mainClientData);
+        
+        // Agar branches hain, to unhe bhi state mein set karein
+        if (branches && Array.isArray(branches)) {
+          setBranches(branches);
+        }
+      }
+    }
+  }, [clientId, isEditMode]);
 
   // Load countries
   useEffect(() => {
@@ -129,6 +154,8 @@ export default function ClientOnboarding() {
     setFormData({ ...formData, [name]: value });
   };
 
+  
+
   // File Upload
   const handleFileChange = (e, type) => {
     const file = e.target.files[0];
@@ -144,6 +171,18 @@ export default function ClientOnboarding() {
         return;
       }
       setClientLogo(file);
+      const reader = new FileReader();
+        // 2. Jab file padhna poora ho jaaye, to yeh function chalega.
+      reader.onloadend = () => {
+        // reader.result mein image ka Base64 text URL hoga.
+        // Hum ise state mein save kar denge.
+        setFormData((prevFormData) => ({
+          ...prevFormData,
+          clientLogoUrl: reader.result,
+        }));
+      };
+        reader.readAsDataURL(file);
+      setFormData({ ...formData, clientLogoUrl: URL.createObjectURL(file) });
     } else if (type === "contract") {
       if (file.type !== "application/pdf") {
         alert("Only PDF allowed");
@@ -180,17 +219,28 @@ export default function ClientOnboarding() {
 
   const handleClear = () => window.location.reload();
 
-  const handleSubmit = (e) => {
+   const handleSubmit = (e) => {
     e.preventDefault();
-    if (
-      formData.contractEnd &&
-      formData.contractStart &&
-      formData.contractEnd < formData.contractStart
-    ) {
-      alert("Contract End Date must be after Start Date!");
-      return;
+    if (formData.contractEnd && formData.contractStart && formData.contractEnd < formData.contractStart) {
+      return alert("Contract End Date must be after Start Date!");
     }
-    console.log(formData, clientLogo, contractFile, branches);
+    
+    const allClients = JSON.parse(localStorage.getItem("clients")) || [];
+    const finalClientData = { ...formData, branches };
+
+    if (isEditMode) {
+      const updatedClients = allClients.map((client) =>
+        client.id == clientId ? { ...finalClientData, id: client.id } : client
+      );
+      localStorage.setItem("clients", JSON.stringify(updatedClients));
+      alert("Client details updated successfully!");
+    } else {
+      const newClient = { ...finalClientData, id: Date.now() };
+      const updatedClients = [...allClients, newClient];
+      localStorage.setItem("clients", JSON.stringify(updatedClients));
+      alert("Client added successfully!");
+    }
+    navigate("/"); // Navigate back to Admin Console
   };
 
   // Reverse geocode fetch
@@ -461,6 +511,7 @@ export default function ClientOnboarding() {
                 type="button"
                 title="Upload Logo"
                 onClick={() => document.getElementById("logoFile").click()}
+                className="gradient-upload-btn"
               >
                 <FaUpload />
               </button>
@@ -515,6 +566,7 @@ export default function ClientOnboarding() {
                 value={contractFile ? contractFile.name : ""}
                 onClick={() => document.getElementById("contractFile").click()}
                 required
+                
               />
               <label>Contract Upload (PDF)</label>
               <input
@@ -527,6 +579,7 @@ export default function ClientOnboarding() {
                 type="button"
                 title="Upload Contract"
                 onClick={() => document.getElementById("contractFile").click()}
+                className="gradient-upload-btn"
               >
                 <FaUpload />
               </button>
@@ -557,15 +610,23 @@ export default function ClientOnboarding() {
             </h3>
 
             <div className="branch-buttons">
-              <button type="button" onClick={() => setShowBranchList(true)}>
-                <FaEye /> View/Edit Branches
-              </button>
+              
+
+<button
+  type="button"
+  onClick={() => setShowBranchList(prev => !prev)} // Logic ko toggle mein badla
+  className="gradient-button"
+>
+  <FaEye /> 
+  {showBranchList ? "Hide Branches" : "View/Edit Branches"} {/* Text bhi badlega */}
+</button>
               <button
                 type="button"
                 onClick={() => {
                   setBranchFormData(null);
                   setShowBranchForm(true);
                 }}
+                className="gradient-button"
               >
                 + Add Branch
               </button>
@@ -584,6 +645,112 @@ export default function ClientOnboarding() {
             </div>
           </div>
         </form>
+        {/* Branch List ka naya code yahan se shuru karein */}
+{showBranchList && (
+  <div className="inline-branch-list"> {/* Popup ki jagah yeh naya container */}
+    <div className="modal-header-bar">
+      <h3>All Branches</h3>
+      <div className="header-actions">
+        <button
+          className="add-branch-header-btn"
+          onClick={() => {
+            setShowBranchList(false); // List band ho jaayegi
+            setBranchFormData(null);
+            setShowBranchForm(true); // Form khul jaayega
+          }}
+        >
+          + Add Branch
+        </button>
+      </div>
+    </div>
+
+    <div className="branch-summary">
+      <div className="summary-box">
+        <div className="summary-title">Total Branches</div>
+        <div className="summary-count">{1 + branches.length}</div>
+      </div>
+      <div className="summary-box">
+        <div className="summary-title">Additional Branches</div>
+        <div className="summary-count">{branches.length}</div>
+      </div>
+    </div>
+
+    {branches.length === 0 ? (
+      <div className="empty-state">
+        <p>No branches added yet.</p>
+        <button
+          className="add-first-branch-btn"
+          onClick={() => {
+            setShowBranchList(false);
+            setBranchFormData(null);
+            setShowBranchForm(true);
+          }}
+        >
+          + Add First Branch
+        </button>
+      </div>
+    ) : (
+      <div className="branch-list-scroll">
+        <table className="branch-table">
+          {/* Aapka table ka poora code yahan aayega (thead, tbody, etc.) */}
+          <thead>
+            <tr>
+              <th>Branch Name</th>
+              <th>POC Name</th>
+              <th>Phone</th>
+              <th>Store Phone</th>
+              <th>Address</th>
+              <th>City</th>
+              <th>State</th>
+              <th>Country</th>
+              <th>Geo Location</th>
+              <th>APIs</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {branches.map((branch, index) => (
+              <tr key={index}>
+                <td>{branch.branchName}</td>
+                <td>{branch.branchPOC}</td>
+                <td>{branch.phone}</td>
+                <td>{branch.storePhone}</td>
+                <td>{branch.address}</td>
+                <td>{branch.city}</td>
+                <td>{branch.state}</td>
+                <td>{branch.country}</td>
+                <td>{branch.geoLocation}</td>
+                <td>
+                  {branch.apis &&
+                    branch.apis.map((api) => api.apiName).join(", ")}
+                </td>
+                <td>
+                  <div className="branch-actions-table">
+                    <button
+                      className="edit-btn"
+                      onClick={() => handleEditBranch(index)}
+                      title="Edit"
+                    >
+                      <FaEdit />
+                    </button>
+                    <button
+                      className="delete-btn"
+                      onClick={() => handleDeleteBranch(index)}
+                      title="Delete"
+                    >
+                      <FaTrash />
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    )}
+  </div>
+)}
+        
       </div>
 
       {/* Branch Form */}
@@ -612,118 +779,7 @@ export default function ClientOnboarding() {
         </div>
       )}
 
-      {/* Branch List */}
-      {showBranchList && (
-        <div className="modal-overlay">
-          <div className="modal-content">
-            <div className="modal-header-bar">
-              <h3>All Branches</h3>
-              <div className="header-actions">
-                <button
-                  className="add-branch-header-btn"
-                  onClick={() => {
-                    setShowBranchList(false);
-                    setBranchFormData(null);
-                    setShowBranchForm(true);
-                  }}
-                >
-                  + Add Branch
-                </button>
-                <button
-                  className="close-btn"
-                  onClick={() => setShowBranchList(false)}
-                >
-                  <FaTimes />
-                </button>
-              </div>
-            </div>
-             {/* 👇 Ye naya add karna hai */}
-      <div className="branch-summary">
-  <div className="summary-box">
-    <div className="summary-title">Total Branches</div>
-    <div className="summary-count">{1 + branches.length}</div>
-  </div>
-  <div className="summary-box">
-    <div className="summary-title">Additional Branches</div>
-    <div className="summary-count">{branches.length}</div>
-  </div>
-</div>
-
-            {branches.length === 0 ? (
-              <div className="empty-state">
-                <p>No branches added yet.</p>
-                <button
-                  className="add-first-branch-btn"
-                  onClick={() => {
-                    setShowBranchList(false);
-                    setBranchFormData(null);
-                    setShowBranchForm(true);
-                  }}
-                >
-                  + Add First Branch
-                </button>
-              </div>
-            ) : (
-              <div className="branch-list-scroll">
-                <table className="branch-table">
-                  <thead>
-                    <tr>
-                      <th>Branch Name</th>
-                      <th>POC Name</th>
-                      <th>Phone</th>
-                      <th>Store Phone</th>
-                      <th>Address</th>
-                      <th>City</th>
-                      <th>State</th>
-                      <th>Country</th>
-                      <th>Geo Location</th>
-                      <th>APIs</th>
-                      <th>Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {branches.map((branch, index) => (
-                      <tr key={index}>
-                        <td>{branch.branchName}</td>
-                        <td>{branch.branchPOC}</td>
-                        <td>{branch.phone}</td>
-                        <td>{branch.storePhone}</td>
-                        <td>{branch.address}</td>
-                        <td>{branch.city}</td>
-                        <td>{branch.state}</td>
-                        <td>{branch.country}</td>
-                        <td>{branch.geoLocation}</td>
-                        <td>
-                          {branch.apis &&
-                            branch.apis.map((api) => api.apiName).join(", ")}
-                        </td>
-                        <td>
-                          <div className="branch-actions-table">
-                            <button
-                              className="edit-btn"
-                              onClick={() => handleEditBranch(index)}
-                              title="Edit"
-                            >
-                              <FaEdit />
-                            </button>
-                            <button
-                              className="delete-btn"
-                              onClick={() => handleDeleteBranch(index)}
-                              title="Delete"
-                            >
-                              <FaTrash />
-                            </button>
-                          </div>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            )}
-          </div>
-        </div>
-      )}
+    
 
       {/* Map Modal */}
       {showMap && (

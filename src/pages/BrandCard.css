@@ -1,0 +1,58 @@
+.brand-card {
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  overflow: hidden; /* Bahar nikle hue content ko hide karega */
+  display: flex; /* Flexbox use karenge content arrange karne ke liye */
+  flex-direction: column; /* Items ko column mein rakhega */
+  max-width: 250px; /* Card ki max width set karein */
+  height: auto; /* Height content ke hisaab se adjust hogi */
+  transition: transform 0.2s ease-in-out; /* Hover effect */
+}
+
+.brand-card:hover {
+  transform: translateY(-5px);
+  /*box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);*/
+}
+
+.brand-img {
+  width: 100%; /* Image card ki poori width legi */
+  height: 150px; /* Image ki fixed height */
+  object-fit: contain; /* Image ko scale karega taaki woh poori dikhe, stretch na ho */
+  background-color: #f0f0f0; /* Default background agar image load na ho */
+  border-bottom: 1px solid #eee;
+  padding: 10px; /* Image ke andar thodi padding */
+  box-sizing: border-box; /* Padding ko width/height calculation mein include karega */
+}
+
+.brand-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.brand-info {
+  padding: 15px; /* Text content ke liye padding */
+  text-align: center; /* Text ko center align karein */
+  flex-grow: 1; /* Baki space le lega */
+  display: flex; /* Info content ko bhi flex banayein */
+  flex-direction: column; /* Info items column mein */
+  justify-content: center; /* Vertically center karein agar space ho */
+}
+
+.brand-info h4 {
+  margin: 0 0 5px 0; /* Margin adjust karein */
+  color: #333;
+  font-size: 1.1em;
+  font-weight: 600;
+  white-space: nowrap; /* Text ko ek hi line mein rakhega */
+  overflow: hidden; /* Agar text bada ho to hide karega */
+  text-overflow: ellipsis; /* ... dikhayega agar text cut ho */
+}
+
+.brand-info p {
+  margin: 0;
+  color: #777;
+  font-size: 0.9em;
+}

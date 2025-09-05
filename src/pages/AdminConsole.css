@@ -1,0 +1,333 @@
+/* Container */
+.admin-container {
+  padding: 20px;
+  font-family: "Poppins", sans-serif;
+}
+
+/* Topbar */
+.topbar-admin {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.lo {
+  font-size: 18px;
+  font-weight: 600;
+  color: #1e293b;
+  margin: 0;
+}
+
+/* Icons */
+.topbar-icons-admin {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-size: 20px;
+  color: #374151;
+}
+
+.topbar-icons .icon-admin {
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.topbar-icons .icon:hover {
+  color: #2563eb;
+}
+
+/* Search Bar */
+.search-bar-admin {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1.5px solid #d1d5db;
+  outline: none;
+  font-size: 15px;
+  background: #f9fafb;
+  margin-bottom: 20px;
+  transition: all 0.3s ease;
+}
+
+.search-bar-admin:focus {
+  border-color: #2563eb;
+  background: #fff;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.15);
+}
+
+/* Brand grid */
+.brand-grid-admin {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 25px;
+  padding: 20px;
+  margin-top: 30px;
+  justify-content: center;
+}
+.brand-grid-admin > p {
+  grid-column: 1 / -1;
+  text-align: center;
+  color: #555;
+  font-size: 1.1em;
+  padding: 40px 0;
+}
+/* Buttons row */
+.button-row-admin {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+/* Add Brand Button */
+.add-btn-admin {
+  background-image: linear-gradient(to right, #4e54c8 0%, #8f94fb 100%);
+  color: #fff;
+  padding: 10px 18px;
+  border-radius: 8px;
+  border: none;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(102, 109, 222, 0.4);
+}
+
+.add-btn-admin:hover {
+  background-image: linear-gradient(to right, #8f94fb 0%, #4e54c8 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(102, 109, 222, 0.5);
+}
+
+/* View/Hide Details Button */
+.view-btn-admin {
+  background-image: linear-gradient(to right, #1d976c 0%, #93f9b9 100%);
+  color: white;
+  padding: 10px 18px;
+  border-radius: 8px;
+  border: none;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(29, 151, 108, 0.4);
+}
+
+.view-btn-admin:hover {
+  background-image: linear-gradient(to right, #93f9b9 0%, #1d976c 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(29, 151, 108, 0.5);
+}
+
+/* Table container styling */
+.details-table-container {
+  margin-top: 30px;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.details-table-container h3 {
+  margin-bottom: 20px;
+  color: #333;
+  font-size: 1.5rem;
+  border-bottom: 2px solid #614385; /* Matching the gradient color */
+  padding-bottom: 10px;
+}
+
+.table-scroll-wrapper {
+  overflow-x: auto;
+}
+
+.details-table-container table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.details-table-container td {
+  padding: 12px 15px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.details-table-container tbody tr:hover {
+  background-color: #f7f9fa;
+}
+
+.no-data-msg {
+  text-align: center;
+  padding: 40px;
+  color: #777;
+  font-size: 1.1rem;
+}
+
+/* Action buttons in table */
+.action-buttons {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.edit-btn-table, .delete-btn-table {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.1em;
+}
+
+.edit-btn-table { color: #007bff; }
+.delete-btn-table { color: #dc3545; }
+
+
+/* ==== PROFESSIONAL BUTTON STYLING (YAHAN SE NAYA CODE SHURU HAI) ==== */
+
+/* View Branches Button */
+.view-branches-btn {
+  /* Existing styles removed, new gradient and hover */
+  background-image: linear-gradient(to right, #6a11cb 0%, #2575fc 100%); /* Purple-Blue Gradient */
+  color: white;
+  border: none;
+  padding: 8px 12px; /* Thoda bada padding */
+  border-radius: 20px; /* Pill-shaped */
+  cursor: pointer;
+  display: inline-flex; /* Icon aur text ko align karne ke liye */
+  align-items: center;
+  gap: 8px; /* Icon aur text ke beech space */
+  font-size: 13px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0, 123, 255, 0.3); /* Subtle shadow */
+  min-width: 110px; /* Minimum width */
+  justify-content: center;
+}
+
+.view-branches-btn:hover {
+  background-image: linear-gradient(to right, #2575fc 0%, #6a11cb 100%); /* Reverse gradient on hover */
+  box-shadow: 0 6px 15px rgba(0, 123, 255, 0.4);
+  transform: translateY(-1px); /* Thoda upar uthega */
+}
+
+/* View API Button */
+.view-api-btn {
+  /* Existing styles removed, new gradient and hover */
+  background-image: linear-gradient(to right, #00b09b 0%, #96c93d 100%); /* Green-Cyan Gradient */
+  color: white;
+  border: none;
+  padding: 7px 10px; /* Thoda chhota padding */
+  border-radius: 18px; /* Pill-shaped */
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 12px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  box-shadow: 0 3px 8px rgba(0, 176, 155, 0.3);
+  min-width: 90px;
+  justify-content: center;
+}
+
+.view-api-btn:hover {
+  background-image: linear-gradient(to right, #96c93d 0%, #00b09b 100%); /* Reverse gradient on hover */
+  box-shadow: 0 5px 12px rgba(0, 176, 155, 0.4);
+  transform: translateY(-1px);
+}
+
+
+/* ==== GRADIENT HEADER STYLES (NO CHANGE) ==== */
+
+/* Common style for all header cells */
+table th {
+    color: white;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.85em;
+    letter-spacing: 0.5px;
+    padding: 12px 15px;
+    background-color: transparent; /* Remove any solid color */
+}
+
+/* 1. Client Details Table Header (Main Table) */
+.details-table-container > .table-scroll-wrapper > table > thead {
+  background-image: linear-gradient(to right, #614385, #516395);
+}
+
+/* 2. Branch Details Table Header (First Level) */
+.branch-inner-table > thead {
+  background-image: linear-gradient(to right, #1A2980, #26D0CE);
+}
+
+/* 3. API Details Table Header (Second Level) */
+.api-inner-table > thead {
+  background-image: linear-gradient(to right, #606c88, #3f4c6b);
+}
+
+/* Main client row styling */
+.main-client-row td { border-bottom: 1px solid #e0e0e0; }
+
+/* Branch details row styling */
+.branch-details-row td {
+  padding: 0;
+  border: none;
+}
+.branch-details-wrapper {
+  padding: 16px;
+  background-color: #f8f9fa;
+  border-left: 4px solid #1A2980; /* Matching the gradient color */
+}
+.branch-details-wrapper h4 {
+  margin-top: 0;
+  margin-bottom: 12px;
+  color: #333;
+}
+
+/* Inner Branch Table */
+.branch-inner-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.branch-inner-table th, .branch-inner-table td {
+  border: 1px solid #dee2e6;
+  padding: 8px 12px;
+  text-align: left;
+  font-size: 14px;
+}
+.branch-inner-table tbody tr:nth-child(even) { background-color: #f8f9fa; }
+
+/* API details row styling */
+.api-details-row td {
+  padding: 0;
+  border: none;
+  box-shadow: inset 0 4px 6px -4px rgba(0,0,0,0.1);
+}
+.api-details-wrapper {
+  padding: 12px 24px;
+  background-color: #ffffff;
+}
+.api-details-wrapper h5 {
+  margin-top: 0;
+  margin-bottom: 10px;
+  color: #555;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+/* Inner API Table */
+.api-inner-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.api-inner-table th, .api-inner-table td {
+  border: 1px solid #e9ecef;
+  padding: 8px 12px;
+  text-align: left;
+  font-size: 13px;
+  word-break: break-all;
+}
