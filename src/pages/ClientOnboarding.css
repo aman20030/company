@@ -1,90 +1,118 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
-html, body{
-  height:auto;
-  overflow:auto !important;
-  padding-right: 25px;
+
+/* ===== BASE STYLES ===== */
+html, body {
+  height: auto;
+  overflow: auto !important;
+  padding-right: 0;
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  padding: 0;
 }
 
-.onboard-header{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin:10px 40px;
+/* ===== HEADER ===== */
+.onboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 10px 40px;
+  padding: 0 10px;
 }
 
-.actions{
-  display:flex;
-  gap:20px;
-  font-size:22px;
-  cursor:pointer;
+.onboard-header h2 {
+  margin: 0;
+  color: #2d3748;
+  font-weight: 600;
+  font-size: clamp(18px, 4vw, 24px);
 }
 
-.client-onboarding{
-  width:100%;
-  margin:15px auto;
+.actions {
+  display: flex;
+  gap: 20px;
+  font-size: 22px;
+  cursor: pointer;
+  color: #4a5568;
 }
 
-form{
-  width:100%;
-  background:#fff;
-  padding:15px;
-  border-radius:6px;
-  display:flex;
-  flex-direction:column;
-  gap:15px;
-   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-}
-
-.form-row{
-  display:flex;
-  gap:15px; /* ✅ Consistent gap */
-  flex-wrap:wrap;
-  align-items: flex-end; /* ✅ Align all items to bottom */
-}
-
-/* ✅ Base input styling - ALL inputs same height */
-input, select, textarea{
-  padding: 12px 10px;
-  font-size: 14px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  outline: none;
+/* ===== MAIN CONTAINER ===== */
+.client-onboarding {
+  width: 100%;
+  max-width: 1200px;
+  margin: 15px auto;
+  padding: 0 20px;
   box-sizing: border-box;
-  height: 44px; /* ✅ Fixed height for all inputs */
 }
 
-textarea {
-  height: 80px; /* Exception for textarea */
-  resize: vertical;
+/* ===== FORM STYLING ===== */
+form {
+  width: 100%;
+  background: #fff;
+  padding: 30px;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  border: 1px solid #e2e8f0;
+  box-sizing: border-box;
 }
 
+/* ===== FORM ROWS ===== */
+.form-row {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  align-items: flex-end;
+}
+
+/* ===== INPUT GROUPS ===== */
 .input-group {
   position: relative;
   flex: 1;
-  min-width: 200px; /* ✅ Minimum width for consistency */
+  min-width: 250px;
   font-family: 'Poppins', sans-serif;
 }
 
-.input-group input {
+.input-group input,
+.input-group select,
+.input-group textarea {
   width: 100%;
-  padding: 12px 10px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
+  padding: 12px 16px;
+  border: 2px solid #e2e8f0;
+  border-radius: 8px;
   outline: none;
   font-size: 14px;
+  font-family: 'Poppins', sans-serif;
   background: white;
-  height: 44px; /* ✅ Same height as other inputs */
+  height: 50px;
   box-sizing: border-box;
+  transition: all 0.3s ease;
 }
 
+.input-group textarea {
+  height: 120px;
+  resize: vertical;
+  padding-top: 16px;
+}
+
+.input-group input:focus,
+.input-group select:focus,
+.input-group textarea:focus {
+  border-color: #2F4EE8;
+  box-shadow: 0 0 0 3px rgba(47, 78, 232, 0.1);
+}
+
+/* ===== FLOATING LABELS ===== */
 .input-group label {
   position: absolute;
-  left: 12px;
-  top: 12px;
-  color: #888;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #718096;
   font-size: 14px;
+  font-weight: 500;
   background: white;
-  transition: 0.2s ease all;
+  transition: all 0.3s ease;
   padding: 0 4px;
   pointer-events: none;
   z-index: 1;
@@ -92,516 +120,727 @@ textarea {
 
 .input-group input:focus + label,
 .input-group input:valid + label,
-.input-group input:not(:placeholder-shown) + label {
+.input-group input:not(:placeholder-shown) + label,
+.input-group input[value]:not([value=""]) + label,
+.input-group select:focus + label,
+.input-group select:valid + label,
+.input-group select:not([value=""]) + label,
+.input-group textarea:focus + label,
+.input-group textarea:valid + label,
+.input-group textarea:not(:placeholder-shown) + label {
   top: -8px;
-  left: 8px;
+  left: 12px;
   font-size: 12px;
   color: #2F4EE8;
+  font-weight: 600;
+  transform: translateY(0);
 }
 
-/* ✅ Phone input group - same structure */
+/* ===== PHONE INPUT ===== */
 .phone-input-group {
   flex: 1;
   position: relative;
-  min-width: 200px;
-   z-index: 2000;
+  min-width: 250px;
+  z-index: 100;
 }
 
 .phone-input-group label {
   position: absolute;
   top: -8px;
-  left: 8px;
+  left: 12px;
   font-size: 12px;
   background: white;
   color: #2F4EE8;
+  font-weight: 600;
   padding: 0 4px;
   z-index: 10;
 }
 
-/* ✅ Phone field styling to match other inputs */
 .phone-field {
   width: 100% !important;
-  height: 44px !important;
+  height: 50px !important;
   font-size: 14px !important;
-  border: 1px solid #ccc !important;
-  border-radius: 6px !important;
+  border: 2px solid #e2e8f0 !important;
+  border-radius: 8px !important;
   box-sizing: border-box !important;
+  font-family: 'Poppins', sans-serif !important;
 }
 
 .react-tel-input .form-control {
   width: 100% !important;
-  height: 44px !important;
-  border: 1px solid #ccc !important;
-  border-radius: 6px !important;
+  height: 50px !important;
+  border: 2px solid #e2e8f0 !important;
+  border-radius: 8px !important;
+  font-family: 'Poppins', sans-serif !important;
 }
 
-/* ✅ Upload input wrapper - consistent with other inputs */
-.upload-input-wrapper{
+.react-tel-input .form-control:focus {
+  border-color: #2F4EE8 !important;
+  box-shadow: 0 0 0 3px rgba(47, 78, 232, 0.1) !important;
+}
+
+/* ===== UPLOAD INPUTS ===== */
+.upload-input-wrapper {
   position: relative;
   flex: 1;
-  min-width: 200px;
-  height: 44px; /* ✅ Same height container */
+  min-width: 250px;
+  height: 50px;
 }
 
-.upload-input-wrapper input[type='text']{
+.upload-input-wrapper input[type='text'] {
   width: 100%;
-  padding: 12px 80px 12px 12px; /* ✅ Space for button */
-  border: 1px solid #ccc;
-  border-radius: 6px;
+  padding: 12px 80px 12px 16px;
+  border: 2px solid #e2e8f0;
+  border-radius: 8px;
   cursor: pointer;
-  height: 44px;
+  height: 50px;
   box-sizing: border-box;
   font-size: 14px;
+  font-family: 'Poppins', sans-serif;
+  background: white;
 }
 
-.upload-input-wrapper button{
+.upload-input-wrapper .gradient-upload-btn {
   position: absolute;
   top: 50%;
   right: 4px;
   transform: translateY(-50%);
-  background: #244EE8;
-  color: white;
-  padding: 6px 14px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 12px;
-  height: 32px;
+  background: linear-gradient(135deg, #F957A2, #6A67F3) !important;
+  color: white !important;
+  padding: 8px 16px !important;
+  border: none !important;
+  border-radius: 6px !important;
+  cursor: pointer !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  height: 40px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  transition: all 0.3s ease !important;
+  box-shadow: 0 2px 8px rgba(175, 102, 232, 0.3) !important;
 }
 
-/* ✅ Standalone inputs without input-group */
-input[name='geoLocation'] {
-  flex: 0.8;
-  min-width: 150px;
-  height: 44px;
-  padding: 12px 10px;
-  font-size: 14px;
+.upload-input-wrapper .gradient-upload-btn:hover {
+  transform: translateY(-50%) scale(1.05) !important;
+  box-shadow: 0 4px 12px rgba(175, 102, 232, 0.5) !important;
 }
 
-/* ✅ Date inputs - consistent styling */
-input[type="date"],
-input[name="contractStart"],
-input[name="contractEnd"] {
-  height: 44px !important;
-  padding: 12px 10px !important;
+/* ===== CONTRACT SECTIONS ===== */
+.section-title-clientonboarding {
+  color: #2d3748;
+  font-size: clamp(16px, 3vw, 18px);
+  font-weight: 600;
+  margin: 30px 0 20px 0;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #e2e8f0;
 }
 
-.branch-buttons{
+.contracts-container-clientonboarding {
   display: flex;
-  justify-content: flex-end;
-  gap: 10px;
-  margin-top: 10px;
+  flex-direction: column;
+  gap: 20px;
+  background: #f8fafc;
+  padding: 25px;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
 }
 
-/* ✅ Updated Branch Buttons as per requirement */
-.branch-buttons button {
-  background: #2F4EE8;  /* Blue background */
-  color: #ffffff;      /* White text color */
-  border: none;         /* Border hata diya, solid color pe accha lagega */
-  padding: 8px 16px;
-  border-radius: 50px;
+.contract-row-clientonboarding {
+  display: flex;
+  gap: 20px;
+  align-items: flex-end;
+  padding: 20px;
+  background: white;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  flex-wrap: wrap;
+}
+
+.input-group-clientonboarding {
+  position: relative;
+  flex: 1;
+  min-width: 200px;
+}
+
+.input-group-clientonboarding input {
+  width: 100%;
+  padding: 12px 16px;
+  border: 2px solid #e2e8f0;
+  border-radius: 8px;
+  outline: none;
+  font-size: 14px;
+  font-family: 'Poppins', sans-serif;
+  height: 50px;
+  box-sizing: border-box;
+  transition: all 0.3s ease;
+}
+
+.input-group-clientonboarding input:focus {
+  border-color: #2F4EE8;
+  box-shadow: 0 0 0 3px rgba(47, 78, 232, 0.1);
+}
+
+.input-group-clientonboarding label {
+  position: absolute;
+  left: 16px;
+  top: -8px;
+  font-size: 12px;
+  background: white;
+  color: #2F4EE8;
+  font-weight: 600;
+  padding: 0 4px;
+}
+
+/* ===== UPDATED CONTRACT FILE UPLOAD STYLING ===== */
+.file-upload-group-clientonboarding {
+  position: relative;
+  flex: 1;
+  min-width: 200px;
+  height: 50px;
+}
+
+.file-upload-display {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 50px;
+}
+
+.file-upload-btn {
+  flex: 1;
+  height: 50px;
+  background: linear-gradient(135deg, #667eea, #764ba2) !important;
+  color: white !important;
+  border: none !important;
+  border-radius: 8px !important;
+  cursor: pointer !important;
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  transition: all 0.3s ease !important;
+  padding: 12px 16px !important;
+  box-sizing: border-box !important;
+  font-family: 'Poppins', sans-serif !important;
+  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3) !important;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  max-width: calc(100% - 56px);
+}
+
+.file-upload-btn:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 4px 12px rgba(118, 75, 162, 0.4) !important;
+  background: linear-gradient(135deg, #5a67d8, #6b46c1) !important;
+}
+
+.download-file-btn {
+  width: 48px !important;
+  height: 48px !important;
+  background: linear-gradient(135deg, #48bb78, #38a169) !important;
+  color: white !important;
+  border: none !important;
+  border-radius: 8px !important;
+  cursor: pointer !important;
+  font-size: 16px !important;
+  font-weight: 600 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  transition: all 0.3s ease !important;
+  box-shadow: 0 2px 8px rgba(72, 187, 120, 0.3) !important;
+  flex-shrink: 0;
+}
+
+.download-file-btn:hover {
+  transform: translateY(-2px) scale(1.05) !important;
+  box-shadow: 0 4px 12px rgba(72, 187, 120, 0.5) !important;
+  background: linear-gradient(135deg, #38a169, #2f855a) !important;
+}
+
+.file-upload-display .file-upload-btn:only-child {
+  max-width: 100%;
+}
+
+.add-contract-btn-clientonboarding {
+  background: linear-gradient(135deg, #48bb78, #38a169);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
   cursor: pointer;
-  font-family: Lexend;
-   font-size: 0.85rem;
-  height: 40px;
-  font-weight: 600; /* Text ko thoda bold kar diya for better look */
-  transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transition */
-   display: inline-flex;
+  font-size: 14px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  align-self: flex-start;
+  transition: all 0.3s ease;
+}
+
+.add-contract-btn-clientonboarding:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(72, 187, 120, 0.4);
+}
+
+.remove-contract-btn-clientonboarding {
+  background: linear-gradient(135deg, #f56565, #e53e3e);
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  height: 50px;
+  width: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+}
+
+.remove-contract-btn-clientonboarding:hover {
+  transform: translateY(-2px) scale(1.1);
+  box-shadow: 0 4px 12px rgba(245, 101, 101, 0.4);
+}
+
+/* ===== SLA SECTION ===== */
+.sla-section {
+  margin-top: 20px;
+}
+
+.sla-section .input-group {
+  width: 100%;
+}
+
+.sla-section textarea {
+  width: 100%;
+  height: 120px;
+  resize: vertical;
+}
+
+/* ===== ADDITIONAL BRANCHES SECTION ===== */
+.additional-branches-section {
+  margin-top: 30px;
+  padding: 25px;
+  background: #f8fafc;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.additional-branches-section h3 {
+  margin: 0;
+  color: #2d3748;
+  font-weight: 600;
+  font-size: clamp(16px, 3vw, 18px);
+  display: flex;
+  align-items: center;
+}
+
+.additional-branches-section h3::before {
+  content: '';
+  display: inline-block;
+  width: 4px;
+  height: 20px;
+  background: #2F4EE8;
+  margin-right: 12px;
+  border-radius: 2px;
+}
+
+.branch-count-badge {
+  background: #2F4EE8;
+  color: white;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+  margin-left: 8px;
+}
+
+.branch-buttons {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.branch-buttons .gradient-button {
+  background: linear-gradient(135deg, #F957A2, #6A67F3);
+  border: none;
+  color: white;
+  padding: 12px 24px;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(175, 102, 232, 0.4);
+  display: flex;
   align-items: center;
   gap: 8px;
 }
 
-/* Optional: Hover effect for better user experience */
-.branch-buttons button:hover {
-  background: #1e3fd6; /* Thoda dark blue on hover */
-  transform: translateY(-2px); /* Button thoda upar uthega */
+.branch-buttons .gradient-button:hover {
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 6px 20px rgba(175, 102, 232, 0.6);
 }
 
-.sla-section {
-  margin-top: 10px;
+/* ===== INLINE BRANCH LIST ===== */
+.inline-branch-list {
+  margin-top: 30px;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 25px;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  background: #f8fafc;
+  animation: fadeInUp 0.5s ease;
+  overflow-x: auto;
 }
 
-.sla-section label {
-  display: block;
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.inline-branch-list .modal-header-bar {
+  background: transparent;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 0 20px 0;
+  border-bottom: 2px solid #e2e8f0;
+  margin-bottom: 25px;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.inline-branch-list .modal-header-bar h3 {
+  color: #2d3748;
+  margin: 0;
+  font-size: clamp(18px, 4vw, 20px);
+  font-weight: 600;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.add-branch-header-btn {
+  background: linear-gradient(135deg, #F957A2, #6A67F3);
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(175, 102, 232, 0.4);
+  white-space: nowrap;
+}
+
+.add-branch-header-btn:hover {
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 6px 20px rgba(175, 102, 232, 0.6);
+}
+
+/* ===== BRANCH SUMMARY ===== */
+.branch-summary {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  margin: 25px 0;
+  flex-wrap: wrap;
+}
+
+.summary-box {
+  background: white;
+  border: 2px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 20px 30px;
+  text-align: center;
+  min-width: 180px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  flex: 1;
+  max-width: 250px;
+}
+
+.summary-box:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  border-color: #2F4EE8;
+}
+
+.summary-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #718096;
   margin-bottom: 8px;
-  color: #0d2db8;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
 }
 
-.sla-section textarea{
+.summary-count {
+  font-size: clamp(24px, 6vw, 32px);
+  font-weight: 700;
+  color: #2F4EE8;
+}
+
+/* ===== EMPTY STATE ===== */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 40px;
+  text-align: center;
+}
+
+.empty-state p {
+  font-size: clamp(16px, 3vw, 18px);
+  color: #718096;
+  margin-bottom: 30px;
+  font-weight: 500;
+}
+
+.add-first-branch-btn {
+  background: linear-gradient(135deg, #F957A2, #6A67F3);
+  border: none;
+  color: white;
+  padding: 15px 30px;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(175, 102, 232, 0.4);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.add-first-branch-btn:hover {
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 8px 25px rgba(175, 102, 232, 0.6);
+}
+
+/* ===== BRANCH TABLE ===== */
+.branch-list-scroll {
+  overflow-x: auto;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  background: white;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+.branch-table {
   width: 100%;
-  height: 80px;
-  margin-top: 0;
-  resize: vertical;
+  min-width: 1000px;
+  border-collapse: collapse;
+  font-size: clamp(12px, 2.5vw, 14px);
 }
-.city-input, 
-.country-input {
-  flex: 0.5;   /* ✅ Half width */
-  min-width: 150px;
+
+.branch-table thead {
+  background: linear-gradient(135deg, #667eea, #764ba2);
 }
-/* ✅ Button Wrapper - Complete Transparent */
+
+.branch-table th {
+  padding: 15px 12px;
+  text-align: left;
+  font-weight: 600;
+  color: white;
+  font-size: clamp(11px, 2.2vw, 13px);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-right: 1px solid rgba(255, 255, 255, 0.2);
+  white-space: nowrap;
+}
+
+.branch-table th:last-child {
+  border-right: none;
+}
+
+.branch-table td {
+  padding: 15px 12px;
+  border-bottom: 1px solid #e2e8f0;
+  border-right: 1px solid #e2e8f0;
+  color: #4a5568;
+  font-weight: 500;
+  word-wrap: break-word;
+  max-width: 150px;
+}
+
+.branch-table td:last-child {
+  border-right: none;
+}
+
+.branch-table tbody tr {
+  transition: all 0.2s ease;
+}
+
+.branch-table tbody tr:hover {
+  background: #f7fafc;
+  transform: scale(1.01);
+}
+
+.branch-actions-table {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: nowrap;
+}
+
+.branch-actions-table .edit-btn {
+  background: linear-gradient(135deg, #48bb78, #38a169);
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+}
+
+.branch-actions-table .edit-btn:hover {
+  transform: translateY(-2px) scale(1.1);
+  box-shadow: 0 4px 12px rgba(72, 187, 120, 0.4);
+}
+
+.branch-actions-table .delete-btn {
+  background: linear-gradient(135deg, #f56565, #e53e3e);
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+}
+
+.branch-actions-table .delete-btn:hover {
+  transform: translateY(-2px) scale(1.1);
+  box-shadow: 0 4px 12px rgba(245, 101, 101, 0.4);
+}
+
+/* ===== SUBMIT BUTTONS ===== */
 .btn-wrapper {
   background: none !important;
   padding: 0 !important;
   border: none !important;
   display: flex !important;
   justify-content: center !important;
-  gap: 15px !important;
+  gap: 20px !important;
   width: 100% !important;
-  margin: 25px auto !important;
+  margin: 40px auto !important;
 }
 
-/* ✅ Button Row - Complete Transparent */
 .button-row {
-  display: flex !important;
-  justify-content: center !important;
-  align-items: center !important;
-  gap: 15px !important;
-  margin: 25px auto !important;
-  padding: 0 !important;
-  background: none !important;
-  border: none !important;
-  box-shadow: none !important;
-  width: 100% !important;
-}
-
-/* ✅ Submit Button - Individual Styling Only */
-.submit-btn,
-.submit-btn button,
-button.submit-btn {
-  background: linear-gradient(135deg, #ff6b9d 0%, #c44569 25%, #3c6382 75%, #2F4EE8 100%) !important;
-  color: white !important;
-  border: none !important;
-  border-radius: 12px !important;
-  padding: 12px 28px !important;
-  cursor: pointer !important;
-  outline: none !important;
-  box-shadow: 0 4px 15px rgba(255, 107, 157, 0.3) !important;
-  font-size: 14px !important;
-  font-weight: 700 !important;
-  min-width: 120px !important;
-  height: 44px !important;
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  margin: 0 !important;
-  transition: all 0.3s ease !important;
-  letter-spacing: 0.5px !important;
-  text-transform: uppercase !important;
-  position: relative !important;
-  overflow: hidden !important;
-}
-
-
-.submit-btn:hover,
-.submit-btn button:hover,
-button.submit-btn:hover {
-  background: linear-gradient(135deg, #ff5582 0%, #b33951 25%, #2f5582 75%, #1e3fd6 100%) !important;
-  transform: translateY(-3px) scale(1.02) !important;
-  box-shadow: 0 8px 25px rgba(255, 107, 157, 0.4) !important;
-}
-/* Animated Gradient Effect */
-.submit-btn::before,
-.submit-btn button::before,
-button.submit-btn::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-  transition: left 0.5s;
-}
-
-.submit-btn:hover::before,
-.submit-btn button:hover::before,
-button.submit-btn:hover::before {
-  left: 100%;
-}
-
-/* ✅ Clear Button - Individual Styling Only */
-.clear-btn,
-button.clear-btn {
-  background: linear-gradient(135deg, #FFD54F 0%, #FF8A65 50%, #ff6b9d 100%) !important;
-  color: white !important;
-  font-weight: 700 !important;
-  padding: 12px 28px !important;
-  border: none !important;
-  border-radius: 12px !important;
-  cursor: pointer !important;
-  font-size: 14px !important;
-  outline: none !important;
-  box-shadow: 0 4px 15px rgba(255, 138, 101, 0.3) !important;
-  min-width: 120px !important;
-  height: 44px !important;
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  margin: 0 !important;
-  transition: all 0.3s ease !important;
-  letter-spacing: 0.5px !important;
-  text-transform: uppercase !important;
-  position: relative !important;
-  overflow: hidden !important;
-}
-
-.clear-btn:hover,
-button.clear-btn:hover {
-  background: linear-gradient(135deg, #FFC107 0%, #FF7043 50%, #ff5582 100%) !important;
-  transform: translateY(-3px) scale(1.02) !important;
-  box-shadow: 0 8px 25px rgba(255, 138, 101, 0.5) !important;
-}
-/* Button Container */
-.btn-wrapper,
-.button-row {
-  background: none !important;
-  padding: 0 !important;
-  border: none !important;
   display: flex !important;
   justify-content: center !important;
   align-items: center !important;
   gap: 20px !important;
-  width: 100% !important;
-  margin: 30px auto !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  background: none !important;
+  border: none !important;
   box-shadow: none !important;
+  width: 100% !important;
+  flex-wrap: wrap;
 }
 
-/* Modal Overlay */
-.modal-overlay {
-  position: fixed;
-  top: 0; 
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.3);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
+.submit-btn {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #2F4EE8 100%) !important;
+  color: white !important;
+  border: none !important;
+  border-radius: 12px !important;
+  padding: 15px 35px !important;
+  cursor: pointer !important;
+  outline: none !important;
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4) !important;
+  font-size: clamp(14px, 3vw, 16px) !important;
+  font-weight: 700 !important;
+  min-width: 140px !important;
+  height: 54px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  margin: 0 !important;
+  transition: all 0.3s ease !important;
+  letter-spacing: 0.8px !important;
+  text-transform: uppercase !important;
+  position: relative !important;
+  overflow: hidden !important;
 }
 
-/* Modal Content - small popup */
-.modal-content {
-  min-height: auto;
-  background: #fff;
-  padding: 20px;
-  border-radius: 12px;
-  max-width: 90%;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-  position: relative;
-  margin: 0;
+.submit-btn:hover {
+  background: linear-gradient(135deg, #5a67d8 0%, #6b46c1 50%, #1e3fd6 100%) !important;
+  transform: translateY(-3px) scale(1.05) !important;
+  box-shadow: 0 10px 30px rgba(102, 126, 234, 0.6) !important;
 }
 
-.modal-header-bar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: #1c9ba5;
-  color: white;
-  padding: 10px 15px;
-  border-radius: 8px 8px 0 0;
+.clear-btn {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 50%, #4facfe 100%) !important;
+  color: white !important;
+  font-weight: 700 !important;
+  padding: 15px 35px !important;
+  border: none !important;
+  border-radius: 12px !important;
+  cursor: pointer !important;
+  font-size: clamp(14px, 3vw, 16px) !important;
+  outline: none !important;
+  box-shadow: 0 6px 20px rgba(240, 147, 251, 0.4) !important;
+  min-width: 140px !important;
+  height: 54px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  margin: 0 !important;
+  transition: all 0.3s ease !important;
+  letter-spacing: 0.8px !important;
+  text-transform: uppercase !important;
+  position: relative !important;
+  overflow: hidden !important;
 }
 
-.modal-header-bar h3 {
-  margin: 0;
-  font-size: 18px;
+.clear-btn:hover {
+  background: linear-gradient(135deg, #e879f9 0%, #f43f5e 50%, #3b82f6 100%) !important;
+  transform: translateY(-3px) scale(1.05) !important;
+  box-shadow: 0 10px 30px rgba(240, 147, 251, 0.6) !important;
 }
 
-.close-btn {
-  background: transparent;
-  border: none;
-  font-size: 22px;
-  color: white;
-  cursor: pointer;
-}
-
-.map-wrapper {
-  margin-top: 10px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  overflow: hidden;
-}
-
-.selected-address {
-  margin-top: 12px;
-  padding: 10px;
-  background: #e6f5f5;
-  border: 1px solid #cdecec;
-  border-radius: 6px;
-  font-size: 14px;
-}
-
-.modal-actions {
-  display: flex;
-  justify-content: flex-end;
-  gap: 10px;
-  margin-top: 15px;
-}
-
-.btn-cancel {
-  background: #ddd;
-  border: none;
-  padding: 8px 16px;
-  border-radius: 6px;
-  cursor: pointer;
-}
-
-.btn-select {
-  background: #1c9ba5;
-  color: white;
-  border: none;
-  padding: 8px 16px;
-  border-radius: 6px;
-  cursor: pointer;
-}
-
-.branch-cards {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 15px;
-}
-
-.branch-card {
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  padding: 12px 16px;
-  background-color: #f9f9f9;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-  transition: transform 0.2s ease-in-out;
-}
-
-.branch-card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-}
-
-.branch-card h3 {
-  margin: 0 0 8px 0;
-  color: #1c9ba5;
-}
-
-.branch-card p {
-  margin: 4px 0;
-  font-size: 14px;
-}
-
-/* ✅ Branch List Scrollable */
-.branch-list-scroll {
-  max-height: 400px;
-  overflow-y: auto;
-  padding-right: 10px;
-}
-
-.branch-list-scroll::-webkit-scrollbar {
-  width: 6px;
-}
-
-.branch-list-scroll::-webkit-scrollbar-thumb {
-  background: #1c9ba5;
-  border-radius: 4px;
-}
-
-.branch-list-scroll::-webkit-scrollbar-track {
-  background: #f1f1f1;
-}
-
-.branch-actions {
-  display: flex;
-  justify-content: flex-end;
-  gap: 10px;
-  margin-top: 10px;
-}
-
-.edit-btn {
-  background-color: #4caf50;
-  color: white;
-  border: none;
-  padding: 6px 12px;
-  border-radius: 6px;
-  cursor: pointer;
-  font-weight: 600;
-}
-
-.delete-btn {
-  background-color: #f44336;
-  color: white;
-  border: none;
-  padding: 6px 12px;
-  border-radius: 6px;
-  cursor: pointer;
-  font-weight: 600;
-}
-
-.edit-btn:hover {
-  background-color: #45a049;
-}
-
-.delete-btn:hover {
-  background-color: #d32f2f;
-}
-.city-input, 
-.country-input {
-  flex: 0.5;   /* ✅ Half width */
-  min-width: 150px;
-}
-
-
-/* ✅ Responsive Design */
-@media (max-width: 768px) {
-  .form-row {
-    flex-direction: column;
-    gap: 15px;
-  }
-  
-  .form-row > * {
-    flex: 1 1 100%;
-    min-width: 100%;
-  }
-
-  .input-group,
-  .phone-input-group,
-  .upload-input-wrapper {
-    min-width: 100%;
-  }
-
-  .client-onboarding {
-    margin-left: 0 !important;
-    width: 100%;
-    padding: 10px;
-    max-height: none;
-    overflow-y: visible;
-  }
-
-  .btn-wrapper {
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: center !important;
-    background: none !important;
-    gap: 12px !important;
-    margin: 25px auto !important;
-    padding: 0 !important;
-  }
-  
-  .button-row {
-    flex-direction: column !important;
-    gap: 12px !important;
-    background: none !important;
-    padding: 0 !important;
-  }
-  
-  .submit-btn button,
-  button.submit-btn,
-  .clear-btn,
-  button.clear-btn {
-    min-width: 120px !important;
-    width: auto !important;
-  }
-}
-
-
-
-
-/* ✅ Modal Overlay - Modern Design with better centering */
+/* ===== MODAL STYLING ===== */
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -613,7 +852,7 @@ button.clear-btn:hover {
   justify-content: center;
   align-items: center;
   z-index: 1000;
-  backdrop-filter: blur(5px);
+  backdrop-filter: blur(8px);
   animation: fadeIn 0.3s ease;
   padding: 20px;
   box-sizing: border-box;
@@ -624,14 +863,14 @@ button.clear-btn:hover {
   to { opacity: 1; }
 }
 
-/* ✅ Modal Content - Much smaller height for better visibility */
 .modal-content {
   background: #ffffff;
   border-radius: 16px;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
-  max-width: 85%;
-  max-height: 85vh;
-  width: 900px;
+  box-shadow: 0 25px 80px rgba(0, 0, 0, 0.3);
+  max-width: 95%;
+  max-height: 90vh;
+  width: 100%;
+  max-width: 900px;
   display: flex;
   flex-direction: column;
   animation: slideUp 0.4s ease;
@@ -641,17 +880,16 @@ button.clear-btn:hover {
 
 @keyframes slideUp {
   from {
-    transform: translateY(30px);
+    transform: translateY(30px) scale(0.95);
     opacity: 0;
   }
   to {
-    transform: translateY(0);
+    transform: translateY(0) scale(1);
     opacity: 1;
   }
 }
 
-/* ✅ Modal Header - Professional */
-.modal-header-bar {
+.modal-content .modal-header-bar {
   background: linear-gradient(135deg, #2F4EE8, #1E3FD6);
   color: white;
   padding: 20px 25px;
@@ -661,9 +899,9 @@ button.clear-btn:hover {
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.modal-header-bar h3 {
+.modal-content .modal-header-bar h3 {
   margin: 0;
-  font-size: 20px;
+  font-size: clamp(16px, 4vw, 20px);
   font-weight: 600;
   letter-spacing: 0.5px;
 }
@@ -682,6 +920,7 @@ button.clear-btn:hover {
   align-items: center;
   justify-content: center;
   transition: all 0.3s ease;
+  flex-shrink: 0;
 }
 
 .close-btn:hover {
@@ -689,22 +928,561 @@ button.clear-btn:hover {
   transform: scale(1.1);
 }
 
-/* ✅ Branch List Container - Much more conservative height */
-.branch-list-scroll {
-  flex: 1;
+.branch-form-container {
+  padding: 0;
+  max-height: calc(90vh - 100px);
   overflow-y: auto;
-  padding: 15px 20px 50px 20px;
-  background: #f8faff;
-  min-height: 0;
-  max-height: calc(85vh - 150px);
 }
 
+/* ===== LOCATION MODAL ===== */
+.location-modal {
+  width: 100%;
+  max-width: 800px;
+}
+
+.map-wrapper {
+  margin-top: 15px;
+  border: 2px solid #e2e8f0;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.selected-address {
+  margin-top: 15px;
+  padding: 15px;
+  background: #f0f8ff;
+  border: 2px solid #bfdbfe;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #1e40af;
+  word-break: break-all;
+}
+
+.selected-address b {
+  color: #1e3a8a;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 15px;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+
+.btn-cancel {
+  background: #e2e8f0;
+  color: #4a5568;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.btn-cancel:hover {
+  background: #cbd5e0;
+}
+
+.btn-select {
+  background: linear-gradient(135deg, #2F4EE8, #1E3FD6);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.btn-select:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(47, 78, 232, 0.4);
+}
+
+/* ===== ENHANCED RESPONSIVE BREAKPOINTS ===== */
+
+/* Large tablets and small laptops */
+@media (max-width: 1024px) {
+  .onboard-header {
+    margin: 10px 20px;
+  }
+  
+  .client-onboarding {
+    padding: 0 15px;
+  }
+  
+  .input-group,
+  .phone-input-group,
+  .upload-input-wrapper {
+    min-width: 220px;
+  }
+  
+  .branch-table {
+    min-width: 900px;
+    font-size: 13px;
+  }
+  
+  .branch-table th,
+  .branch-table td {
+    padding: 12px 10px;
+  }
+  
+  .contracts-container-clientonboarding {
+    padding: 20px;
+  }
+  
+  .contract-row-clientonboarding {
+    padding: 18px;
+  }
+}
+
+/* Standard tablets */
+@media (max-width: 768px) {
+  .onboard-header {
+    margin: 10px 15px;
+    flex-wrap: wrap;
+    gap: 15px;
+  }
+  
+  .onboard-header h2 {
+    font-size: 20px;
+  }
+
+  .client-onboarding {
+    margin: 10px;
+    padding: 0 10px;
+  }
+
+  form {
+    padding: 20px;
+    gap: 20px;
+  }
+
+  .form-row {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .form-row > * {
+    flex: 1 1 100%;
+    min-width: 100%;
+  }
+
+  .input-group,
+  .phone-input-group,
+  .upload-input-wrapper,
+  .input-group-clientonboarding,
+  .file-upload-group-clientonboarding {
+    min-width: 100%;
+  }
+
+  .contract-row-clientonboarding {
+    flex-direction: column;
+    gap: 15px;
+    padding: 15px;
+  }
+
+  .file-upload-display {
+    flex-direction: column;
+    gap: 10px;
+    height: auto;
+  }
+
+  .file-upload-btn {
+    max-width: 100%;
+  }
+
+  .download-file-btn {
+    width: 100% !important;
+    height: 48px !important;
+  }
+
+  .additional-branches-section {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+    padding: 20px;
+  }
+
+  .branch-buttons {
+    width: 100%;
+    justify-content: stretch;
+  }
+
+  .branch-buttons .gradient-button {
+    flex: 1;
+    justify-content: center;
+    min-width: 0;
+  }
+
+  .inline-branch-list {
+    margin: 20px 10px;
+    padding: 15px;
+  }
+
+  .inline-branch-list .modal-header-bar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+    padding-bottom: 15px;
+  }
+
+  .add-branch-header-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .branch-summary {
+    flex-direction: column;
+    gap: 15px;
+    align-items: stretch;
+  }
+
+  .summary-box {
+    min-width: 100%;
+    max-width: none;
+  }
+
+  .branch-table {
+    min-width: 800px;
+    font-size: 12px;
+  }
+
+  .branch-table th,
+  .branch-table td {
+    padding: 10px 8px;
+  }
+
+  .btn-wrapper {
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 15px !important;
+  }
+
+  .button-row {
+    flex-direction: column !important;
+    gap: 15px !important;
+    width: 100% !important;
+  }
+
+  .submit-btn,
+  .clear-btn {
+    width: 100% !important;
+    max-width: 300px !important;
+  }
+
+  .modal-content {
+    width: 95%;
+    margin: 10px;
+    max-height: 90vh;
+  }
+
+  .location-modal {
+    width: 95%;
+  }
+
+  .branch-form-container {
+    max-height: calc(90vh - 80px);
+  }
+
+  .modal-header-bar {
+    padding: 15px 20px !important;
+  }
+
+  .modal-actions {
+    justify-content: stretch;
+  }
+
+  .btn-cancel,
+  .btn-select {
+    flex: 1;
+    text-align: center;
+  }
+}
+
+/* Small tablets and large phones */
+@media (max-width: 600px) {
+  .contracts-container-clientonboarding {
+    padding: 15px;
+  }
+  
+  .contract-row-clientonboarding {
+    padding: 12px;
+  }
+  
+  .empty-state {
+    padding: 60px 20px;
+  }
+  
+  .branch-actions-table {
+    flex-direction: column;
+    gap: 5px;
+  }
+  
+  .branch-actions-table .edit-btn,
+  .branch-actions-table .delete-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* Mobile phones */
+@media (max-width: 480px) {
+  .client-onboarding {
+    margin: 5px;
+    padding: 0 5px;
+  }
+
+  form {
+    padding: 15px;
+  }
+
+  .input-group input,
+  .input-group select,
+  .input-group textarea,
+  .input-group-clientonboarding input {
+    height: 48px;
+    padding: 10px 14px;
+    font-size: 14px;
+  }
+
+  .upload-input-wrapper input[type='text'] {
+    padding: 10px 70px 10px 14px;
+  }
+
+  .upload-input-wrapper .gradient-upload-btn {
+    height: 36px !important;
+    right: 6px !important;
+    padding: 6px 12px !important;
+    font-size: 12px !important;
+  }
+
+  .contracts-container-clientonboarding {
+    padding: 12px;
+  }
+
+  .contract-row-clientonboarding {
+    padding: 12px;
+    gap: 12px;
+  }
+
+  .file-upload-btn {
+    height: 48px !important;
+    font-size: 13px !important;
+    padding: 10px 14px !important;
+  }
+
+  .download-file-btn {
+    height: 48px !important;
+  }
+
+  .remove-contract-btn-clientonboarding {
+    height: 48px !important;
+    width: 48px !important;
+    font-size: 14px;
+  }
+
+  .section-title-clientonboarding {
+    font-size: 16px;
+  }
+
+  .additional-branches-section {
+    padding: 15px;
+  }
+
+  .additional-branches-section h3 {
+    font-size: 16px;
+  }
+
+  .branch-buttons .gradient-button {
+    padding: 10px 20px;
+    font-size: 13px;
+  }
+
+  .inline-branch-list {
+    padding: 10px;
+  }
+
+  .branch-summary {
+    gap: 10px;
+  }
+
+  .summary-box {
+    padding: 15px 20px;
+  }
+
+  .summary-count {
+    font-size: 24px;
+  }
+
+  .branch-table {
+    min-width: 700px;
+    font-size: 11px;
+  }
+
+  .branch-table th,
+  .branch-table td {
+    padding: 8px 6px;
+  }
+
+  .modal-content {
+    width: 98%;
+    margin: 5px;
+    max-height: 95vh;
+  }
+
+  .modal-header-bar {
+    padding: 12px 15px !important;
+  }
+
+  .modal-header-bar h3 {
+    font-size: 16px !important;
+  }
+
+  .close-btn {
+    width: 35px;
+    height: 35px;
+    font-size: 16px;
+  }
+
+  .selected-address {
+    padding: 12px;
+    font-size: 13px;
+  }
+
+  .btn-cancel,
+  .btn-select {
+    padding: 12px 16px;
+    font-size: 14px;
+  }
+}
+
+/* Extra small phones */
+@media (max-width: 360px) {
+  .client-onboarding {
+    margin: 2px;
+    padding: 0 2px;
+  }
+
+  form {
+    padding: 12px;
+  }
+
+  .input-group input,
+  .input-group select,
+  .input-group textarea,
+  .input-group-clientonboarding input {
+    height: 46px;
+    padding: 8px 12px;
+    font-size: 13px;
+  }
+
+  .phone-field {
+    height: 46px !important;
+    font-size: 13px !important;
+  }
+
+  .react-tel-input .form-control {
+    height: 46px !important;
+  }
+
+  .upload-input-wrapper input[type='text'] {
+    padding: 8px 65px 8px 12px;
+  }
+
+  .upload-input-wrapper .gradient-upload-btn {
+    height: 34px !important;
+    right: 6px !important;
+    padding: 5px 10px !important;
+    font-size: 11px !important;
+  }
+
+  .contracts-container-clientonboarding {
+    padding: 10px;
+  }
+
+  .contract-row-clientonboarding {
+    padding: 10px;
+    gap: 10px;
+  }
+
+  .file-upload-btn {
+    height: 46px !important;
+    font-size: 12px !important;
+    padding: 8px 12px !important;
+  }
+
+  .download-file-btn {
+    height: 46px !important;
+    font-size: 14px !important;
+  }
+
+  .remove-contract-btn-clientonboarding {
+    height: 46px !important;
+    width: 46px !important;
+    font-size: 13px;
+  }
+
+  .additional-branches-section {
+    padding: 12px;
+  }
+
+  .branch-buttons .gradient-button {
+    padding: 8px 16px;
+    font-size: 12px;
+  }
+
+  .add-branch-header-btn {
+    padding: 8px 16px;
+    font-size: 12px;
+  }
+
+  .inline-branch-list {
+    padding: 8px;
+  }
+
+  .summary-box {
+    padding: 12px 16px;
+  }
+
+  .summary-title {
+    font-size: 12px;
+  }
+
+  .summary-count {
+    font-size: 20px;
+  }
+
+  .branch-table {
+    min-width: 600px;
+    font-size: 10px;
+  }
+
+  .branch-table th,
+  .branch-table td {
+    padding: 6px 4px;
+  }
+
+  .submit-btn,
+  .clear-btn {
+    padding: 12px 25px !important;
+    height: 48px !important;
+  }
+}
+
+/* ===== SCROLLBAR STYLING ===== */
 .branch-list-scroll::-webkit-scrollbar {
   width: 8px;
+  height: 8px;
 }
 
 .branch-list-scroll::-webkit-scrollbar-track {
-  background: #e0e7ff;
+  background: #f1f5f9;
   border-radius: 4px;
 }
 
@@ -717,778 +1495,155 @@ button.clear-btn:hover {
   background: linear-gradient(135deg, #1E3FD6, #0d2db8);
 }
 
-/* ✅ Branch Cards Grid */
-.branch-cards {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-  gap: 20px;
+/* For Firefox */
+.branch-list-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: #2F4EE8 #f1f5f9;
 }
 
-/* ✅ Individual Branch Card - Modern Design with extra bottom margin */
-.branch-card {
-  background: #ffffff;
-  border: 1px solid #e0e7ff;
-  border-radius: 12px;
-  padding: 20px;
-  position: relative;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(47, 78, 232, 0.08);
-  overflow: hidden;
-  margin-bottom: 30px;
+.branch-form-container::-webkit-scrollbar {
+  width: 6px;
 }
 
-.branch-card:last-child {
-  margin-bottom: 50px;
+.branch-form-container::-webkit-scrollbar-track {
+  background: #f1f5f9;
+  border-radius: 3px;
 }
 
-.branch-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 4px;
+.branch-form-container::-webkit-scrollbar-thumb {
   background: linear-gradient(135deg, #2F4EE8, #1E3FD6);
+  border-radius: 3px;
 }
 
-.branch-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 25px rgba(47, 78, 232, 0.15);
-  border-color: #2F4EE8;
-}
-
-/* ✅ Branch Card Header */
-.branch-card h3 {
-  margin: 0 0 15px 0;
-  font-size: 18px;
-  font-weight: 700;
-  color: #1a202c;
-  padding-bottom: 8px;
-  border-bottom: 2px solid #e0e7ff;
-}
-
-/* ✅ Branch Info Styling */
-.branch-card p {
-  margin: 8px 0;
-  font-size: 14px;
-  line-height: 1.5;
-  color: #4a5568;
-  display: flex;
-  align-items: center;
-}
-
-.branch-card p strong {
-  color: #2d3748;
-  font-weight: 600;
-  min-width: 80px;
-  margin-right: 10px;
-}
-
-/* ✅ API List Styling */
-.branch-card div {
-  margin-top: 15px;
-}
-
-.branch-card div strong {
-  color: #2F4EE8;
-  font-weight: 600;
-  font-size: 15px;
-  display: block;
-  margin-bottom: 8px;
-}
-
-.branch-card ul {
-  margin: 8px 0 0 0;
-  padding-left: 0;
-  list-style: none;
-}
-
-.branch-card li {
-  background: #f7faff;
-  border: 1px solid #e0e7ff;
-  border-radius: 6px;
-  padding: 8px 12px;
-  margin-bottom: 6px;
-  font-size: 13px;
-  color: #4a5568;
-  transition: all 0.2s ease;
-}
-
-.branch-card li:hover {
-  background: #eef2ff;
-  border-color: #2F4EE8;
-}
-
-.branch-card li::before {
-  content: '🔗';
-  margin-right: 8px;
-}
-
-/* ✅ Branch Actions - Modern Buttons */
-.branch-actions {
-  display: flex;
-  justify-content: flex-end;
-  gap: 10px;
-  margin-top: 20px;
-  padding-top: 15px;
-  border-top: 1px solid #e0e7ff;
-}
-
-.edit-btn,
-.delete-btn {
-  border: none;
-  padding: 10px 16px;
-  border-radius: 8px;
-  cursor: pointer;
-  font-weight: 600;
-  font-size: 14px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 45px;
-  height: 40px;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
-
-.edit-btn {
-  background: linear-gradient(135deg, #10b981, #059669);
-  color: white;
-}
-
-.edit-btn:hover {
-  background: linear-gradient(135deg, #059669, #047857);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
-}
-
-.delete-btn {
-  background: linear-gradient(135deg, #ef4444, #dc2626);
-  color: white;
-}
-
-.delete-btn:hover {
-  background: linear-gradient(135deg, #dc2626, #b91c1c);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
-}
-
-/* ✅ Empty State */
-.modal-content p {
-  text-align: center;
-  font-size: 16px;
-  color: #6b7280;
-  margin: 40px 0;
-  font-style: italic;
-}
-
-/* ✅ Responsive Design */
-@media (max-width: 768px) {
-  .modal-content {
-    width: 95%;
-    margin: 10px;
-    max-height: 85vh;
-  }
-
-  .branch-cards {
-    grid-template-columns: 1fr;
-    gap: 15px;
-  }
-
-  .branch-card {
-    padding: 15px;
-  }
-
-  .branch-list-scroll {
-    padding: 15px;
-    max-height: 400px;
-  }
-
-  .modal-header-bar {
-    padding: 15px 20px;
-  }
-
-  .modal-header-bar h3 {
-    font-size: 18px;
-  }
-
-  .branch-actions {
-    gap: 8px;
-  }
-
-  .edit-btn,
-  .delete-btn {
-    padding: 8px 12px;
-    min-width: 40px;
-    height: 36px;
-  }
-}
-
-/* ✅ Loading State Animation */
-@keyframes shimmer {
-  0% { background-position: -200px 0; }
-  100% { background-position: calc(200px + 100%) 0; }
-}
-
-.branch-card.loading {
-  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
-  background-size: 200px 100%;
-  animation: shimmer 1.5s infinite;
-}
-
-
-
-/* Header actions for branch list modal */
-.header-actions {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-}
-
-.add-branch-header-btn {
-  background: rgba(255, 255, 255, 0.2);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  color: white;
-  padding: 8px 16px;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 14px;
-  font-weight: 600;
-  transition: all 0.3s ease;
-}
-
-.add-branch-header-btn:hover {
-  background: rgba(255, 255, 255, 0.3);
-  transform: translateY(-1px);
-}
-
-.empty-state {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 60px 20px;
+/* ===== UTILITY CLASSES ===== */
+.text-center {
   text-align: center;
 }
 
-.add-first-branch-btn {
-  background: linear-gradient(135deg, #2F4EE8, #1E3FD6);
-  color: white;
-  border: none;
-  padding: 12px 24px;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 16px;
-  font-weight: 600;
-  margin-top: 20px;
-  transition: all 0.3s ease;
-}
-
-.add-first-branch-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(47, 78, 232, 0.3);
-}
-
-.branch-form-container {
-  padding: 0;
-  max-height: calc(85vh - 100px);
-  overflow-y: auto;
-}
-
-.store-phone-row {
-  display: flex;
-  margin-bottom: 15px;
-}
-
-
-/* Styles for the new Branch Table */
-.branch-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 10px;
-  font-size: 14px;
-}
-
-.branch-table th,
-.branch-table td {
-  border: 1px solid #e0e0e0;
-  padding: 10px 14px;
-  text-align: left;
-  vertical-align: middle;
-}
-
-.branch-table thead {
-  background-color: #f8faff;
-}
-
-.branch-table th {
-  font-weight: 600;
-  color: #333;
-}
-
-.branch-table tbody tr:nth-child(even) {
-  background-color: #f9f9f9;
-}
-
-.branch-table tbody tr:hover {
-  background-color: #f1f5f8;
-}
-
-/* Actions buttons inside the table */
-.branch-actions-table {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 8px;
-}
-
-.branch-actions-table .edit-btn,
-.branch-actions-table .delete-btn {
-  padding: 6px 10px;
-  
-}
-/* Form Row */
-.form-row {
-  display: flex;
-  gap: 20px;
+.mb-20 {
   margin-bottom: 20px;
 }
 
-/* Input group */
-.input-group {
-  position: relative;
-  flex: 1;
-  min-width: 200px;
+.mt-20 {
+  margin-top: 20px;
 }
 
-/* Input + Select Common Style */
-.input-group input,
-.input-group select,
-.input-group textarea {
+.p-0 {
+  padding: 0;
+}
+
+.w-100 {
   width: 100%;
-  padding: 12px 10px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  outline: none;
-  font-size: 14px;
-  background: white;
-  height: 44px;
-  box-sizing: border-box;
-  transition: border-color 0.3s ease;
-}
-.input-group textarea {
-  height: 80px;
-  resize: vertical;
 }
 
-/* On focus */
-.input-group input:focus,
-.input-group select:focus {
-  border-color: #4a90e2;
+/* ===== FOCUS STATES FOR ACCESSIBILITY ===== */
+.gradient-button:focus,
+.add-branch-header-btn:focus,
+.add-first-branch-btn:focus,
+.submit-btn:focus,
+.clear-btn:focus,
+.file-upload-btn:focus,
+.download-file-btn:focus,
+.btn-cancel:focus,
+.btn-select:focus,
+.close-btn:focus {
+  outline: 3px solid rgba(47, 78, 232, 0.3);
+  outline-offset: 2px;
 }
 
-/* Floating label */
-.input-group label {
-  position: absolute;
-  left: 12px;
-  top: 12px;
-  color: #888;
-  font-size: 14px;
-  background: white;
-  transition: all 0.2s ease;
-  padding: 0 4px;
+/* ===== LOADING STATES ===== */
+.loading {
+  opacity: 0.6;
   pointer-events: none;
-  z-index: 1;
-}
-.input-group input:focus + label,
-.input-group input:valid + label,
-.input-group input:not(:placeholder-shown) + label,
-.input-group input[value]:not([value=""]) + label,
-.input-group select:focus + label,
-.input-group select:valid + label,
-.input-group select:not([value=""]) + label,
-.input-group textarea:focus + label,
-.input-group textarea:valid + label,
-.input-group textarea:not(:placeholder-shown) + label {
-  top: -8px;
-  left: 8px;
-  font-size: 12px;
-  color: #2F4EE8;
-  font-weight: 500;
 }
 
-/* Label float when input filled OR focused */
-.input-group input:focus ~ label,
-.input-group input:not(:placeholder-shown) ~ label,
-.input-group select:focus ~ label,
-.input-group select:valid ~ label {
-  top: -8px;
-  left: 8px;
-  font-size: 12px;
-  color: #4a90e2;
-}
-.input-group input:focus,
-.input-group select:focus,
-.input-group textarea:focus {
-  border-color: #2F4EE8;
-  box-shadow: 0 0 0 2px rgba(47, 78, 232, 0.1);
-}
-.input-group select option:first-child {
-  color: #999;
-}
-
-.input-group select:invalid {
-  color: #999;
-}
-
-.input-group select:valid {
-  color: #333;
-}
-/* Disabled dropdown */
-.input-group select:disabled,
-.input-group input:disabled {
-  background: #f5f5f5;
-  color: #999;
-  cursor: not-allowed;
-}
-.input-group select {
-  position: relative;
-  z-index: 10;
-}
-.input-group select:disabled + label,
-.input-group input:disabled + label {
-  color: #999;
-}
-/* Force dropdown to open downward */
-select {
-  direction: ltr;
-}
-
-select option {
-  direction: ltr;
-}
-/* === 🌿 ADDITIONAL BRANCHES SECTION (UPDATED) === */
-
-.additional-branches-section {
-  margin-top: 2rem;
-  padding: 1.5rem;
-  background-color: var(--light-bg);
-  border-radius: var(--border-radius);
-/*  border: 1px solid #e9ecef;*/
-  
-  /* --- New lines for alignment --- */
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.additional-branches-section h3 {
-  margin: 0; /* Reset margin */
-  color: #333;
-  font-size: 1.2rem; /* Optional: Adjust font size */
-}
-
-.branch-buttons {
-  display: flex;
-  justify-content: flex-end;
-  gap: 1rem;
-}
-.additional-branches-section h3 {
-    color: #34495e; /* Thoda professional dark blue-gray color */
-  font-weight: 600;
-  font-size: 0.95rem; /* Uppercase ke saath yeh size sahi lagega */
-  text-transform: uppercase; /* Saare akshar bade */
-  letter-spacing: 0.8px; /* Aksharon ke beech halki space */
-  
-  /* Yeh line icon aur text ko align karne ke liye hai */
-  display: flex;
-  align-items: center;
-}
-.additional-branches-section h3::before {
-  content: ''; /* Pseudo-element banane ke liye zaroori hai */
-  display: inline-block;
-  width: 4px;
-  height: 18px;
-  background-color: var(--primary-color);
-  margin-right: 12px; /* Line aur text ke beech space */
-  border-radius: 2px; /* Line ke kone halke se gol */
-}
-.branch-summary {
-  display: flex;
-  justify-content: center;
-  gap: 40px;
-  margin: 20px 0;
-}
-
-.branch-summary .summary-box {
-  background: #f8faff;
-  border: 1px solid #e0e6ff;
-  border-radius: 10px;
-  padding: 15px 25px;
-  text-align: center;
-  min-width: 180px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
-  transition: all 0.2s ease-in-out;
-}
-
-.branch-summary .summary-box:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-}
-
-.branch-summary .summary-title {
-  font-size: 14px;
-  font-weight: 600;
-  color: #555;
-  margin-bottom: 8px;
-  letter-spacing: 0.3px;
-}
-
-.branch-summary .summary-count {
-  font-size: 22px;
-  font-weight: 700;
-  color: #2d5be3; /* Blue accent */
-}
-/* Purane code ko hatakar yeh code daalein */
-/* Base style for the button */
-.branch-buttons .gradient-button {
-  background: linear-gradient(to right, #F957A2, #6A67F3);
-  border: none;
-  color: white;
-  padding: 12px 24px;
-  font-size: 16px;
-  font-weight: bold;
-  border-radius: 25px;
-  cursor: pointer;
-  /* Add box-shadow and transform to the transition */
-  transition: all 0.3s ease; 
-  box-shadow: 0 4px 15px 0 rgba(175, 102, 232, 0.4);
-}
-
-/* Style for the button ON HOVER */
-.branch-buttons .gradient-button:hover {
-  /* Re-apply the gradient to prevent it from changing */
-  background: linear-gradient(to right, #F957A2, #6A67F3); 
-  
-  /* Make the shadow a bit stronger on hover */
-  box-shadow: 0 6px 20px 0 rgba(175, 102, 232, 0.6); 
-  
-  /* Keep the zoom effect */
-  transform: scale(1.05); 
-}
-/* Inline Branch List Styling */
-.inline-branch-list {
-  margin-top: 2rem;
-  padding: 1.5rem;
-  border: 1px solid #e0e0e0;
-  border-radius: 8px;
-  background-color: #f9f9f9;
-  animation: fadeIn 0.5s ease-in-out;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-  to {
+@keyframes pulse {
+  0%, 100% {
     opacity: 1;
-    transform: translateY(0);
+  }
+  50% {
+    opacity: 0.5;
   }
 }
 
-.inline-branch-list .modal-header-bar {
-  padding: 0 0 1rem 0; /* Adjust padding as it's not a modal anymore */
-  border-bottom: 1px solid #ddd;
-}
-/* ========================================================= */
-/* =========== Branch List Header Fix (Desktop) ============ */
-/* ========================================================= */
-
-.inline-branch-list .modal-header-bar {
-  /* Step 1: Blue background hatana */
-  background: none; 
-  background-color: transparent;
-
-  /* Step 2: Baaki styles ko theek karna */
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 0 1rem 0;
-  border-bottom: 1px solid #ddd;
-  margin-bottom: 1rem;
+.loading * {
+  animation: pulse 1.5s ease-in-out infinite;
 }
 
-.inline-branch-list .modal-header-bar h3 {
-    color: #333; /* Title ka color theek karna */
+/* ===== LANDSCAPE ORIENTATION FOR MOBILE ===== */
+@media (max-height: 500px) and (orientation: landscape) {
+  .modal-content {
+    max-height: 95vh;
+  }
+  
+  .branch-form-container {
+    max-height: calc(95vh - 60px);
+  }
+  
+  .empty-state {
+    padding: 40px 20px;
+  }
+  
+  .modal-header-bar {
+    padding: 10px 20px !important;
+  }
+}
+
+/* ===== HIGH DPI DISPLAYS ===== */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .branch-table {
+    font-size: 13px;
+  }
+  
+  .input-group input,
+  .input-group select,
+  .input-group textarea {
+    border-width: 1px;
+  }
+}
+
+/* ===== PRINT STYLES ===== */
+@media print {
+  .actions,
+  .branch-buttons,
+  .btn-wrapper,
+  .modal-overlay,
+  .download-file-btn,
+  .branch-actions-table,
+  .close-btn {
+    display: none !important;
+  }
+
+  .client-onboarding {
+    box-shadow: none;
+    border: 1px solid #ccc;
     margin: 0;
-}
-
-/* Step 3: Header ke andar waale button ko style karna */
-.add-branch-header-btn {
-  background-color: #eef2ff; /* Light, clean background */
-  color: #4f46e5; /* Professional blue text color */
-  border: 1px solid #c7d2fe;
-  font-weight: bold;
-  padding: 8px 16px;
-  border-radius: 20px;
-  cursor: pointer;
-  transition: all 0.2s ease-in-out;
-}
-
-.add-branch-header-btn:hover {
-  background-color: #e0e7ff;
-  border-color: #a5b4fc;
-  transform: translateY(-2px);
-}
-
-
-/* ====================================================== */
-/* =========== Responsive Fix for Header ================ */
-/* ====================================================== */
-
-@media (max-width: 768px) {
-  .inline-branch-list .modal-header-bar {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 1rem;
+    padding: 0;
   }
 
-  /* Button ko poori width dena mobile par */
-  .add-branch-header-btn {
-    width: 100%;
+  form {
+    box-shadow: none;
+    border: 1px solid #ccc;
+    padding: 20px;
   }
-}
-/* Style for the "+ Add First Branch" button */
-.empty-state .add-first-branch-btn {
-  background: linear-gradient(to right, #F957A2, #6A67F3); /* Yahi gradient color hai */
-  border: none;
-  color: white;
-  padding: 12px 24px;
-  font-size: 16px;
-  font-weight: bold;
-  border-radius: 25px; /* Submit button jaisa rounded corner */
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 15px 0 rgba(175, 102, 232, 0.4); /* Glowing shadow effect */
-  margin-top: 1rem; /* Upar wale text se thoda space */
-  display: inline-flex; /* Icon ke liye */
-  align-items: center; /* Icon aur text ko center karne ke liye */
-  gap: 0.5rem; /* Icon aur text ke beech space */
-}
 
-.empty-state .add-first-branch-btn:hover {
-  transform: scale(1.05); /* Hover effect */
-  box-shadow: 0 6px 20px 0 rgba(175, 102, 232, 0.6);
-}
-
-/* Responsive adjustment for this button */
-@media (max-width: 768px) {
-  .empty-state .add-first-branch-btn {
-    width: 100%; /* Mobile par poori width lega */
-    justify-content: center; /* Text aur icon ko center karega */
+  .file-upload-btn {
+    background: #f8f9fa !important;
+    color: #333 !important;
+    border: 1px solid #ccc !important;
   }
-}
-/* Header ke Add Branch button ko gradient style dena */
-.add-branch-header-btn {
-  background: linear-gradient(to right, #F957A2, #6A67F3);
-  border: none;
-  color: white;
-  padding: 10px 20px; /* Thoda chota size header ke liye */
-  font-size: 14px;   /* Thoda chota font */
-  font-weight: bold;
-  border-radius: 25px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 15px 0 rgba(175, 102, 232, 0.4);
-}
-
-.add-branch-header-btn:hover {
-  transform: scale(1.05);
-  box-shadow: 0 6px 20px 0 rgba(175, 102, 232, 0.6);
-}
-.upload-input-wrapper .gradient-upload-btn {
-  /* Required Gradient Colors */
-  background: linear-gradient(to right, #F957A2, #6A67F3) !important;
   
-  /* Styling to match submit button */
-  border: none !important;
-  color: white !important;
-  font-weight: bold !important; /* Bold text like submit button */
-  font-size: 15px !important; /* Font size like submit button */
+  .onboard-header h2 {
+    font-size: 24px;
+  }
   
-  /* Sizing and Shape */
-  height: 44px !important; /* Same height as input */
-  padding: 10px 15px !important;
-  border-radius: 0 6px 6px 0 !important; /* Right corners rounded */
+  .branch-table {
+    min-width: auto;
+    font-size: 12px;
+  }
   
-  /* Visuals */
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 15px 0 rgba(175, 102, 232, 0.4) !important; /* Submit button jaisa shadow */
-}
-
-/* Hover effect */
-.upload-input-wrapper .gradient-upload-btn:hover {
- 
-  box-shadow: 0 6px 20px 0 rgba(175, 102, 232, 0.6) !important;
-}
-.branch-actions-table .edit-btn {
-  background: linear-gradient(to right, #56ab2f, #a8e063); /* Fresh Green Gradient */
-  box-shadow: 0 2px 8px rgba(115, 182, 94, 0.4); /* Green Shadow */
-}
-
-.branch-actions-table .edit-btn:hover {
-  transform: translateY(-2px) scale(1.05);
-  box-shadow: 0 4px 12px rgba(115, 182, 94, 0.6);
-}
-
-/* 🔴 Delete Button - RED GRADIENT 🔴 */
-.branch-actions-table .delete-btn {
-  background: linear-gradient(to right, #FF416C, #FF4B2B); /* Warning Red/Orange Gradient */
-  box-shadow: 0 2px 8px rgba(255, 65, 108, 0.4); /* Red Shadow */
-}
-
-.branch-actions-table .delete-btn:hover {
-  transform: translateY(-2px) scale(1.05);
-  box-shadow: 0 4px 12px rgba(255, 65, 108, 0.6);
-}
-
-
-/* Step 1: Dono main containers ko ek jaisa size dena */
-.client-onboarding,
-.inline-branch-list {
-  /* Dono sections ki max-width 1200px set kar di */
-  max-width: 1200px;
-  
-  /* Dono ko page ke center mein le aaye */
-  margin-left: auto;
-  margin-right: auto;
-}
-
-/* Thoda vertical space add karna */
-.client-onboarding {
-  margin-top: 2rem;
-  margin-bottom: 2rem;
-}
-.inline-branch-list {
-  margin-top: 2rem;
-  margin-bottom: 2rem;
-}
-
-
-/* Step 2: Table ke andar scrollbar laana */
-.branch-list-scroll {
-  overflow-x: auto; /* Yahi line table ko scrollable banati hai */
-  border: 1px solid #e0e0e0;
-  border-radius: 8px;
-}
-
-.branch-table {
-  width: 100%;
-  min-width: 900px; /* Table ka content isse kam hone par scrollbar aayega */
-  border-collapse: collapse;
+  .branch-table th,
+  .branch-table td {
+    padding: 8px 6px;
+  }
 }

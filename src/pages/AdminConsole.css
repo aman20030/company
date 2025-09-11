@@ -757,3 +757,137 @@ table th {
     display: none;
   }
 }
+/* --- Contracts Cell Styling in Admin Table --- */
+.contracts-cell ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-size: 0.9em;
+}
+
+.contracts-cell li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 4px 0;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.contracts-cell li:last-child {
+  border-bottom: none;
+}
+
+.pdf-download-link {
+  color: #d32f2f; /* Red color for PDF icon */
+  margin-left: 10px;
+  font-size: 1.2em;
+  transition: color 0.2s;
+}
+
+.pdf-download-link:hover {
+  color: #b71c1c;
+}
+/* Styling for the Contracts cell in the main table */
+.contracts-cell {
+  min-width: 250px; /* Thoda space dega cell ko */
+}
+
+.contracts-cell ul {
+  list-style: none; /* Default bullet points hata dega */
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px; /* Har contract ke beech mein space */
+}
+
+.contracts-cell li {
+  display: flex;
+  justify-content: space-between; /* Date aur icon ko alag karega */
+  align-items: center;
+  background-color: #f0f4f8; /* Thoda light background color */
+  padding: 8px 12px;
+  border-radius: 20px; /* Pill/tag jaisa shape dega */
+  border: 1px solid #dfe6ec;
+  transition: all 0.2s ease-in-out;
+}
+
+.contracts-cell li:hover {
+  border-color: #007bff; /* Hover pe border color change hoga */
+  box-shadow: 0 2px 8px rgba(0, 123, 255, 0.15); /* Halki si shadow */
+}
+
+.contracts-cell li span {
+  font-family: 'Courier New', Courier, monospace; /* Dates ke liye professional font */
+  font-size: 0.9em;
+  color: #333;
+  font-weight: 600;
+}
+
+/* PDF Download Icon ko style karega */
+.pdf-download-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%; /* Gol shape dega */
+  background-color: #ffffff;
+  color: #c42929; /* PDF jaisa red color */
+  text-decoration: none;
+  border: 1px solid #e0e0e0;
+  transition: all 0.2s ease-in-out;
+}
+
+.pdf-download-link:hover {
+  background-color: #c42929; /* Hover pe background color change */
+  color: white; /* Icon ka color white ho jayega */
+  transform: scale(1.1) rotate(10deg); /* Thoda sa zoom aur rotate effect */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+/* --- Custom Confirmation Toast Styling --- */
+.confirmation-toast-body {
+  font-family: 'Poppins', sans-serif;
+  padding: 5px;
+}
+
+.confirmation-toast-body p {
+  margin: 0 0 15px 0;
+  font-size: 16px;
+  color: #333;
+}
+
+.confirmation-buttons {
+  display: flex;
+  justify-content: flex-end; /* Buttons ko right side mein rakhega */
+  gap: 10px;
+}
+
+.confirmation-buttons button {
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+/* "Yes" Button Styling */
+.btn-confirm {
+  background-color: #d33;
+  color: white;
+}
+.btn-confirm:hover {
+  background-color: #c42929;
+  transform: translateY(-2px);
+}
+
+/* "No" Button Styling */
+.btn-cancel {
+  background-color: #f0f0f0;
+  color: #555;
+  border: 1px solid #ccc;
+}
+.btn-cancel:hover {
+  background-color: #e0e0e0;
+}
